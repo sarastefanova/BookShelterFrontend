@@ -1,0 +1,50 @@
+h1{
+    font-style: italic;
+}
+
+.form-group input{
+    margin-left: 280px;
+}
+
+.btn-block,.forgot-password{
+    margin-left: 280px;
+}
+
+.btnColor{
+    background-color: #cc0044 !important;
+    color: white !important;
+}
+.labelLogin{
+ margin-right: 470px !important;
+}
+.containerLogin{
+    margin-top: -100px;
+
+    background-color: #ffe1e1;
+}
+
+.colorLink,.colorH{
+    color: #cc0044 !important;
+}
+
+.rememberMe{
+    margin-right: 420px;
+}
+
+.labelLogin2{
+    margin-right: 440px;
+}
+
+.labelLogin3{
+    margin-right: 420px;
+}
+
+.labelLogin4{
+    margin-right: 480px;
+}
+
+.labelLogin5{
+    margin-right: 500px;
+}
+
+

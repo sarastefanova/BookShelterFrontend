@@ -1,0 +1,89 @@
+.ColorBtn{
+    color: white !important;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.btn-outline-primary{
+    border: 0px;
+}
+
+
+
+
+.navbar-brand img{
+    width: 150px !important;
+    height: 80px !important;
+}
+
+.btn-outline-primary:hover{
+    cursor: pointer;
+
+}
+
+.row{
+
+
+    /*width: 840px;*/
+
+}
+
+.col-md-3{
+    /*margin: -20px;*/
+
+}
+
+
+.navbar-brand img{
+    width: 100px;
+    height: 75px;
+}
+body{
+    padding-top: 3rem;
+    background-color: #efedee;
+}
+
+
+
+
+
+/*.jumbotron{*/
+/*    background-color: #efedee;*/
+/*    height: 100%;*/
+/*}*/
+
+
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-style: italic;
+    color: black !important;
+}
+
+
+
+.aligneOneLine input{
+    width: 450px;
+}
+
+.fa-search{
+
+}
+
+.rounded{
+    border-radius: 7% !important;
+}
+
+.ProfilePic{
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.btn-primary{
+    background-color: #cc0044 !important;
+}
+a {
+    background-color:transparent !important;
+    border-color: #cc0044 !important;
+}
+
+
