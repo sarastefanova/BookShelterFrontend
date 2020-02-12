@@ -1,13 +1,15 @@
-import React, {useState, useEffect, Component} from 'react'
-import {useHistory} from 'react-router-dom';
+import React, {Component} from 'react'
+
 import axios from "../../../cutom-axios/axios";
 import './addBookStyle.css'
+
 
 class BookAddImg extends Component{
     state = {
         authors: [],
         selectedTeam: "",
-        selectedFile:null
+        selectedFile:null,
+
     }
 
 
@@ -23,7 +25,7 @@ class BookAddImg extends Component{
                         {
                             value: "",
                             display:
-                                "(Select your favourite team)"
+                                "(Select one author)"
                         }
                     ].concat(authorFromApi)
                 });
@@ -74,8 +76,8 @@ render() {
             <form onSubmit={this.onFormSubmit} >
                 <h1 className="colorH">Add new book</h1>
                 <div className="form-group files color">
-                    <label>Upload Your File </label>
-                    <input type="file" name={"file"} id="file" onChange={(event => this.onFileChangeHandler(event))} className="form-control"/>
+                    <label className="bookAddLabel2">Upload Your File </label>
+                    <input type="file" name={"file"} id="file" onChange={(event => this.onFileChangeHandler(event))} className="form-control col-md-6"/>
                 </div>
                 <div className="form-group">
                     <label className="bookAddLabel1">Name</label>
@@ -85,6 +87,7 @@ render() {
                 <div className="form-group">
                     <label className="bookAddLabel2">Choose author</label>
                     <select name={"nameAndSurname"} id="nameAndSurname"
+                            className="form-control col-md-6"
                             value={this.state.selectedTeam}
                             onChange={e =>
                                 this.setState({

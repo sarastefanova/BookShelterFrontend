@@ -13,7 +13,8 @@ import BookAdd from '../Books/AddBook/addBook';
 import EditBook from '../Books/EditBook/editBook';
 import AuthorService from '../../repository/axiosAuthorRepository';
 import BookService from '../../repository/axiosBookRepository';
-import BookAddWithImg from '../Books/AddBookImg/AddBookImg'
+import BookAddWithImg from '../Books/AddBookImg/AddBookImg';
+import GridBooks from '../Books/GridBooks/allBooks'
 
 class App extends Component{
 
@@ -28,7 +29,7 @@ class App extends Component{
 
     componentDidMount() {
 
-
+        this.loadBooks();
     }
 
     loadAuthors = () => {
@@ -142,6 +143,9 @@ class App extends Component{
                     <EditBook />}>
                 </Route>
 
+
+                <Route path={"/allBooks"} render={()=><GridBooks  books={this.state.books}/>}>
+                </Route>
             </div>
 
           </main>
