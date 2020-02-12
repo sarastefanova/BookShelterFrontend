@@ -14,7 +14,14 @@ const BookService={
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-    },
+    },fetchBooksTermsPaged:(page,pageSize)=>{
+        return axios.get("/books",{
+            headers: {
+                'page':page,'page-size':pageSize
+            }
+        })
+    }
+    ,
     addNewBookWithImg:(book)=>{
 
         //const formParams = qs.stringify(book);

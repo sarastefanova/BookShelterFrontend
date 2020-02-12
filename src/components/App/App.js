@@ -14,7 +14,9 @@ import EditBook from '../Books/EditBook/editBook';
 import AuthorService from '../../repository/axiosAuthorRepository';
 import BookService from '../../repository/axiosBookRepository';
 import BookAddWithImg from '../Books/AddBookImg/AddBookImg';
-import GridBooks from '../Books/GridBooks/allBooks'
+import GridBooks from '../Books/GridBooks/allBooks';
+import AddAuthorImg from "../Author/AddAuthorImg/AddAuthorImg";
+import DetailsAuthor from '../Author/DetailsAuthor/DetailsAuthor'
 
 class App extends Component{
 
@@ -23,13 +25,15 @@ class App extends Component{
         super(props);
         this.state={
             authors: [],
-            books:[]
+            books:[],
+            totalPages:0,
+            pageSize:6
         }
     }
 
     componentDidMount() {
 
-        this.loadBooks();
+        this.loadBooksPaginate();
     }
 
     loadAuthors = () => {
@@ -97,6 +101,23 @@ class App extends Component{
         });
     };
 
+    createAuthorImg=(author)=>{
+        AuthorService.addNewAuthorWithImg(author).then((response)=>{
+            const author = response.data;
+            console.log(response+"img");
+
+            this.setState((prevState) => {
+                const newAuthorRef = [...prevState.authors, author];
+                //or
+                //const terms = prevState.terms.concat(newTerm);
+
+                return {
+                    "authors": newAuthorRef
+                }
+            });
+        });
+    };
+
     loadBooks = () => {
         BookService.getAllBooks().then(response=>{
             this.setState((prevState)=>{
@@ -106,6 +127,18 @@ class App extends Component{
             })
         })
     };
+
+    loadBooksPaginate = (page=0) => {
+        BookService.fetchBooksTermsPaged(page,this.state.pageSize).then((data) => {
+            this.setState({
+                books: data.data.content,
+                page:data.data.page,
+                pageSize:data.data.pageSize,
+                totalPages:data.data.totalPages
+            })
+        })
+
+    }
 
   render() {
 
@@ -122,13 +155,21 @@ class App extends Component{
                 </Route>
                 <Route path={"/register"} render={()=><Register />}>
                 </Route>
-                <Route path={"/addAuthor"} render={()=><AuthorAdd onNewAuthorAdded={this.createAuthor}/>}>
+
+                {/*Bez slika dodavanje na avtor*/}
+                {/*<Route path={"/addAuthor"} render={()=><AuthorAdd onNewAuthorAdded={this.createAuthor}/>}>*/}
+                {/*</Route>*/}
+
+                {/*Bez slika dodavanje na kniga*/}
+                {/*<Route path={"/addBook"} render={()=><BookAdd onNewBookAdded={this.createBook}/>}>*/}
+                {/*</Route>*/}
+
+                {/*Dodavanje na kniga so slika*/}
+                <Route path={"/addBook"} render={()=><BookAddWithImg books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
                 </Route>
 
-                <Route path={"/addBook"} render={()=><BookAdd onNewBookAdded={this.createBook}/>}>
-                </Route>
-
-                <Route path={"/upload"} render={()=><BookAddWithImg books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
+                {/*Dodavanje na avtor so slika*/}
+                <Route path={"/addAuthor"} render={()=><AddAuthorImg author={this.state.author} onNewAuthorAddedImg={this.createAuthorImg}/>}>
                 </Route>
 
                 <Route path="/editAuthor" render={()=>
@@ -143,8 +184,11 @@ class App extends Component{
                     <EditBook />}>
                 </Route>
 
+                <Route path="/detailsAuthor/:nameAndSurname" render={()=>
+                    <DetailsAuthor />}>
+                </Route>
 
-                <Route path={"/allBooks"} render={()=><GridBooks  books={this.state.books}/>}>
+                <Route path={"/allBooks"} render={()=><GridBooks onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
             </div>
 

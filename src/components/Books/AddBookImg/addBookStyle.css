@@ -1,5 +1,5 @@
 .containerAddBook{
-    height: 700px;
+    height: 720px;
     margin-top: -50px;
 }
 
@@ -17,4 +17,9 @@
 
 .form-group select{
     margin-left: 280px;
+}
+
+.imgUpladed {
+    width: 100px;
+    height: 100px;
 }

@@ -14,6 +14,14 @@ const AuthorService={
             }
         });
     },
+    addNewAuthorWithImg:(author)=>{
+        return axios.post("/author/addAuthor",author, {
+            headers: {
+                'Content-Type': 'multipart/form-data; boundary=${form._boundary}'
+            }
+        });
+    }
+    ,
     deleteAuthorTerm:(id)=>{
         return axios.delete(`/author/${id}`)
     }

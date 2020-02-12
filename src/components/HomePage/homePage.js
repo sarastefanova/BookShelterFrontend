@@ -6,7 +6,8 @@ import bookImg from '../AllPhotos/books.png';
 import bookReason from '../AllPhotos/booksReason.png';
 import moneyReason from '../AllPhotos/moneyReason.png';
 import mailReason from '../AllPhotos/mail.png'
-import PhotoWithText from './PhotoWithText/photoWithText'
+import PhotoWithText from './PhotoWithText/photoWithText';
+import {Link} from "react-router-dom"
 class homePage extends Component{
 
     render() {
@@ -49,7 +50,7 @@ class homePage extends Component{
                   </div>
               </div>
              <div className="row mt-3">
-                 <a className="btn ColorBtn btnBuy btn-primary">See all our books!</a>
+                 <Link to={"/allBooks"} className="btn ColorBtn btnBuy btn-primary">See all our books!</Link>
              </div>
           </div>
 

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-
+import { Redirect } from "react-router";
 import axios from "../../../cutom-axios/axios";
 import './addBookStyle.css'
+
 
 
 class BookAddImg extends Component{
@@ -9,6 +10,7 @@ class BookAddImg extends Component{
         authors: [],
         selectedTeam: "",
         selectedFile:null,
+        redirect: false
 
     }
 
@@ -61,20 +63,25 @@ class BookAddImg extends Component{
         console.log(formData);
         console.log(this.state.selectedFile);
         this.props.onNewBookAddedWithImg(formData);
-
-
-
+        this.setState({redirect:true});
 
     };
 
 
+
 render() {
 
-
+    let url = this.state.selectedFile && URL.createObjectURL(this.state.selectedFile);
+    if (this.state.redirect) {
+        return <Redirect to='/'/>;
+    }
     return (
         <div className="container containerAddBook">
             <form onSubmit={this.onFormSubmit} >
                 <h1 className="colorH">Add new book</h1>
+                {/*<div className="col-md-6">*/}
+                {/*    <img src={url} className="imgUpladed"/>*/}
+                {/*</div>*/}
                 <div className="form-group files color">
                     <label className="bookAddLabel2">Upload Your File </label>
                     <input type="file" name={"file"} id="file" onChange={(event => this.onFileChangeHandler(event))} className="form-control col-md-6"/>
@@ -115,7 +122,7 @@ render() {
 
                 <div className=" text-right">
 
-                    <button type="submit" className="btn btnColor col-md-6 btn-block" title="AddBook">
+                    <button  type="submit"  className="btn btnColor col-md-6 btn-block" title="AddBook">
                         <i className="fa fa-fw fa-save"></i> Add book
                     </button>
                 </div>
@@ -124,6 +131,9 @@ render() {
 
         </div>
     )
+
+
+
 }
 };
 

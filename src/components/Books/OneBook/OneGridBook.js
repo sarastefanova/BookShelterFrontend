@@ -15,7 +15,7 @@ class OneGridBook extends Component{
                         {this.Example()}
 
                         {this.cardFooter()}
-                        <hr/>
+
                     </div>
                 </div>
             </div>
@@ -23,18 +23,18 @@ class OneGridBook extends Component{
 
     }
 
-   Example = () => <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" class="card-img-top imgWidthAndHeight"/>
+   Example = () => <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
     cardHeader(){
         return (<div className="card-header">
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-6 font-weight-bold font-italic fontNameBook">
                     {this.props.book.name}
                 </div>
                 <div className="col-md-6 text-right">
                     <a href="#" className="btn btn-light" title="Следи">
                         <i className="fa fa-star"/>
                     </a>
-                    <Link className="btn btn-default" ><i className="fa fa-pencil"/></Link>
+                    <a className="btn btn-default" ><i className="fa fa-pencil"/></a>
                     <a  className="btn btn-danger" title="Избриши">
                         <i className="fa fa-trash"/>
                     </a>
@@ -59,8 +59,8 @@ class OneGridBook extends Component{
         return(
             <div className="card-footer">
                 <div className="row">
-                    <div className="col-md-12">
-                        <span>Written by {this.props.book.author.nameAndSurname}</span>
+                    <div className="col-md-12 ">
+                        <span className="colorH  float-left"><i className="fa fa-book"/> <Link to={"/detailsAuthor/"+this.props.book.author.nameAndSurname}><span className="colorH">Written by {this.props.book.author.nameAndSurname}</span></Link></span>
                     </div>
                 </div>
             </div>
