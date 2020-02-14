@@ -59,6 +59,7 @@ class BookAddImg extends Component{
         formData.append('nameAndSurname',e.target.nameAndSurname.value);
         formData.append('price',e.target.price.value);
         formData.append('file', this.state.selectedFile);
+        formData.append('shortContentBook',e.target.shortContentBook.value)
        // // console.log(newBook.get("name"));
         console.log(formData);
         console.log(this.state.selectedFile);
@@ -90,6 +91,11 @@ render() {
                     <label className="bookAddLabel1">Name</label>
                     <input name={"name"} id="name" type="text" className="form-control col-md-6"
                            placeholder="Enter book's name"/>
+                </div>
+                <div className="form-group">
+                    <label className="bookAddLabel1">Short content of the book</label>
+                    <input name={"shortContentBook"} id="shortContentBook" type="text" className="form-control col-md-6"
+                           placeholder="Write something about the book"/>
                 </div>
                 <div className="form-group">
                     <label className="bookAddLabel2">Choose author</label>

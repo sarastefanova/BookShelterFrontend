@@ -23,7 +23,7 @@ class OneGridBook extends Component{
 
     }
 
-   Example = () => <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
+    Example = () => <Link to={"/detailsBook/"+this.props.book.name}><img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/></Link>
     cardHeader(){
         return (<div className="card-header">
             <div className="row">
@@ -34,8 +34,8 @@ class OneGridBook extends Component{
                     <a href="#" className="btn btn-light" title="Следи">
                         <i className="fa fa-star"/>
                     </a>
-                    <a className="btn btn-default" ><i className="fa fa-pencil"/></a>
-                    <a  className="btn btn-danger" title="Избриши">
+                    <Link to={"/editBook/"+this.props.book.name}  className="btn btn-default" ><i className="fa fa-pencil"/></Link>
+                    <a  onClick={()=>this.props.onDelete(this.props.bookName)} className="btn btn-danger" title="Избриши">
                         <i className="fa fa-trash"/>
                     </a>
                 </div>

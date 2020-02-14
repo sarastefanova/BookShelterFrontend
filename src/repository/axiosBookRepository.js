@@ -32,17 +32,18 @@ const BookService={
             }
         });
     },
-    deleteBookTerm:(id)=>{
+    deleteBook:(id)=>{
         return axios.delete(`/books/${id}`)
     }
     ,
-    updateBookTerm : (book) => {
+    updateBook : (book) => {
 
-        const bookId=book.id;
-        const formParams = qs.stringify(bookId);
+        const bookId=book.name;
+        const formParams = qs.stringify(book);
+        console.log(book.name)
         return axios.patch("/books/"+bookId,formParams, {
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
     }

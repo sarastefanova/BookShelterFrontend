@@ -16,7 +16,8 @@ import BookService from '../../repository/axiosBookRepository';
 import BookAddWithImg from '../Books/AddBookImg/AddBookImg';
 import GridBooks from '../Books/GridBooks/allBooks';
 import AddAuthorImg from "../Author/AddAuthorImg/AddAuthorImg";
-import DetailsAuthor from '../Author/DetailsAuthor/DetailsAuthor'
+import DetailsAuthor from '../Author/DetailsAuthor/DetailsAuthor';
+import DetailsBook from '../Books/DetailsBook/DetailsBook'
 
 class App extends Component{
 
@@ -140,6 +141,36 @@ class App extends Component{
 
     }
 
+
+    updateBooks= ((editedBook) => {
+        BookService.updateBook(editedBook).then((response)=>{
+            const newBook = response.data;
+            this.setState((prevState) => {
+                const newBooksRef = prevState.books.map((book)=>{
+                    //debugger;
+                    if (book.name===newBook.name) {
+                        return response.data;
+                    }
+                    return book;
+                })
+                return {
+                    "books": newBooksRef
+                }
+            });
+        });
+    });
+
+    deleteBook=(i)=>{
+        BookService.deleteBook(i).then((response)=>{
+            this.setState((state)=>{
+                const books=state.books.filter((t)=>{
+                    return t.name!==i;
+                });
+                return {books}
+            })
+        })
+    }
+
   render() {
 
     const routing=(
@@ -180,15 +211,19 @@ class App extends Component{
                     <EditUser />}>
                 </Route>
 
-                <Route path="/editBook" render={()=>
-                    <EditBook />}>
+                <Route path="/editBook/:name" render={()=>
+                    <EditBook onEditedBook={this.updateBooks}/>}>
                 </Route>
 
                 <Route path="/detailsAuthor/:nameAndSurname" render={()=>
                     <DetailsAuthor />}>
                 </Route>
 
-                <Route path={"/allBooks"} render={()=><GridBooks onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
+                <Route path="/detailsBook/:name" render={()=>
+                    <DetailsBook />}>
+                </Route>
+
+                <Route path={"/allBooks"} render={()=><GridBooks onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
             </div>
 
