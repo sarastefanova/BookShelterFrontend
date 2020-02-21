@@ -1,0 +1,16 @@
+.carouselBooksImg{
+    /*width: 500px;*/
+    height: 300px;
+}
+
+.carouselWidth{
+    width: 500px !important;
+}
+
+.carousel {
+    width:600px;
+    height:300px;
+    /*margin: auto;*/
+    margin-top: 50px!important;
+    margin-left: 280px;
+}

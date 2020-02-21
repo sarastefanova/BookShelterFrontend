@@ -1,6 +1,7 @@
 .imgWidthAndHeight{
     width: 200px;
     height: 200px;
+    position: relative;
 }
 .fontNameBook{
     margin-left: -18px;
@@ -10,4 +11,25 @@
 
 .headerText{
     margin-top: -5px;
+}
+.favourite{
+    position: absolute;
+    top: 25%;
+    left: 80%;
+    border: 1px solid #cc0044 !important;
+    border-radius: 30px!important;
+    background-color: #ffe1e1 !important;
+}
+
+.favouriteHeart{
+    font-size: 40px !important;
+}
+
+.fa-heart{
+    color: #cc0044 !important;
+
+}
+
+.roundedLinksBooks{
+    border-radius: 20px!important;
 }

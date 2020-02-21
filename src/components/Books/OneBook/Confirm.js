@@ -16,7 +16,7 @@ const Example=(props)=> {
         <span>
 
 
-            <a   className="btn btn-danger" title="Избриши" onClick={handleShow}>
+            <a   className="btn btn-danger roundedLinksBooks" title="Delete" onClick={handleShow}>
                 <i className="fa fa-trash"/>
             </a>
 

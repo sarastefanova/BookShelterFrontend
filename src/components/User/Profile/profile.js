@@ -81,15 +81,21 @@ class MyProfile extends Component{
                     {/*    <i className="fa fa-edit"/>Edit my profile*/}
                     {/*</Link>*/}
                         <Link to={"/editUserImg/"+this.state.user.id}>
-                            <span  className="nameProfile"> <i className="fa fa-edit "/>Edit my profile</span>
+                            <span  className="linksProfile"> <i className="fa fa-edit "/>Edit my profile</span>
                         </Link>
                         <br/>
                         <Link to="/addBook">
-                            <span  className="nameProfile"> <i className="fa fa-edit "/>Add new book</span>
+                            <span  className="linksProfile"> <i className="fa fa-edit "/>Add new book</span>
                         </Link>
                         <br/>
-                         <Link to="/addAuthor">
-                            <span  className="nameProfile"> <i className="fa fa-edit "/>Add new author</span>
+                        <Link to="/addAuthor">
+                            <span  className="linksProfile"> <i className="fa fa-edit "/>Add new author</span>
+                        </Link>
+                        <Link to="/allBooks">
+                            <span  className="linksProfile"> <i className="fa fa-edit "/>List all books</span>
+                        </Link>
+                        <Link to="/allAuthors">
+                            <span  className="linksProfile"> <i className="fa fa-edit "/>List all authors</span>
                         </Link>
                 </span>
 

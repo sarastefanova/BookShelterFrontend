@@ -5,6 +5,7 @@ import {Link, useParams} from "react-router-dom";
 import Img from "react-image";
 import bookImg from "../../AllPhotos/books.png";
 import authorPhoto from '../../AllPhotos/authorImg.jpg';
+import CarouselAuthor from './Carousel/carousel'
 const detailsAuthor=(props)=>{
     const [detailsForAuthor,setDetailsAuthor]=useState({});
     const [allBooksAuthor,setAllBooksAuthor]=useState({});
@@ -22,33 +23,31 @@ const detailsAuthor=(props)=>{
 
 
 
-    const booksArray = Object.values(allBooksAuthor);
-    const booksAuthor =booksArray.map((item) =>
-        <div id={item.name} key={item.name} className="col-md-2 col-sm-6 col-xs-12">
-            <div className="card-body image-box">
-                {/*slikaa*/}<Link to={"/detailsBook/"+item.name}>
-                <img src={`data:image/jpeg;base64,${item.file}`}  alt="imgBook" className=" rounded imgBook"/>
-            </Link>
-            </div>
-            <div className="text-left font-italic font-weight-bold">
-                <span className="ml-3">{item.name}</span><br/>
-            </div>
-        </div>
-    );
+    // const booksArray = Object.values(allBooksAuthor);
+    // const booksAuthor =booksArray.map((item) =>
+    //     <div id={item.name} key={item.name} className="col-md-2 col-sm-6 col-xs-12">
+    //         <div className="card-body image-box">
+    //             {/*slikaa*/}<Link to={"/detailsBook/"+item.name}>
+    //             <img src={`data:image/jpeg;base64,${item.file}`}  alt="imgBook" className=" rounded imgBook"/>
+    //         </Link>
+    //         </div>
+    //         <div className="text-left font-italic font-weight-bold">
+    //             <span className="ml-3">{item.name}</span><br/>
+    //         </div>
+    //     </div>
+    // );
   //  <li key={item.name}>{item.name}  </li>
 
     return(
 
-        <div className="container containerDetails">
+        <div className="container containerDetailsAuthor">
             <div className="row mt-5">
 
                 <div className="col-md-4 mt-5">
                     <Img alt="" src={authorPhoto} className="topPhoto rounded"/>
-                    <img src={`data:image/jpeg;base64,${detailsForAuthor.file}`}  alt="" className=" imgProfile rounded-circle"/>
+                    <img src={`data:image/jpeg;base64,${detailsForAuthor.file}`}  alt="" className=" imgProfileAuthor rounded-circle"/>
 
                     <br/>
-
-
 
                 </div>
                 <div className="col-md-8 mt-5">
@@ -63,9 +62,10 @@ const detailsAuthor=(props)=>{
             </div>
             <h4 className="colorH font-italic">All the books of {detailsForAuthor.nameAndSurname}</h4>
             <hr/>
-            <div className="row">
+            <div className="row mt-3">
 
-                {booksAuthor}
+                {/*{booksAuthor}*/}
+                <CarouselAuthor nameAndSurname={nameAndSurname}/>
             </div>
         </div>
     )

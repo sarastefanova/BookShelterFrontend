@@ -1,5 +1,5 @@
-.containerDetails{
-    height: 580px;
+.containerDetailsAuthor{
+    height: 800px;
     margin-top: 60px;
 }
 
@@ -12,7 +12,7 @@
     border-radius: 7% !important;
 }
 
-.imgProfile {
+.imgProfileAuthor {
     width: 100px !important;
     height: 100px !important;
     position: absolute;

@@ -28,7 +28,15 @@ class OneGridBook extends Component{
 
     }
 
-    Example = () => <Link to={"/detailsBook/"+this.props.book.name}><img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/></Link>
+    Example = () => <div>
+        <Link to={"/detailsBook/"+this.props.book.name}>
+            <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
+
+        </Link>
+        <a href="#" className="btn btn-light favourite" title="Favourite">
+            <i className="fa fa-heart favouriteHeart"/>
+        </a>
+    </div>
 
     cardHeader(){
 
@@ -41,11 +49,9 @@ class OneGridBook extends Component{
                 {/*    {this.props.book.name}*/}
                 {/*</div>*/}
 
-                <div className="col-md-6 text-right">
-                    <a href="#" className="btn btn-light" title="Следи">
-                        <i className="fa fa-heart"/>
-                    </a>
-                    <Link to={"/editBook/"+this.props.book.name}  className="btn btn-default" ><i className="fa fa-pencil"/></Link>
+                <div className="col-md-6 text-right ">
+
+                    <Link to={"/editBook/"+this.props.book.name} title="Edit" className="btn btn-default roundedLinksBooks" ><i className="fa fa-pencil"/></Link>
                     <Confirm onDelete={this.props.onDelete} bookName={this.props.bookName}/>
 
 
