@@ -91,9 +91,11 @@ class MyProfile extends Component{
                         <Link to="/addAuthor">
                             <span  className="linksProfile"> <i className="fa fa-edit "/>Add new author</span>
                         </Link>
+                        <br/>
                         <Link to="/allBooks">
                             <span  className="linksProfile"> <i className="fa fa-edit "/>List all books</span>
                         </Link>
+                        <br/>
                         <Link to="/allAuthors">
                             <span  className="linksProfile"> <i className="fa fa-edit "/>List all authors</span>
                         </Link>

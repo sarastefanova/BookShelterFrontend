@@ -17,7 +17,7 @@ const detailsBook=(props)=>{
 
     },[])
 
-    console.log(detailsForBook.author)
+    //console.log(detailsForBook.author)
     return(
         <div className="container containerDetails">
             <div className="row mt-5">

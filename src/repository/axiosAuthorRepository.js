@@ -28,7 +28,7 @@ const AuthorService={
     ,
     updateAuthorTerm : (author) => {
 
-        const authorId=author.id;
+        const authorId=author.nameAndSurname;
         const formParams = qs.stringify(author);
         return axios.patch("/author/"+authorId,formParams, {
             headers: {

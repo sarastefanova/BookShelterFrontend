@@ -21,7 +21,8 @@ import DetailsAuthor from '../Author/DetailsAuthor/DetailsAuthor';
 import DetailsBook from '../Books/DetailsBook/DetailsBook';
 import UserService from '../../repository/axiosUserRepository';
 import {User} from '../../model/user';
-import MyProfile from '../User/Profile/profile'
+import MyProfile from '../User/Profile/profile';
+import AllAuthors from '../Author/AllAuthors/allAuthors'
 
 class App extends Component{
 
@@ -46,6 +47,7 @@ class App extends Component{
 
         this.loadBooksPaginate();
        this.saveCurrentUser();
+       this.loadAuthors();
     }
 
     saveCurrentUser=()=>{
@@ -216,6 +218,26 @@ class App extends Component{
     });
 
 
+    updateAuthors= ((editedAuthor) => {
+        AuthorService.updateAuthorTerm(editedAuthor).then((response)=>{
+            const newAuthor = response.data;
+            console.log(newAuthor);
+            this.setState((prevState) => {
+                const newAuthorRef = prevState.authors.map((author)=>{
+                    //debugger;
+                    if (author.nameAndSurname===newAuthor.nameAndSurname) {
+                        return response.data;
+                    }
+                    return author;
+                })
+                return {
+                    "authors": newAuthorRef
+                }
+            });
+        });
+    });
+
+
 
     deleteBook=(i)=>{
         BookService.deleteBook(i).then((response)=>{
@@ -224,6 +246,17 @@ class App extends Component{
                     return t.name!==i;
                 });
                 return {books}
+            })
+        })
+    };
+
+    deleteAuthor=(i)=>{
+        AuthorService.deleteAuthorTerm(i).then((response)=>{
+            this.setState((state)=>{
+                const authors=state.authors.filter((t)=>{
+                    return t.nameAndSurname!==i;
+                });
+                return {authors}
             })
         })
     };
@@ -314,8 +347,8 @@ const {currentUser}=this.state;
                 <Route path={"/addAuthor"} render={()=><AddAuthorImg authorRedirect={this.state.authorRedirect} errorMsgAuthor={this.state.errorMsgAuthor} author={this.state.author} onNewAuthorAddedImg={this.createAuthorImg}/>}>
                 </Route>
 
-                <Route path="/editAuthor" render={()=>
-                    <AuthorEdit />}>
+                <Route path="/editAuthor/:nameAndSurname" render={()=>
+                    <AuthorEdit onEditedAuthor={this.updateAuthors} />}>
                 </Route>
 
                 <Route path="/editUser/:id"  render={()=>
@@ -339,6 +372,9 @@ const {currentUser}=this.state;
                 </Route>
 
                 <Route path={"/allBooks"} render={()=><GridBooks onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
+                </Route>
+
+                <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthor}  onPageClick={this.loadAuthors}  authors={this.state.authors}/>}>
                 </Route>
             </div>
 

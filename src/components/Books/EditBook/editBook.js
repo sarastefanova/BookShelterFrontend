@@ -7,7 +7,7 @@ const BookEdit=(props)=>{
      const [detailsBook,setDetailsBooks]=useState({});
     const history = useHistory();
     const {name}=useParams();
-
+    let flag=true;
    useEffect(()=>{
 
            axios.get("/books?name="+name).then((data)=>{
@@ -25,10 +25,10 @@ const BookEdit=(props)=>{
     const allAuthorsFromApi = allAuthorsArray.map(author => {return {value: author.nameAndSurname, display: author.nameAndSurname}});
 
     let defaultAuthor=null;
-    if (Object.values(detailsBook).length > 0) {
-        console.log(Object.values(detailsBook)[1].nameAndSurname);
-       defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
-    }
+    // if (Object.values(detailsBook).length > 0) {
+    //     console.log(Object.values(detailsBook)[1].nameAndSurname);
+    //    defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
+    // }
     // console.log(Object.values(detailsBook)[1]);
    // console.log(detailsBook.shortAuthorBiography);
 
