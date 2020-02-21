@@ -17,19 +17,19 @@ const detailsBook=(props)=>{
 
     },[])
 
-
+    console.log(detailsForBook.author)
     return(
         <div className="container containerDetails">
             <div className="row mt-5">
 
                 <div className="col-md-4 mt-5">
                     <Img alt="" src={authorPhoto} className="topPhoto rounded"/>
-                    <img src={`data:image/jpeg;base64,${detailsForBook.file}`}  alt="" className=" imgProfile rounded-circle"/>
+                    <img src={`data:image/jpeg;base64,${detailsForBook.file}`}  alt="" className=" imgProfileBook rounded-circle"/>
 
                     <br/>
 
-                    <span className="font-weight-bold font-italic  nameBook mt-5">{detailsForBook.name} by {detailsForBook.nameAndSurname}</span>
-                    <p className="font-weight-bold font-italic nameProfile ml-4 mt-3">{detailsForBook.price} denari</p>
+                    <span className="font-weight-bold font-italic  nameBook mt-5">{detailsForBook.name}</span>
+                    <p className="font-weight-bold font-italic nameProfile ml-4 mt-2">{detailsForBook.price} denari</p>
 
                 </div>
                 <div className="col-md-8 mt-5">

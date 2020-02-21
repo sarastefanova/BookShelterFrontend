@@ -3,3 +3,8 @@
 
     background-color: #ffe1e1;
 }
+
+
+.form-grouphas-error input{
+    margin-left: 280px;
+}

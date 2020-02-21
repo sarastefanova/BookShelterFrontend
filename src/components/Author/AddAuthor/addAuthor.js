@@ -31,7 +31,7 @@ const authorAdd=(props)=>{
                             </div>
                             <div className="form-group">
                                 <label className="labelAuthor2">Short author biography</label>
-                                <input name={"shortAuthorBiography"} id="shortAuthorBiography" type="text" className="form-control col-md-6" placeholder="Enter short author biography" />
+                                <textarea cols="6" rows="5" name={"shortAuthorBiography"} id="shortAuthorBiography"  className="form-control col-md-6" placeholder="Enter short author biography" />
                             </div>
 
                             <div className=" text-right">

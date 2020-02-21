@@ -37,7 +37,8 @@ class App extends Component{
             idCurrentUser:0,
             errorMsg:false,
             errorMsgAuthor:false,
-            bookRedirect:false
+            bookRedirect:false,
+            authorRedirect:false
         }
     }
 
@@ -54,7 +55,7 @@ class App extends Component{
             debugger;
         });
 
-    }
+    };
 
     loadAuthors = () => {
         AuthorService.getAllAuthors().then(response=>{
@@ -109,6 +110,7 @@ class App extends Component{
             this.setState({
                 bookRedirect:true
             });
+            debugger;
             const book = response.data;
             console.log(response+"img");
 
@@ -121,6 +123,10 @@ class App extends Component{
                     "books": newBookRef
                 }
             });
+            // debugger;
+            // return <Redirect to='/'/>;
+            // debugger;
+
         },error => {
             if (error.response.status === 409) {
                 console.log("error");
@@ -139,6 +145,10 @@ class App extends Component{
         AuthorService.addNewAuthorWithImg(author).then((response)=>{
             const author = response.data;
             console.log(response+"img");
+
+            this.setState({
+                authorRedirect:true
+            });
 
             this.setState((prevState) => {
                 const newAuthorRef = [...prevState.authors, author];
@@ -264,8 +274,8 @@ class App extends Component{
 
   render() {
 const {currentUser}=this.state;
-// console.log(currentUser.id);
-// console.log(this.state.idCurrentUser);
+
+
 
     const routing=(
         <Router>
@@ -274,6 +284,7 @@ const {currentUser}=this.state;
           <main role="main" className="mt-3">
 
             <div className="container-fluid">
+
                 <Route path={"/"} exact render={()=><HomePage />}>
                 </Route>
                 <Route path={"/login"} component={Login} exact>
@@ -296,11 +307,11 @@ const {currentUser}=this.state;
                 {/*</Route>*/}
 
                 {/*Dodavanje na kniga so slika*/}
-                <Route path={"/addBook"} render={()=><BookAddWithImg bookRedirect={this.state.bookRedirect} errorMsg={this.state.errorMsg} books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
+                <Route path={"/addBook"} render={()=><BookAddWithImg render={() => (<Redirect to="/" />)} bookRedirect={this.state.bookRedirect} errorMsg={this.state.errorMsg} books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
                 </Route>
 
                 {/*Dodavanje na avtor so slika*/}
-                <Route path={"/addAuthor"} render={()=><AddAuthorImg errorMsgAuthor={this.state.errorMsgAuthor} author={this.state.author} onNewAuthorAddedImg={this.createAuthorImg}/>}>
+                <Route path={"/addAuthor"} render={()=><AddAuthorImg authorRedirect={this.state.authorRedirect} errorMsgAuthor={this.state.errorMsgAuthor} author={this.state.author} onNewAuthorAddedImg={this.createAuthorImg}/>}>
                 </Route>
 
                 <Route path="/editAuthor" render={()=>
@@ -333,6 +344,8 @@ const {currentUser}=this.state;
 
           </main>
             <Footer/>
+
+
         </Router>
     );
 

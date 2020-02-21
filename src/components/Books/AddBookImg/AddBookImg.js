@@ -79,24 +79,25 @@ componentDidMount() {
         console.log(formData);
         console.log(this.state.selectedFile);
         this.props.onNewBookAddedWithImg(formData);
-        if(this.props.errorMsg){
-            //debugger;
-            this.setState({redirect:true});
-        }
 
+        // if(this.props.bookRedirect===true){
+        //     debugger;
+        //     this.setState({redirect:true});
+        // }
     };
 
 
 
 render() {
-    let $imagePreview = (<div className="previewText image-container">Please select an Image for Preview</div>);
+    let $imagePreview;
     if (this.state.imagePreviewUrl) {
         $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="200" /> </div>);
     }
     // console.log(this.props.errorMsg);
     // const {submitted}=this.state;
     // let url = this.state.selectedFile && URL.createObjectURL(this.state.selectedFile);
-    if (this.state.redirect) {
+    // console.log(this.props.bookRedirect);
+    if (this.props.bookRedirect) {
         //debugger;
         return <Redirect to='/'/>;
     }
@@ -105,21 +106,22 @@ render() {
             <form onSubmit={this.onFormSubmit} >
                 <h1 className="colorH">Add new book</h1>
                 { $imagePreview }
+                {this.props.errorMsg && <div className="alert alert-danger errorMessage2 col-md-6"  role="alert">
+                    <strong>Error! </strong> Username is already taken!
+                </div>}
                 <div className="form-group files color">
                     <label className="bookAddLabel2">Upload Your File </label>
                     <input required type="file" name={"file"} id="file" onChange={(event => this.onFileChangeHandler(event))} className="form-control col-md-6"/>
                 </div>
                 <div className="form-group">
-                    {this.props.errorMsg && <div className="alert alert-danger errorMessage2 col-md-6"  role="alert">
-                        <strong>Error! </strong> Username is already taken!
-                    </div>}
+
                     <label className="bookAddLabel1">Name</label>
                     <input required name={"name"} id="name" type="text"   className="form-control col-md-6"
                            placeholder="Enter book's name"/>
                 </div>
                 <div className="form-group">
                     <label className="bookAddLabel4">Short content of the book</label>
-                    <input required name={"shortContentBook"} id="shortContentBook" type="text" className="form-control col-md-6"
+                    <textarea cols="5" rows="5" required name={"shortContentBook"} id="shortContentBook"  className="form-control col-md-6"
                            placeholder="Write something about the book"/>
                 </div>
                 <div className="form-group">

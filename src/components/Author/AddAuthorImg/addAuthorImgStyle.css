@@ -1,4 +1,8 @@
 .containerAddAuthorImg{
-    height: 800px;
+    height: 950px;
     margin-top: -50px;
+}
+
+textarea{
+    margin-left:280px !important;
 }

@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import './registerStyle.css';
 import UserService from '../../../repository/axiosUserRepository';
 import {User} from '../../../model/user';
+import PasswordStrength from './PasswordStrength/passwordStrength';
+import PasswordInput from './PasswordInput/passwordInput'
 class Register extends Component{
 
     // constructor(props) {
@@ -81,7 +83,7 @@ class Register extends Component{
                         <label className="labelLogin" htmlFor={"userName"}>UserName</label>
                         <input type="text" name={"userName"} value={user.userName} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter userName" />
                         {submitted && !user.userName &&
-                        <div className="help-block">Username is required</div>
+                        <span className="help-block font-weight-bold">Username is required!</span>
                         }
                     </div>
 
@@ -89,7 +91,7 @@ class Register extends Component{
                         <label className="labelLogin" htmlFor={"name"}>First name</label>
                         <input type="text" name={"name"} value={user.name} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter first name" />
                         {submitted && !user.name &&
-                        <div className="help-block">Name is required</div>
+                        <span className="help-block font-weight-bold">Name is required!</span>
                         }
                     </div>
 
@@ -97,7 +99,7 @@ class Register extends Component{
                         <label className="labelLogin4" htmlFor={"surname"}>Surname</label>
                         <input type="text" name={"surname"} value={user.surname} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter surname" />
                         {submitted && !user.surname &&
-                        <div className="help-block">Surname is required</div>
+                        <span className="help-block font-weight-bold">Surname is required!</span>
                         }
                     </div>
 
@@ -105,7 +107,7 @@ class Register extends Component{
                         <label className="labelLogin5" htmlFor={"email"}>Email</label>
                         <input type="email" name="email" value={user.email} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter email" />
                         {submitted && !user.email &&
-                        <div className="help-block">Email is required</div>
+                        <span className="help-block font-weight-bold">Email is required!</span>
                         }
                     </div>
 
@@ -118,21 +120,24 @@ class Register extends Component{
                         <label className="labelLogin2" htmlFor={"address"}>Home address</label>
                         <input type="text" name="address" value={user.address} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter address" />
                         {submitted && !user.address &&
-                        <div className="help-block">Address is required</div>
+                        <span className="help-block font-weight-bold">Address is required!</span>
                         }
                     </div>
 
-                    <div className={'form-group' + (submitted && !user.password ? 'has-error' : '')}>
-                        <label className="labelLogin4" htmlFor={"password"}>Password</label>
-                        <input type="password" name="password" value={user.password} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter password" />
-                        {submitted && !user.password &&
-                        <div className="help-block">Password is required</div>
-                        }
-                    </div>
+                    {/*<div className={'form-group' + (submitted && !user.password ? 'has-error' : '')}>*/}
+                    {/*    <label className="labelLogin4" htmlFor={"password"}>Password</label>*/}
+                    {/*    <input type="password" name="password" value={user.password} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter password" />*/}
+                    {/*    {submitted && !user.password &&*/}
+                    {/*    <span className="help-block font-weight-bold">Password is required!</span>*/}
+                    {/*    }*/}
+                    {/*</div>*/}
+                    <PasswordInput value={user.password}
+                                   name="password"
+                    handleChange={(e) => this.handleChange(e)}/>
 
 
 
-                    <div className="form-group">
+                    <div className="form-group mt-5">
                         <button className="btn btn-lg btn-primary btn-block col-md-6 form-submit-button"
                                 disabled={loading}>Sign Up
                         </button>

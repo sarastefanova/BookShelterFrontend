@@ -37,9 +37,13 @@ class OneGridBook extends Component{
                 <div className="col-md-6 font-weight-bold font-italic headerText">
                     <span className="fontNameBook">{this.props.book.name}</span>
                 </div>
+                {/*<div className="headerText">*/}
+                {/*    {this.props.book.name}*/}
+                {/*</div>*/}
+
                 <div className="col-md-6 text-right">
                     <a href="#" className="btn btn-light" title="Следи">
-                        <i className="fa fa-star"/>
+                        <i className="fa fa-heart"/>
                     </a>
                     <Link to={"/editBook/"+this.props.book.name}  className="btn btn-default" ><i className="fa fa-pencil"/></Link>
                     <Confirm onDelete={this.props.onDelete} bookName={this.props.bookName}/>

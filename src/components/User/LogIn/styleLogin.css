@@ -10,6 +10,9 @@ h1{
     margin-left: 280px;
 }
 
+.form-grouphas-error input{
+    margin-left: 280px;
+}
 .btnColor{
     background-color: #cc0044 !important;
     color: white !important;

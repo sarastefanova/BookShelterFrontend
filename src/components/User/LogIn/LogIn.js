@@ -61,7 +61,7 @@ class LogIn extends Component{
                         <label className="labelLogin" htmlFor={"userName"}>UserName</label>
                         <input name={"userName"} type="text" value={user.userName} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter userName" />
                         {submitted && !user.userName &&
-                        <div className="help-block">Username is required</div>
+                        <span className="help-block col-md-6 font-weight-bold">Username is required!</span>
                         }
                     </div>
 
@@ -69,7 +69,7 @@ class LogIn extends Component{
                         <label className="labelLogin" htmlFor={"password"}>Password</label>
                         <input name={"password"} type="password" value={user.password} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter password" />
                         {submitted && !user.password &&
-                        <div className="help-block">Password is required</div>
+                        <span className="help-block col-md-6 font-weight-bold">Password is required!</span>
                         }
                     </div>
 
