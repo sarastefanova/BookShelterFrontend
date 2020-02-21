@@ -19,8 +19,17 @@
     top:0% !important;
     left: 10%;
     border: 1px #cc0044 solid;
+    display: none;
 }
 
+.imgProfileAvatar{
+    width: 100px !important;
+    height: 100px !important;
+    position: absolute;
+    top:0% !important;
+    left: 10%;
+    border: 1px #cc0044 solid;
+}
 .nameProfile{
     font-size: 25px;
 }
@@ -34,4 +43,16 @@
 .imgBook{
     width:200px;
     height:200px
+}
+.editUser{
+    margin-right: 100px;
+}
+.fa{
+    display: inline !important;
+}
+
+.nameProfile{
+    font-size: 15px;
+    margin-right: 180px;
+    color: #cc0044 !important;
 }

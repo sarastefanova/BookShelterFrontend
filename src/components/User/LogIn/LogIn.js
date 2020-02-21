@@ -1,22 +1,76 @@
 import React, { Component } from "react";
-import './styleLogin.css'
+import './styleLogin.css';
+import UserService from '../../../repository/axiosUserRepository';
+import {User} from '../../../model/user';
 class LogIn extends Component{
 
+    state = {
+        user: new User('', ''),
+        submitted: false,
+        loading: false,
+        errorMessage: '',
+
+    };
+
+
+    handleChange(e) {
+        let {name, value} = e.target;
+        let user = this.state.user;
+        user[name] = value;
+        this.setState({user: user});
+    }
+
+    handleLogin(e) {
+        e.preventDefault();
+
+        this.setState({submitted: true});
+        const {user} = this.state;
+
+        if(!(user.userName && user.password)){
+            return;
+        }
+
+        this.setState({loading: true});
+
+        UserService.login(user).then( (response) => {
+            this.props.history.push("/");
+        }, error => {
+            this.setState({
+                errorMessage: "Username or password is not valid",
+                loading: false
+            });
+            console.log(this.state.user)
+        });
+    }
+
     render() {
+        const {user, submitted, loading, errorMessage} = this.state;
+
         return(
             <div className="container containerLogin">
-                <form>
+                <form onSubmit={(e) => this.handleLogin(e)}>
                     <h1 className="colorH">My account</h1>
 
                     <h3  className="colorH">Login</h3>
-                    <div className="form-group">
-                        <label className="labelLogin">UserName</label>
-                        <input name="userName" type="text" className="form-control col-md-6" placeholder="Enter userName" />
+                    {errorMessage &&
+                    <div className="alert alert-danger" role="alert">
+                        <strong>Error! </strong> {errorMessage}
+                    </div>
+                    }
+                    <div className={'form-group' + (submitted && !user.userName ? 'has-error':'')}>
+                        <label className="labelLogin" htmlFor={"userName"}>UserName</label>
+                        <input name={"userName"} type="text" value={user.userName} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter userName" />
+                        {submitted && !user.userName &&
+                        <div className="help-block">Username is required</div>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label className="labelLogin">Password</label>
-                        <input name="password" type="password" className="form-control col-md-6" placeholder="Enter password" />
+                    <div className={'form-group' + (submitted && !user.password ? 'has-error':'')}>
+                        <label className="labelLogin" htmlFor={"password"}>Password</label>
+                        <input name={"password"} type="password" value={user.password} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter password" />
+                        {submitted && !user.password &&
+                        <div className="help-block">Password is required</div>
+                        }
                     </div>
 
                     <div className="form-group">
@@ -26,7 +80,7 @@ class LogIn extends Component{
                         </div>
                     </div>
 
-                    <button type="submit" className="btn btnColor col-md-6 btn-block">Submit</button>
+                    <button type="submit" className="btn btnColor col-md-6 btn-block" disabled={loading}>Submit</button>
                     <button type="submit" className="btn btnColor col-md-6 btn-block">Forgot password?</button>
                     <br/>
                     <br/>

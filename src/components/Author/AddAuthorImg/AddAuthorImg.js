@@ -6,7 +6,8 @@ class AddAuthorImg extends Component{
 
 
         selectedFile:null,
-        redirect: false
+        redirect: false,
+        imagePreviewUrl:null
 
     }
     onFormSubmit = (e) => {
@@ -26,7 +27,11 @@ class AddAuthorImg extends Component{
         console.log(formData);
         console.log(this.state.selectedFile);
         this.props.onNewAuthorAddedImg(formData);
-        this.setState({redirect:true});
+        if(this.props.errorMsgAuthor){
+            debugger;
+            this.setState({redirect:true});
+        }
+
 
     };
 
@@ -34,28 +39,45 @@ class AddAuthorImg extends Component{
         e.preventDefault();
         let file=e.target.files[0];
         this.setState({selectedFile:file});
+        let reader = new FileReader();
 
+        reader.onloadend = () => {
+            this.setState({
+                imagePreviewUrl: reader.result
+            });
+        };
+
+        reader.readAsDataURL(e.target.files[0])
     };
 
     render() {
+        let $imagePreview = (<div className="previewText image-container">Please select an Image for Preview</div>);
+        if (this.state.imagePreviewUrl) {
+            $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="200" /> </div>);
+        }
+
         if (this.state.redirect) {
             return <Redirect to='/'/>;
         }
         return(
-            <div className="container containerAddAuthor">
+            <div className="container containerAddAuthorImg">
                 <form onSubmit={this.onFormSubmit}>
                     <h1 className="colorH">Add new author</h1>
+                    { $imagePreview }
                     <div className="form-group files color">
                         <label className="bookAddLabel2">Upload Your File </label>
-                        <input type="file" name={"file"} id="file" onChange={(event => this.onFileChangeHandler(event))} className="form-control col-md-6"/>
+                        <input  required type="file" name={"file"} id="file" onChange={(event => this.onFileChangeHandler(event))} className="form-control col-md-6"/>
                     </div>
                     <div className="form-group">
+                        {this.props.errorMsgAuthor && <div className="alert alert-danger errorMessage2 col-md-6"  role="alert">
+                            <strong>Error! </strong> Name and surname are already taken!
+                        </div>}
                         <label className="labelAuthor1">First and last name</label>
-                        <input name={"nameAndSurname"} id="nameAndSurname" type="text" className="form-control col-md-6" placeholder="Enter author's first name and last name" />
+                        <input required name={"nameAndSurname"} id="nameAndSurname" type="text" className="form-control col-md-6" placeholder="Enter author's first name and last name" />
                     </div>
                     <div className="form-group">
                         <label className="labelAuthor2">Short author biography</label>
-                        <input name={"shortAuthorBiography"} id="shortAuthorBiography" type="text" className="form-control col-md-6" placeholder="Enter short author biography" />
+                        <input required name={"shortAuthorBiography"} id="shortAuthorBiography" type="text" className="form-control col-md-6" placeholder="Enter short author biography" />
                     </div>
 
                     <div className=" text-right">

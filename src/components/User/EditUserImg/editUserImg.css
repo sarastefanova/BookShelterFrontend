@@ -1,0 +1,37 @@
+.containerEditUserImg{
+    height: 1220px;
+    margin-top: -50px;
+}
+
+.photoProfile {
+    width: 100px !important;
+    height: 100px !important;
+    position: absolute;
+    top:0% !important;
+    left: 10%;
+    border: 1px #cc0044 solid;
+    margin-top: 320px;
+    margin-left: 550px;
+}
+
+.errorMessage{
+    margin-top: 150px;
+}
+.photoProfileAvatar{
+    width: 100px !important;
+    height: 100px !important;
+    position: absolute;
+    top:0% !important;
+    left: 10%;
+    border: 1px #cc0044 solid;
+    margin-top: 320px;
+    margin-left: 550px;
+}
+.files{
+    margin-top: 50px;
+}
+
+
+.rounded {
+    border-radius: 7% !important;
+}

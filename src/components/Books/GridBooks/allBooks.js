@@ -4,9 +4,11 @@ import './gridBookStyle.css';
 import ReactPaginate from 'react-paginate';
 const getAllBooks=(props)=>{
 
-
+    //console.log(Array.of(props.books));
     const oneBookGrid=props.books.map((book,index)=>{
+       // console.log(book);
         return(
+
             <OneBook onDelete={props.onDelete} bookName={book.name} book={book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
 
         ) ;
@@ -45,7 +47,7 @@ const getAllBooks=(props)=>{
           <div className="row marginTop">
               {oneBookGrid}
           </div>
-         <div >
+         <div className="paginateBooks">
              {paginate()}
          </div>
       </div>

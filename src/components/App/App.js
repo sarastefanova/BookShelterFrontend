@@ -9,6 +9,7 @@ import Register from "../User/Register/Register";
 import AuthorAdd from '../Author/AddAuthor/addAuthor';
 import AuthorEdit from '../Author/EditAuthor/editAuthor';
 import EditUser from '../User/EditUser/editUser';
+import EditUserImg from '../User/EditUserImg/editUserImg';
 import BookAdd from '../Books/AddBook/addBook';
 import EditBook from '../Books/EditBook/editBook';
 import AuthorService from '../../repository/axiosAuthorRepository';
@@ -17,7 +18,10 @@ import BookAddWithImg from '../Books/AddBookImg/AddBookImg';
 import GridBooks from '../Books/GridBooks/allBooks';
 import AddAuthorImg from "../Author/AddAuthorImg/AddAuthorImg";
 import DetailsAuthor from '../Author/DetailsAuthor/DetailsAuthor';
-import DetailsBook from '../Books/DetailsBook/DetailsBook'
+import DetailsBook from '../Books/DetailsBook/DetailsBook';
+import UserService from '../../repository/axiosUserRepository';
+import {User} from '../../model/user';
+import MyProfile from '../User/Profile/profile'
 
 class App extends Component{
 
@@ -28,13 +32,28 @@ class App extends Component{
             authors: [],
             books:[],
             totalPages:0,
-            pageSize:6
+            pageSize:6,
+            currentUser:new User(),
+            idCurrentUser:0,
+            errorMsg:false,
+            errorMsgAuthor:false,
+            bookRedirect:false
         }
     }
 
     componentDidMount() {
 
         this.loadBooksPaginate();
+       this.saveCurrentUser();
+    }
+
+    saveCurrentUser=()=>{
+        UserService.currentUser.subscribe(data => {
+           // debugger;
+            this.setState({currentUser: data});
+            debugger;
+        });
+
     }
 
     loadAuthors = () => {
@@ -87,6 +106,9 @@ class App extends Component{
 
     createBookImg=(book)=>{
         BookService.addNewBookWithImg(book).then((response)=>{
+            this.setState({
+                bookRedirect:true
+            });
             const book = response.data;
             console.log(response+"img");
 
@@ -99,6 +121,17 @@ class App extends Component{
                     "books": newBookRef
                 }
             });
+        },error => {
+            if (error.response.status === 409) {
+                console.log("error");
+
+                this.setState({
+                    errorMsg:true
+                });
+                debugger;
+                // setErrorMessage("Username is already taken!")
+
+            }
         });
     };
 
@@ -116,6 +149,17 @@ class App extends Component{
                     "authors": newAuthorRef
                 }
             });
+        },error => {
+            if (error.response.status === 409) {
+                console.log("error");
+
+                this.setState({
+                    errorMsgAuthor:true
+                });
+              //  debugger;
+                // setErrorMessage("Username is already taken!")
+
+            }
         });
     };
 
@@ -130,6 +174,7 @@ class App extends Component{
     };
 
     loadBooksPaginate = (page=0) => {
+        //debugger;
         BookService.fetchBooksTermsPaged(page,this.state.pageSize).then((data) => {
             this.setState({
                 books: data.data.content,
@@ -160,6 +205,8 @@ class App extends Component{
         });
     });
 
+
+
     deleteBook=(i)=>{
         BookService.deleteBook(i).then((response)=>{
             this.setState((state)=>{
@@ -169,22 +216,75 @@ class App extends Component{
                 return {books}
             })
         })
+    };
+
+    searchData = (search) => {
+
+           if (search!==""){
+               BookService.searchBookByName(search,this.state.pageSize).then((response)=>{
+
+                   this.setState({
+                       books: response.data,
+                       page:0,
+                      //  pageSize:0,
+                       totalPages:0
+                   })
+               })
+           }
+           else {
+
+               this.loadBooksPaginate(0);
+           }
+    }
+
+    updateUser= ((editedUser) => {
+        UserService.updateUser(editedUser).then((response)=>{
+            const newUser= response.data;
+            this.setState({
+                "currentUser":newUser
+            })
+        });
+    });
+
+    logout() {
+        UserService.logOut().then(data => {
+            this.state.history.push('/');
+        }, error => {
+            this.setState({
+                errorMessage: "Unexpected error occurred."
+            });
+        });
+    }
+
+    saveId(){
+        this.setState({
+            idCurrentUser:this.state.currentUser.id
+        })
     }
 
   render() {
+const {currentUser}=this.state;
+// console.log(currentUser.id);
+// console.log(this.state.idCurrentUser);
 
     const routing=(
         <Router>
-          <Header/>
+              <Header currentUser={this.state.currentUser} onPageClick={this.loadBooksPaginate} onSearch={this.searchData}/>
 
           <main role="main" className="mt-3">
 
             <div className="container-fluid">
-                <Route path={"/"} exact render={()=><HomePage/>}>
+                <Route path={"/"} exact render={()=><HomePage />}>
                 </Route>
-                <Route path={"/login"} render={()=><Login />}>
+                <Route path={"/login"} component={Login} exact>
                 </Route>
-                <Route path={"/register"} render={()=><Register />}>
+                <Route path={"/register"} component={Register} exact>
+                </Route>
+
+                {/*<Route path={"/myProfile"} component={MyProfile} currentUser={this.state.currentUser}>*/}
+                {/*</Route>*/}
+
+                <Route path={"/myProfile"} render={()=><MyProfile currentUser={currentUser}/>} exact>
                 </Route>
 
                 {/*Bez slika dodavanje na avtor*/}
@@ -196,19 +296,23 @@ class App extends Component{
                 {/*</Route>*/}
 
                 {/*Dodavanje na kniga so slika*/}
-                <Route path={"/addBook"} render={()=><BookAddWithImg books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
+                <Route path={"/addBook"} render={()=><BookAddWithImg bookRedirect={this.state.bookRedirect} errorMsg={this.state.errorMsg} books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
                 </Route>
 
                 {/*Dodavanje na avtor so slika*/}
-                <Route path={"/addAuthor"} render={()=><AddAuthorImg author={this.state.author} onNewAuthorAddedImg={this.createAuthorImg}/>}>
+                <Route path={"/addAuthor"} render={()=><AddAuthorImg errorMsgAuthor={this.state.errorMsgAuthor} author={this.state.author} onNewAuthorAddedImg={this.createAuthorImg}/>}>
                 </Route>
 
                 <Route path="/editAuthor" render={()=>
                     <AuthorEdit />}>
                 </Route>
 
-                <Route path="/editUser" render={()=>
-                    <EditUser />}>
+                <Route path="/editUser/:id"  render={()=>
+                    <EditUser currentUser={this.state.currentUser}/>}>
+                </Route>
+
+                <Route path="/editUserImg/:id"  render={()=>
+                    <EditUserImg currentUser={this.state.currentUser}/>}>
                 </Route>
 
                 <Route path="/editBook/:name" render={()=>

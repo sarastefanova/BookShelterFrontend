@@ -46,6 +46,10 @@ const BookService={
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
+    },
+    searchBookByName: (search,pageSize) => {
+
+        return axios.get(`/books/searchBook?name=${search}`);
     }
 }
 export default BookService;

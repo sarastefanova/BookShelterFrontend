@@ -1,55 +1,142 @@
 import React, {Component} from "react";
-import './registerStyle.css'
+import './registerStyle.css';
+import UserService from '../../../repository/axiosUserRepository';
+import {User} from '../../../model/user';
 class Register extends Component{
 
+    // constructor(props) {
+    //     super(props);
+    //
+    //     if (UserService.currentUserValue) {
+    //         this.props.history.push('/');
+    //     }
+    //
+    //
+    //
+    // }
+    state = {
+        user: new User('', '', ''),
+        submitted: false,
+        loading: false,
+        errorMessage: '',
+
+    };
+
+
+
+    handleChange(e) {
+
+        var {name, value} = e.target;
+        var user = this.state.user;
+        user[name] = value;
+        // user["file"]=null;
+        this.setState({user: user});
+
+    }
+
+
+    handleRegister(e) {
+        e.preventDefault();
+        this.setState({submitted: true});
+        // user["file"]=null;
+
+        const {user} = this.state;
+        console.log(user);
+        if (!(user.userName && user.password && user.name)) {
+            return;
+        }
+
+        this.setState({loading: true});
+        UserService.register(user).then(data => {
+            this.props.history.push("/login");
+        }, error => {
+            if (error.response.status === 409) {
+                this.setState({
+                    errorMessage: "Username is not available",
+                    loading: false
+                });
+            } else {
+                this.setState({
+                    errorMessage: "Unexpected error occurred.",
+                    loading: false
+                });
+            }
+        });
+    }
+
+
     render() {
+        const {user, submitted, loading, errorMessage} = this.state;
         return(
             <div className="container containerLogin ">
-                <form>
+                <form onSubmit={(e) => this.handleRegister(e)}>
                     <h1 className="colorH ">Create new account</h1>
+                    {errorMessage &&
+                    <div className="alert alert-danger" role="alert">
+                        <strong>Error! </strong> {errorMessage}
+                    </div>
+                    }
+
+                    <div className={'form-group' + (submitted && !user.userName ? 'has-error' : '')}>
+                        <label className="labelLogin" htmlFor={"userName"}>UserName</label>
+                        <input type="text" name={"userName"} value={user.userName} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter userName" />
+                        {submitted && !user.userName &&
+                        <div className="help-block">Username is required</div>
+                        }
+                    </div>
+
+                    <div className={'form-group' + (submitted && !user.name ? 'has-error' : '')}>
+                        <label className="labelLogin" htmlFor={"name"}>First name</label>
+                        <input type="text" name={"name"} value={user.name} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter first name" />
+                        {submitted && !user.name &&
+                        <div className="help-block">Name is required</div>
+                        }
+                    </div>
+
+                    <div className={'form-group' + (submitted && !user.surname ? 'has-error' : '')}>
+                        <label className="labelLogin4" htmlFor={"surname"}>Surname</label>
+                        <input type="text" name={"surname"} value={user.surname} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter surname" />
+                        {submitted && !user.surname &&
+                        <div className="help-block">Surname is required</div>
+                        }
+                    </div>
+
+                    <div className={'form-group' + (submitted && !user.email ? 'has-error' : '')}>
+                        <label className="labelLogin5" htmlFor={"email"}>Email</label>
+                        <input type="email" name="email" value={user.email} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter email" />
+                        {submitted && !user.email &&
+                        <div className="help-block">Email is required</div>
+                        }
+                    </div>
+
+                    <div className={'form-group' + (submitted && !user.number ? 'has-error' : '')}>
+                        <label className="labelLogin2" htmlFor={"number"}>Phone number</label>
+                        <input name="number" value={user.number} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter phone number" />
+                    </div>
+
+                    <div className={'form-group' + (submitted && !user.address ? 'has-error' : '')}>
+                        <label className="labelLogin2" htmlFor={"address"}>Home address</label>
+                        <input type="text" name="address" value={user.address} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter address" />
+                        {submitted && !user.address &&
+                        <div className="help-block">Address is required</div>
+                        }
+                    </div>
+
+                    <div className={'form-group' + (submitted && !user.password ? 'has-error' : '')}>
+                        <label className="labelLogin4" htmlFor={"password"}>Password</label>
+                        <input type="password" name="password" value={user.password} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter password" />
+                        {submitted && !user.password &&
+                        <div className="help-block">Password is required</div>
+                        }
+                    </div>
+
 
 
                     <div className="form-group">
-                        <label className="labelLogin">UserName</label>
-                        <input type="text" name="userName" className="form-control col-md-6" placeholder="Enter userName" />
+                        <button className="btn btn-lg btn-primary btn-block col-md-6 form-submit-button"
+                                disabled={loading}>Sign Up
+                        </button>
                     </div>
-
-                    <div className="form-group">
-                        <label className="labelLogin">First name</label>
-                        <input type="text" name="name" className="form-control col-md-6" placeholder="Enter first name" />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="labelLogin4">Surname</label>
-                        <input type="text" name="surName" className="form-control col-md-6" placeholder="Enter surname" />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="labelLogin5">Email</label>
-                        <input type="email" name="email" className="form-control col-md-6" placeholder="Enter email" />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="labelLogin2">Phone number</label>
-                        <input name="number" className="form-control col-md-6" placeholder="Enter phone number" />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="labelLogin2">Home address</label>
-                        <input type="text" name="address" className="form-control col-md-6" placeholder="Enter address" />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="labelLogin4">Password</label>
-                        <input type="password" name="password" className="form-control col-md-6" placeholder="Enter password" />
-                    </div>
-
-                    <div className="form-group">
-                        <label className="labelLogin3">Confirm password</label>
-                        <input type="password" name="confirmPassword" className="form-control col-md-6" placeholder="Confirm your password" />
-                    </div>
-
-                    <button type="submit" className="btn btnColor col-md-6 btn-block">Register</button>
 
                     <br/>
                     <br/>

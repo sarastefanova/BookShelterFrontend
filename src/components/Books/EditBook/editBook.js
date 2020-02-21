@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from "react";
+import React, {Component,useEffect, useState } from "react";
 import './styleEditBook.css'
 import axios from "../../../cutom-axios/axios";
 import {Redirect, useHistory, useParams} from 'react-router-dom';
@@ -24,6 +24,15 @@ const BookEdit=(props)=>{
 
     const allAuthorsFromApi = allAuthorsArray.map(author => {return {value: author.nameAndSurname, display: author.nameAndSurname}});
 
+    let defaultAuthor=null;
+    if (Object.values(detailsBook).length > 0) {
+        console.log(Object.values(detailsBook)[1].nameAndSurname);
+       defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
+    }
+    // console.log(Object.values(detailsBook)[1]);
+   // console.log(detailsBook.shortAuthorBiography);
+
+
     // const selectedAuthor=detailsBook.nameAndSurname;
    const onFormSubmit = (e) => {
 
@@ -42,8 +51,8 @@ const BookEdit=(props)=>{
         // formData.append('price',e.target.price.value);
         // formData.append('shortContentBook',e.target.shortContentBook.value)
         // // console.log(newBook.get("name"));
-       console.log(detailsBook.nameAndSurname);
-        console.log(newBook);
+       //console.log(detailsBook.nameAndSurname);
+        //console.log(newBook);
 
         props.onEditedBook(newBook);
 
@@ -65,18 +74,18 @@ const BookEdit=(props)=>{
 
                 <div className="form-group">
                     <label className="bookAddLabel1">Short content of the book</label>
-                    <input onChange={handleTermOnChange} value={detailsBook.shortContentBook} name={"shortContentBook"} id="shortContentBook" type="text" className="form-control col-md-6"
+                    <input required onChange={handleTermOnChange} value={detailsBook.shortContentBook} name={"shortContentBook"} id="shortContentBook" type="text" className="form-control col-md-6"
                            placeholder="Write something about the book"/>
                 </div>
                 <div className="form-group">
                     <label className="bookAddLabel2">Choose author</label>
-                    <select  onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option selected={{value:detailsBook.nameAndSurname,display:detailsBook.nameAndSurname}} key={author.value} value={author.value}>{author.display}</option>)}</select>
+                    <select value={defaultAuthor} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
                 </div>
 
 
                 <div className="form-group">
                     <label className="bookAddLabel3">Price</label>
-                    <input onChange={handleTermOnChange} value={detailsBook.price} name={"price"} id="price" type="text" className="form-control col-md-6"
+                    <input required onChange={handleTermOnChange} value={detailsBook.price} name={"price"} id="price" type="text" className="form-control col-md-6"
                            placeholder="Enter price for the book"/>
                 </div>
 

@@ -1,15 +1,20 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom"
 import './OneGridBookStyle.css'
+import Confirm from './Confirm'
 class OneGridBook extends Component{
         state={
              url : ""
         }
+
+
+
     render() {
 
         return(
+
             <div className={this.props.colClass}>
-                <div className="card">
+                <div className="card ">
                     <div className="book">
                         {this.cardHeader()}
                         {this.Example()}
@@ -24,20 +29,22 @@ class OneGridBook extends Component{
     }
 
     Example = () => <Link to={"/detailsBook/"+this.props.book.name}><img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/></Link>
+
     cardHeader(){
+
         return (<div className="card-header">
             <div className="row">
-                <div className="col-md-6 font-weight-bold font-italic fontNameBook">
-                    {this.props.book.name}
+                <div className="col-md-6 font-weight-bold font-italic headerText">
+                    <span className="fontNameBook">{this.props.book.name}</span>
                 </div>
                 <div className="col-md-6 text-right">
                     <a href="#" className="btn btn-light" title="Следи">
                         <i className="fa fa-star"/>
                     </a>
                     <Link to={"/editBook/"+this.props.book.name}  className="btn btn-default" ><i className="fa fa-pencil"/></Link>
-                    <a  onClick={()=>this.props.onDelete(this.props.bookName)} className="btn btn-danger" title="Избриши">
-                        <i className="fa fa-trash"/>
-                    </a>
+                    <Confirm onDelete={this.props.onDelete} bookName={this.props.bookName}/>
+
+
                 </div>
             </div>
         </div>);
