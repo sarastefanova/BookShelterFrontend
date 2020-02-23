@@ -23,7 +23,7 @@ class OneAuthor extends Component{
                     {/*    <span className="fa fa-remove"/>*/}
                     {/*    <span><strong>Remove</strong></span>*/}
                     {/*</button>*/}
-                    {/*<ConfirmDelete onDelete={this.props.onDelete} nameAndSurname={this.props.nameAndSurname}/>*/}
+                    <ConfirmDelete onDelete={this.props.onDelete} isDeleted={this.props.isDeleted} nameAndSurname={this.props.nameAndSurname}/>
                     <Link to={"/detailsAuthor/"+this.props.nameAndSurname}  className="btn btn-sm btn-outline-dark">
                         <span><strong>Details</strong></span>
                     </Link>

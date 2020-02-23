@@ -1,4 +1,12 @@
 .containerAllAuthors{
-    //margin-top: 20px!important;
+    margin-top: -80px!important;
     margin-left: 200px!important;
+    height: 700px;
+}
+
+.paginateBooks{
+    position: absolute;
+    bottom: 59px;
+    margin-left: 430px;
+
 }

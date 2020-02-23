@@ -6,10 +6,10 @@ const getAllBooks=(props)=>{
 
     //console.log(Array.of(props.books));
     const oneBookGrid=props.books.map((book,index)=>{
-       // console.log(book);
+       console.log(book);
         return(
 
-            <OneBook onDelete={props.onDelete} bookName={book.name} book={book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
+            <OneBook onDelete={props.onDelete} bookName={book.name} author={book.author} book={book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
 
         ) ;
     });

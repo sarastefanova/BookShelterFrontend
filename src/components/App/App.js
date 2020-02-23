@@ -39,7 +39,8 @@ class App extends Component{
             errorMsg:false,
             errorMsgAuthor:false,
             bookRedirect:false,
-            authorRedirect:false
+            authorRedirect:false,
+            pageSizeAuthor:3,
         }
     }
 
@@ -47,7 +48,7 @@ class App extends Component{
 
         this.loadBooksPaginate();
        this.saveCurrentUser();
-       this.loadAuthors();
+       this.loadAuthorsPaginate();
     }
 
     saveCurrentUser=()=>{
@@ -188,10 +189,25 @@ class App extends Component{
     loadBooksPaginate = (page=0) => {
         //debugger;
         BookService.fetchBooksTermsPaged(page,this.state.pageSize).then((data) => {
+        
             this.setState({
                 books: data.data.content,
                 page:data.data.page,
                 pageSize:data.data.pageSize,
+                totalPages:data.data.totalPages
+            })
+        })
+
+    }
+
+    loadAuthorsPaginate = (page=0) => {
+        //debugger;
+        AuthorService.fetchAuthorsTermsPaged(page,this.state.pageSizeAuthor).then((data) => {
+
+            this.setState({
+                authors: data.data.content,
+                page:data.data.page,
+                pageSize:data.data.pageSizeAuthor,
                 totalPages:data.data.totalPages
             })
         })
@@ -254,6 +270,18 @@ class App extends Component{
         AuthorService.deleteAuthorTerm(i).then((response)=>{
             this.setState((state)=>{
                 const authors=state.authors.filter((t)=>{
+                    return t.nameAndSurname!==i;
+                });
+                return {authors}
+            })
+        })
+    };
+
+    deleteAuthorFlag=(i,flag)=>{
+        AuthorService.deleteAuthorFlag(i,flag).then((response)=>{
+            // console.log(flag);
+            this.setState((state)=>{
+                const authors=state.authors.map((t)=>{
                     return t.nameAndSurname!==i;
                 });
                 return {authors}
@@ -374,7 +402,7 @@ const {currentUser}=this.state;
                 <Route path={"/allBooks"} render={()=><GridBooks onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
-                <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthor}  onPageClick={this.loadAuthors}  authors={this.state.authors}/>}>
+                <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate()} totalPages={this.state.totalPages} authors={this.state.authors}/>}>
                 </Route>
             </div>
 

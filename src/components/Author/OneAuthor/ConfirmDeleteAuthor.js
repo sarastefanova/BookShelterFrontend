@@ -9,7 +9,8 @@ const Example=(props)=> {
     const handleShow = () => setShow(true);
 
     const deleteBook=()=>{
-        props.onDelete(props.bookName);
+        props.onDelete(props.nameAndSurname,1);
+
         handleClose();
     }
     return (

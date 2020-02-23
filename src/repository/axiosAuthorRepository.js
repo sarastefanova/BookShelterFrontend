@@ -5,6 +5,13 @@ const AuthorService={
     getAllAuthors:()=>{
         return axios.get("/author");
     },
+    fetchAuthorsTermsPaged:(page,pageSize)=>{
+    return axios.get("/author/allAuthorsPaginate",{
+        headers: {
+            'page':page,'page-size':pageSize
+        }
+    })
+},
     addNewAuthor:(author)=>{
 
         const formParams = qs.stringify(author);
@@ -24,8 +31,11 @@ const AuthorService={
     ,
     deleteAuthorTerm:(id)=>{
         return axios.delete(`/author/${id}`)
-    }
-    ,
+    },
+    deleteAuthorFlag(nameAndSurname,isDeleted){
+        return axios.delete("/author/deleteFlag/"+nameAndSurname+"?isDeleted="+isDeleted);
+    },
+
     updateAuthorTerm : (author) => {
 
         const authorId=author.nameAndSurname;

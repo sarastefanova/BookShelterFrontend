@@ -5,6 +5,7 @@ import {Redirect, useHistory, useParams} from 'react-router-dom';
 const BookEdit=(props)=>{
     const [allAuthors,setAllAuthors]=useState({});
      const [detailsBook,setDetailsBooks]=useState({});
+    const [theAuthor,setTheAuthor]=useState({});
     const history = useHistory();
     const {name}=useParams();
     let flag=true;
@@ -17,6 +18,14 @@ const BookEdit=(props)=>{
                    setAllAuthors(data.data)
 
                })
+               // axios.get("/author/getAuthorName",{
+               //     headers: {'Content-Type': 'application/json'},
+               //     body:detailsBook.author
+               // }).then((data)=>{
+               //     setTheAuthor(data.data)
+               //
+               // })
+
    },[]);
 
 
@@ -24,12 +33,7 @@ const BookEdit=(props)=>{
 
     const allAuthorsFromApi = allAuthorsArray.map(author => {return {value: author.nameAndSurname, display: author.nameAndSurname}});
 
-    let defaultAuthor=null;
-    // if (Object.values(detailsBook).length > 0) {
-    //     console.log(Object.values(detailsBook)[1].nameAndSurname);
-    //    defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
-    // }
-    // console.log(Object.values(detailsBook)[1]);
+
    // console.log(detailsBook.shortAuthorBiography);
 
 
@@ -65,9 +69,17 @@ const BookEdit=(props)=>{
         const paramValue =  e.target.value;
         setDetailsBooks({[paramName]:paramValue});
 
-    }
+    };
+    let defaultAuthor=null;
 
+
+        if (Object.values(detailsBook).length > 0) {
+            console.log(Object.values(detailsBook)[1].nameAndSurname);
+            defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
+        }
+    console.log(theAuthor);
     return (
+
         <div className="container containerAddBook">
             <form onSubmit={onFormSubmit} >
                 <h1 className="colorH">Add new book</h1>
@@ -79,7 +91,7 @@ const BookEdit=(props)=>{
                 </div>
                 <div className="form-group">
                     <label className="bookAddLabel2">Choose author</label>
-                    <select value={defaultAuthor} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
+                    <select value={theAuthor} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
                 </div>
 
 
