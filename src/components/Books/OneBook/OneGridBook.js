@@ -52,7 +52,7 @@ class OneGridBook extends Component{
 
                 <div className="col-md-6 text-right ">
 
-                    <Link to={"/editBook/"+this.props.book.name} authorName={this.props.book.author.nameAndSurname} title="Edit" className="btn btn-default roundedLinksBooks" ><i className="fa fa-pencil"/></Link>
+                    <Link to={"/editBook/"+this.props.book.name}  title="Edit" className="btn btn-default roundedLinksBooks" ><i className="fa fa-pencil"/></Link>
                     <Confirm onDelete={this.props.onDelete} bookName={this.props.bookName}/>
 
 

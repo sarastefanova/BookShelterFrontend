@@ -62,7 +62,7 @@ const getAllAuthors=(props)=>{
                         </tbody>
                     </table>
                 </div>
-                <div className="paginateBooks">
+                <div className="paginateAuthor">
                     {paginate()}
                 </div>
             </div>

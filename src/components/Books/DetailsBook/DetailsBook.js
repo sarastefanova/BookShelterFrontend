@@ -4,16 +4,21 @@ import authorPhoto from "../../AllPhotos/authorImg.jpg";
 import {useParams} from "react-router";
 import axios from "../../../cutom-axios/axios";
 import './detailsBookStyle.css';
+import {Link} from "react-router-dom";
 const detailsBook=(props)=>{
 
 
     const [detailsForBook,setDetailsForBook]=useState({});
+    const [theAuthor,setTheAuthor]=useState({});
     const {name}=useParams();
 
     useEffect(()=>{
         axios.get("/books?name="+name).then((data)=>{
             setDetailsForBook(data.data)
-        })
+        }),
+            axios.get("/books/"+name+"/authorBook").then((data)=>{
+                setTheAuthor(data.data)
+            })
 
     },[])
 
@@ -28,7 +33,7 @@ const detailsBook=(props)=>{
 
                     <br/>
 
-                    <span className="font-weight-bold font-italic  nameBook mt-5">{detailsForBook.name}</span>
+                    <span className="font-weight-bold font-italic  nameBook mt-5">{detailsForBook.name} by <Link to={"/detailsAuthor/"+theAuthor.nameAndSurname}><span className="text-dark">{theAuthor.nameAndSurname}</span></Link></span>
                     <p className="font-weight-bold font-italic nameProfile ml-4 mt-2">{detailsForBook.price} denari</p>
 
                 </div>

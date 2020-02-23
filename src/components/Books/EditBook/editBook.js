@@ -17,7 +17,10 @@ const BookEdit=(props)=>{
                axios.get("/author").then((data)=>{
                    setAllAuthors(data.data)
 
-               })
+               }),
+                axios.get("/books/"+name+"/authorBook").then((data)=>{
+                    setTheAuthor(data.data)
+                })
                // axios.get("/author/getAuthorName",{
                //     headers: {'Content-Type': 'application/json'},
                //     body:detailsBook.author
@@ -73,11 +76,11 @@ const BookEdit=(props)=>{
     let defaultAuthor=null;
 
 
-        if (Object.values(detailsBook).length > 0) {
-            console.log(Object.values(detailsBook)[1].nameAndSurname);
-            defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
-        }
-    console.log(theAuthor);
+        // if (Object.values(detailsBook).length > 0) {
+        //     console.log(Object.values(detailsBook)[1].nameAndSurname);
+        //     defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
+        // }
+    console.log(theAuthor.nameAndSurname);
     return (
 
         <div className="container containerAddBook">
@@ -91,7 +94,7 @@ const BookEdit=(props)=>{
                 </div>
                 <div className="form-group">
                     <label className="bookAddLabel2">Choose author</label>
-                    <select value={theAuthor} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
+                    <select value={theAuthor.nameAndSurname} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
                 </div>
 
 

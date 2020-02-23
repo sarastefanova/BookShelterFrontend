@@ -41,6 +41,7 @@ class App extends Component{
             bookRedirect:false,
             authorRedirect:false,
             pageSizeAuthor:3,
+            totalPagesAuthor:0
         }
     }
 
@@ -126,6 +127,7 @@ class App extends Component{
                     "books": newBookRef
                 }
             });
+            this.loadBooksPaginate();
             // debugger;
             // return <Redirect to='/'/>;
             // debugger;
@@ -162,6 +164,7 @@ class App extends Component{
                     "authors": newAuthorRef
                 }
             });
+            this.loadAuthorsPaginate();
         },error => {
             if (error.response.status === 409) {
                 console.log("error");
@@ -207,8 +210,8 @@ class App extends Component{
             this.setState({
                 authors: data.data.content,
                 page:data.data.page,
-                pageSize:data.data.pageSizeAuthor,
-                totalPages:data.data.totalPages
+                pageSizeAuthor:data.data.pageSize,
+                totalPagesAuthor:data.data.totalPages
             })
         })
 
@@ -402,7 +405,7 @@ const {currentUser}=this.state;
                 <Route path={"/allBooks"} render={()=><GridBooks onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
-                <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate()} totalPages={this.state.totalPages} authors={this.state.authors}/>}>
+                <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>
                 </Route>
             </div>
 
