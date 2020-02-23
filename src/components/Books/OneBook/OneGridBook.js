@@ -6,12 +6,25 @@ class OneGridBook extends Component{
         state={
              url : ""
         }
+        constructor(props){
+            super(props);
+        }
 
+    addFavourite=(e)=>{
+        //console.log(this.props);
+
+            this.props.addFavourite(this.props.bookName)
+
+    }
 
 
     render() {
       //  console.log(Object.values(this.props.author)[3])
       //   console.log(this.props.author)
+      //   console.log(this.props.okFavourites)
+      //   if(this.props.okFavourites){
+      //
+      //   }
         return(
 
             <div className={this.props.colClass}>
@@ -34,9 +47,9 @@ class OneGridBook extends Component{
             <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
 
         </Link>
-        <a href="#" className="btn btn-light favourite" title="Favourite">
+        <button onClick={this.addFavourite} href="#" className="btn btn-light favourite" title="Favourite">
             <i className="fa fa-heart favouriteHeart"/>
-        </a>
+        </button>
     </div>
 
     cardHeader(){

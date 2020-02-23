@@ -9,7 +9,7 @@ const getAllBooks=(props)=>{
        console.log(book);
         return(
 
-            <OneBook onDelete={props.onDelete} bookName={book.name} author={book.author} book={book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
+            <OneBook okFavourites={props.okFavourites} errorMessageFavourite={props.errorMessageFavourite} addFavourite={props.addFavourite} onDelete={props.onDelete} bookName={book.name} author={book.author} book={book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
 
         ) ;
     });

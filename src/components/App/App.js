@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import HomePage from '../HomePage/homePage';
 import './App.css';
 import Header from '../Header/header';
@@ -22,7 +22,10 @@ import DetailsBook from '../Books/DetailsBook/DetailsBook';
 import UserService from '../../repository/axiosUserRepository';
 import {User} from '../../model/user';
 import MyProfile from '../User/Profile/profile';
-import AllAuthors from '../Author/AllAuthors/allAuthors'
+import AllAuthors from '../Author/AllAuthors/allAuthors';
+import ModalFavourite from '../ModalFavoutite/modalFavourite'
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 class App extends Component{
 
@@ -41,7 +44,10 @@ class App extends Component{
             bookRedirect:false,
             authorRedirect:false,
             pageSizeAuthor:3,
-            totalPagesAuthor:0
+            totalPagesAuthor:0,
+            errorMessageFavourite:null,
+            okFavourites:false,
+            show:false
         }
     }
 
@@ -309,6 +315,22 @@ class App extends Component{
 
                this.loadBooksPaginate(0);
            }
+    };
+
+    addFavourite=(name)=>{
+        UserService.addFavouriteBook(this.state.currentUser.id,name).then((response)=>{
+                this.setState({
+                    okFavourites:true
+                })
+        }, error => {
+            if (error.response.status === 409) {
+                this.setState({
+                    errorMessageFavourite: "The book is already added in your list",
+                    loading: false,
+                    show:true
+                });
+            }
+        })
     }
 
     updateUser= ((editedUser) => {
@@ -336,8 +358,29 @@ class App extends Component{
         })
     }
 
+
+    handleShow = () => this.setState({show:false});
+    modalFavouriteDuplicate(){
+            console.log(this.state.show)
+           return(
+               <Modal show={this.state.show} >
+                   <Modal.Header closeButton>
+                       <Modal.Title>This book is already in your favourite list!</Modal.Title>
+                   </Modal.Header>
+
+                   <Modal.Footer>
+                       <button  onClick={this.handleShow}>
+                           Ok
+                       </button>
+
+                   </Modal.Footer>
+               </Modal>
+           )
+    }
+
   render() {
 const {currentUser}=this.state;
+
 
 
 
@@ -402,7 +445,7 @@ const {currentUser}=this.state;
                     <DetailsBook />}>
                 </Route>
 
-                <Route path={"/allBooks"} render={()=><GridBooks onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
+                <Route path={"/allBooks"} render={()=><GridBooks okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
                 <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>
@@ -416,11 +459,18 @@ const {currentUser}=this.state;
         </Router>
     );
 
+
     return(
         <div className="App">
           {routing}
+            {this.modalFavouriteDuplicate()}
         </div>
+
+
+
     );
+
+
   }
 }
 

@@ -34,6 +34,14 @@ class UserService {
         })
     }
 
+    addFavouriteBook(id,name){
+        return axios.patch("/user/addFavouriteBook/"+id+"?name="+name, {
+            headers: {
+                'Content-Type': 'multipart/form-data; boundary=${form._boundary}'
+            }
+        });
+    }
+
     register(user){
         console.log(user);
         return axios.post( '/user/registration', JSON.stringify(user),
