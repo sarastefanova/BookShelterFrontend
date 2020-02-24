@@ -169,32 +169,32 @@ class editUserImg extends Component{
                     </div>
                     <div className="form-group">
                         <label className="labelLogin">First name</label>
-                        <input type="text" value={this.state.detailsUser.name} onChange={this.handleTermOnChange} name="name" className="form-control col-md-6"/>
+                        <input required type="text" value={this.state.detailsUser.name} onChange={this.handleTermOnChange} name="name" className="form-control col-md-6"/>
                     </div>
 
                     <div className="form-group">
                         <label className="labelLogin4">Surname</label>
-                        <input type="text"  value={this.state.detailsUser.surname} onChange={this.handleTermOnChange} name="surname" className="form-control col-md-6"/>
+                        <input required type="text"  value={this.state.detailsUser.surname} onChange={this.handleTermOnChange} name="surname" className="form-control col-md-6"/>
                     </div>
 
                     <div className="form-group">
 
                         <label className="labelLogin">User name</label>
-                        <input type="text" value={this.state.detailsUser.username} onChange={this.handleTermOnChange} name="userName" className="form-control col-md-6"/>
+                        <input required type="text" value={this.state.detailsUser.username} onChange={this.handleTermOnChange} name="userName" className="form-control col-md-6"/>
                     </div>
                     <div className="form-group">
                         <label className="labelLogin5">Email</label>
-                        <input type="email" value={this.state.detailsUser.email} onChange={this.handleTermOnChange} name="email" className="form-control col-md-6" />
+                        <input required type="email" value={this.state.detailsUser.email} onChange={this.handleTermOnChange} name="email" className="form-control col-md-6" />
                     </div>
 
                     <div className="form-group">
                         <label className="labelLogin2">Phone number</label>
-                        <input type="text" name="number" value={this.state.detailsUser.number} onChange={this.handleTermOnChange} className="form-control col-md-6"  />
+                        <input type="text" name="number" pattern="^\d{3}-\d{3}-\d{3}$" placeholder="xxx-xxx-xxx" required  value={this.state.detailsUser.number} onChange={this.handleTermOnChange} className="form-control col-md-6"  />
                     </div>
 
                     <div className="form-group">
                         <label className="labelLogin2">Home address</label>
-                        <input type="text" value={this.state.detailsUser.address} onChange={this.handleTermOnChange} name="address" className="form-control col-md-6" />
+                        <input type="text" value={this.state.detailsUser.address} onChange={this.handleTermOnChange} required name="address" className="form-control col-md-6" />
                     </div>
 
 

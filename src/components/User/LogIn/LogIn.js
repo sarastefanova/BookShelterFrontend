@@ -33,8 +33,11 @@ class LogIn extends Component{
         this.setState({loading: true});
         console.log(user);
         UserService.login(user).then( (response) => {
+            debugger;
             this.props.history.push("/");
+            debugger;
         }, error => {
+            debugger;
             this.setState({
                 errorMessage: "Username or password is not valid",
                 loading: false

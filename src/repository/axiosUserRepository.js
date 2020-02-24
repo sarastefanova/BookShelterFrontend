@@ -3,15 +3,22 @@ import {BehaviorSubject} from 'rxjs';
 import qs from "qs";
 
 const currentUserSubject = new BehaviorSubject(JSON.parse((localStorage.getItem('currentUser'))));
-
+const currentUserSubjectSession = new BehaviorSubject(JSON.parse((sessionStorage.getItem('currentUser'))));
 class UserService {
 
     get currentUserValue(){
         return currentUserSubject.value;
     }
 
+    get CurrentUserValueSession(){
+        return currentUserSubjectSession.value;
+    }
+
     get currentUser(){
         return currentUserSubject.asObservable();
+    }
+    get currentUserSession(){
+        return currentUserSubjectSession.asObservable();
     }
 
     login(user){
@@ -21,9 +28,16 @@ class UserService {
 
 
         return axios.get( '/user/login', {headers: headers}).then(response => {
-            console.log("bla");
+            debugger;
+            console.log(JSON.stringify(response.data))
+
+           // sessionStorage.setItem('currentUser', JSON.stringify(response.data));
+            debugger;
             localStorage.setItem('currentUser', JSON.stringify(response.data));
+            debugger;
             currentUserSubject.next(response.data);
+           // currentUserSubjectSession.next(response.data)
+            debugger;
         });
     }
 
@@ -36,7 +50,9 @@ class UserService {
         })
     }
 
-    addFavouriteBook(id,name){
+    addFavouriteBook(id,name,user){
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUserSubject.next(user);
         return axios.patch("/user/addFavouriteBook/"+id+"/"+name, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

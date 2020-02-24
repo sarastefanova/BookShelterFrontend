@@ -326,10 +326,11 @@ class App extends Component{
     };
 
     addFavourite=(name)=>{
-        UserService.addFavouriteBook(this.state.currentUser.id,name).then((response)=>{
+        UserService.addFavouriteBook(this.state.currentUser.id,name,this.state.currentUser).then((response)=>{
                 this.setState({
                     okFavourites:true
                 })
+
         }, error => {
             if (error.response.status === 409) {
                 this.setState({
