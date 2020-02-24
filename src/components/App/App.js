@@ -26,6 +26,7 @@ import AllAuthors from '../Author/AllAuthors/allAuthors';
 import ModalFavourite from '../ModalFavoutite/modalFavourite'
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import axios from "../../cutom-axios/axios";
 
 class App extends Component{
 
@@ -298,6 +299,13 @@ class App extends Component{
         })
     };
 
+    onDeleteBookFav=(name)=>{
+        console.log(name)
+        axios.delete("/user/deleteFavBookUser/"+this.state.currentUser.id+"?name="+name).then((response)=>{
+            console.log("delete book");
+        })
+    }
+
     searchData = (search) => {
 
            if (search!==""){
@@ -399,10 +407,13 @@ const {currentUser}=this.state;
                 <Route path={"/register"} component={Register} exact>
                 </Route>
 
+                {/*<Route path={"/allBooksFavourite"} component={AllBooksFavourite} exact>*/}
+                {/*</Route>*/}
+
                 {/*<Route path={"/myProfile"} component={MyProfile} currentUser={this.state.currentUser}>*/}
                 {/*</Route>*/}
 
-                <Route path={"/myProfile"} render={()=><MyProfile currentUser={currentUser}/>} exact>
+                <Route path={"/myProfile"}  render={()=><MyProfile onDeleteBookFav={this.onDeleteBookFav} currentUser={currentUser}/>} exact>
                 </Route>
 
                 {/*Bez slika dodavanje na avtor*/}

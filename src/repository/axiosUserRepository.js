@@ -19,7 +19,9 @@ class UserService {
             authorization:'Basic ' + btoa(user.userName + ':' + user.password)
         };
 
+
         return axios.get( '/user/login', {headers: headers}).then(response => {
+            console.log("bla");
             localStorage.setItem('currentUser', JSON.stringify(response.data));
             currentUserSubject.next(response.data);
         });
@@ -35,9 +37,9 @@ class UserService {
     }
 
     addFavouriteBook(id,name){
-        return axios.patch("/user/addFavouriteBook/"+id+"?name="+name, {
+        return axios.patch("/user/addFavouriteBook/"+id+"/"+name, {
             headers: {
-                'Content-Type': 'multipart/form-data; boundary=${form._boundary}'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
     }

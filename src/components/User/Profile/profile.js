@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import {User} from '../../../model/user';
 import axios from "../../../cutom-axios/axios";
 import avatar from "../../AllPhotos/avatar.jpg";
+import AllBooksFavourite  from '../AllFavouriteBooks/allFavouriteBooks'
 class MyProfile extends Component{
 
 
@@ -51,6 +52,14 @@ class MyProfile extends Component{
         let div=document.getElementById("imgAvatar");
         div.style.display="none";
     }
+
+    // onDelete(name){
+    //     console.log(name)
+    //     axios.delete("/user/deleteFavBookUser/"+this.state.detailsUser.id+"?name="+name).then((response)=>{
+    //         console.log("delete book");
+    //     })
+    // }
+
 
     render() {
         console.log((this.state.detailsUser));
@@ -105,11 +114,11 @@ class MyProfile extends Component{
 
                 </div>
                 <div className="col-md-8 mt-5">
-                    <span className="font-italic float-left colorH font-weight-bold nameProfile"> {this.state.detailsUser.username}</span>
+                    <span className="font-italic float-left colorH font-weight-bold nameProfile">All the favourite books of {this.state.detailsUser.username}</span>
                     <br/>
                     <hr className="hrCostume"/>
                     <div className="float-left text-center">
-
+                            <AllBooksFavourite onDeleteBookFav={this.props.onDeleteBookFav} id={this.state.user.id}/>
                     </div>
                 </div>
             </div>

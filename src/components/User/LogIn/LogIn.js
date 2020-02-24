@@ -31,7 +31,7 @@ class LogIn extends Component{
         }
 
         this.setState({loading: true});
-
+        console.log(user);
         UserService.login(user).then( (response) => {
             this.props.history.push("/");
         }, error => {
