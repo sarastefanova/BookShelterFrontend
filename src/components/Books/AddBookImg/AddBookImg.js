@@ -13,7 +13,8 @@ class BookAddImg extends Component{
         submitted: false,
         error:this.props.errorMsg,
         imagePreviewUrl:null,
-        bookRedirect: this.props.bookRedirect
+        bookRedirect: this.props.bookRedirect,
+        validationError: ""
     }
 
 
@@ -29,13 +30,7 @@ componentDidMount() {
                     return { value: author.nameAndSurname, display: author.nameAndSurname };
                 });
                 this.setState({
-                    authors: [
-                        {
-                            value: "",
-                            display:
-                                "(Select one author)"
-                        }
-                    ].concat(authorFromApi)
+                    authors: authorFromApi
                 });
             })
     }
@@ -74,7 +69,8 @@ componentDidMount() {
         formData.append('nameAndSurname',e.target.nameAndSurname.value);
         formData.append('price',e.target.price.value);
         formData.append('file', this.state.selectedFile);
-        formData.append('shortContentBook',e.target.shortContentBook.value)
+        formData.append('shortContentBook',e.target.shortContentBook.value);
+        formData.append("availability",e.target.availability.value)
        // // console.log(newBook.get("name"));
         console.log(formData);
         console.log(this.state.selectedFile);
@@ -132,6 +128,7 @@ render() {
                             onChange={e =>
                                 this.setState({
                                     selectedTeam: e.target.value
+
                                 })
                             }
                     >
@@ -144,6 +141,7 @@ render() {
                             </option>
                         ))}
                     </select>
+
                 </div>
 
 
@@ -151,6 +149,12 @@ render() {
                     <label className="bookAddLabel3">Price</label>
                     <input required name={"price"} id="price" type="number" className="form-control col-md-6"
                            placeholder="Enter price for the book"/>
+                </div>
+
+                <div className="form-group">
+                    <label className="bookAddLabel3">Quantity</label>
+                    <input required name={"availability"} id="availability" type="number" className="form-control col-md-6"
+                           placeholder="Enter quantity of the book"/>
                 </div>
 
                 <div className=" text-right">

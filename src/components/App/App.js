@@ -27,7 +27,8 @@ import ModalFavourite from '../ModalFavoutite/modalFavourite'
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import axios from "../../cutom-axios/axios";
-
+import AllOrderedBooks from '../User/OrderedBooks/AllOrderedBooksUser/allOrderedBooks'
+import AllRequests from '../User/AllRequests/AllRequestsOrdersAdmin/allRequestsAdmin'
 class App extends Component{
 
 
@@ -48,7 +49,9 @@ class App extends Component{
             totalPagesAuthor:0,
             errorMessageFavourite:null,
             okFavourites:false,
-            show:false
+            show:false,
+            orderedBooksUser:[],
+            showOrder:false
         }
     }
 
@@ -57,6 +60,7 @@ class App extends Component{
         this.loadBooksPaginate();
        this.saveCurrentUser();
        this.loadAuthorsPaginate();
+
     }
 
     saveCurrentUser=()=>{
@@ -210,6 +214,8 @@ class App extends Component{
 
     }
 
+
+
     loadAuthorsPaginate = (page=0) => {
         //debugger;
         AuthorService.fetchAuthorsTermsPaged(page,this.state.pageSizeAuthor).then((data) => {
@@ -299,12 +305,18 @@ class App extends Component{
         })
     };
 
-    onDeleteBookFav=(name)=>{
-        console.log(name)
-        axios.delete("/user/deleteFavBookUser/"+this.state.currentUser.id+"?name="+name).then((response)=>{
-            console.log("delete book");
-        })
-    }
+    // onDeleteBookFav=(name)=>{
+    //     console.log(name)
+    //     axios.delete("/user/deleteFavBookUser/"+this.state.currentUser.id+"?name="+name).then((response)=>{
+    //         console.log("delete book");
+    //     })
+    // }
+    //
+    // onDeleteBookOrdered=(name)=>{
+    //     axios.delete("/user/deleteOrderedBookUser/"+this.state.currentUser.id+"?name="+name).then((response)=>{
+    //         console.log("delete book");
+    //     })
+    // }
 
     searchData = (search) => {
 
@@ -315,14 +327,35 @@ class App extends Component{
                        books: response.data,
                        page:0,
                       //  pageSize:0,
-                       totalPages:0
+                       //totalPages:0
                    })
                })
+
            }
            else {
 
                this.loadBooksPaginate(0);
            }
+    };
+
+    searchDataPage = (search) => {
+
+        if (search!==""){
+            BookService.searchBookByNamePage(search,this.state.pageSize).then((response)=>{
+
+                this.setState({
+                    books: response.data,
+                    page:response.data.page,
+                    pageSize:response.data.pageSize,
+                    totalPages:response.data.totalPages
+                })
+            })
+
+        }
+        else {
+
+            this.loadBooksPaginate(0);
+        }
     };
 
     addFavourite=(name)=>{
@@ -337,6 +370,41 @@ class App extends Component{
                     errorMessageFavourite: "The book is already added in your list",
                     loading: false,
                     show:true
+                });
+            }
+        })
+    }
+
+    addOrder=(name)=>{
+        UserService.addOrderedBook(this.state.currentUser.id,name,this.state.currentUser).then((response)=>{
+            // this.setState({
+            //     okFavourites:true
+            // })
+            console.log("add");
+        }, error => {
+            if (error.response.status === 409) {
+                this.setState({
+                    errorMessageFavourite: "The book is already added in your list",
+                    loading: false,
+                    showOrder:true
+                });
+            }
+        })
+    }
+
+
+    addOrderNewTable=(name)=>{
+        UserService.addOrderedBookNewTable(this.state.currentUser.id,name,this.state.currentUser).then((response)=>{
+            // this.setState({
+            //     okFavourites:true
+            // })
+            console.log("add");
+        }, error => {
+            if (error.response.status === 409) {
+                this.setState({
+                    errorMessageFavourite: "The book is already added in your list",
+                    loading: false,
+                    showOrder:true
                 });
             }
         })
@@ -387,6 +455,25 @@ class App extends Component{
            )
     }
 
+    handleShowOrder = () => this.setState({showOrder:false});
+    modalFavouriteDuplicateOrders(){
+        console.log(this.state.showOrder)
+        return(
+            <Modal show={this.state.showOrder} >
+                <Modal.Header closeButton>
+                    <Modal.Title>This book is already in your favourite list!</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Footer>
+                    <button  onClick={this.handleShowOrder}>
+                        Ok
+                    </button>
+
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+
   render() {
 const {currentUser}=this.state;
 
@@ -414,7 +501,7 @@ const {currentUser}=this.state;
                 {/*<Route path={"/myProfile"} component={MyProfile} currentUser={this.state.currentUser}>*/}
                 {/*</Route>*/}
 
-                <Route path={"/myProfile"}  render={()=><MyProfile onDeleteBookFav={this.onDeleteBookFav} currentUser={currentUser}/>} exact>
+                <Route path={"/myProfile"}  render={()=><MyProfile addOrder={this.addOrderNewTable} onDeleteBookFav={this.onDeleteBookFav} currentUser={currentUser}/>} exact>
                 </Route>
 
                 {/*Bez slika dodavanje na avtor*/}
@@ -462,6 +549,12 @@ const {currentUser}=this.state;
 
                 <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>
                 </Route>
+
+                <Route path={"/allOrderedBooks/:id"} render={()=><AllOrderedBooks  id={this.state.currentUser.id}/>}>
+                </Route>
+
+                <Route path={"/allRequests"} render={()=><AllRequests  id={this.state.currentUser.id}/>}>
+                </Route>
             </div>
 
           </main>
@@ -476,6 +569,7 @@ const {currentUser}=this.state;
         <div className="App">
           {routing}
             {this.modalFavouriteDuplicate()}
+            {this.modalFavouriteDuplicateOrders()}
         </div>
 
 

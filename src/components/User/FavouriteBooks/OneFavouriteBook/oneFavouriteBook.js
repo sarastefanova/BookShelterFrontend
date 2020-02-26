@@ -4,6 +4,23 @@ import React, {Component} from "react";
 
 class OneFavouriteBook extends Component{
 
+    constructor(props){
+        super(props);
+
+        this.state={
+            text:"Order"
+        }
+    }
+
+    addOrder=(e)=>{
+        //console.log(this.props);
+        this.setState({
+            text:"Ordered"
+        });
+        this.props.addOrder(this.props.bookName)
+
+    }
+
     render() {
 
         return(
@@ -12,10 +29,10 @@ class OneFavouriteBook extends Component{
                 <td scope="col"><span className="nameAuthorOne font-weight-bold">{this.props.book.name}</span></td>
 
                 <td scope="col">
-                    <Link to={""} className="btn btn-sm btn-secondary">
+                    <button onClick={this.addOrder} className="btn btn-sm">
                         <span className="fa fa-first-order"/>
-                        <span><strong>Order</strong></span>
-                    </Link>
+                        <span><strong>{this.state.text}</strong></span>
+                    </button>
                     {/*<button  className="btn btn-sm btn-outline-secondary ">*/}
                     {/*    <span className="fa fa-remove"/>*/}
                     {/*    <span><strong>Remove</strong></span>*/}

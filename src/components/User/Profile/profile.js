@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 import {User} from '../../../model/user';
 import axios from "../../../cutom-axios/axios";
 import avatar from "../../AllPhotos/avatar.jpg";
-import AllBooksFavourite  from '../AllFavouriteBooks/allFavouriteBooks'
+import AllBooksFavourite  from '../FavouriteBooks/AllFavouriteBooks/allFavouriteBooks'
 class MyProfile extends Component{
 
 
@@ -108,6 +108,12 @@ class MyProfile extends Component{
                         <Link to="/allAuthors">
                             <span  className="linksProfile"> <i className="fa fa-edit "/>List all authors</span>
                         </Link>
+                        <Link to={"/allOrderedBooks/"+this.state.user.id}>
+                            <span  className="linksProfile"> <i className="fa fa-shopping-cart "/>List all ordered books</span>
+                        </Link>
+                         <Link to={"/allRequests"}>
+                            <span  className="linksProfile"> <i className="fa fa-book "/>List all requests</span>
+                        </Link>
                 </span>
 
 
@@ -118,7 +124,7 @@ class MyProfile extends Component{
                     <br/>
                     <hr className="hrCostume"/>
                     <div className="float-left text-center">
-                            <AllBooksFavourite onDeleteBookFav={this.props.onDeleteBookFav} id={this.state.user.id}/>
+                            <AllBooksFavourite addOrder={this.props.addOrder} onDeleteBookFav={this.props.onDeleteBookFav} id={this.state.user.id}/>
                     </div>
                 </div>
             </div>

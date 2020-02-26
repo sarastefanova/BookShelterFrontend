@@ -16,17 +16,33 @@
     position: absolute;
     top: 25%;
     left: 80%;
-    border: 1px solid #cc0044 !important;
-    border-radius: 30px!important;
-    background-color: #ffe1e1 !important;
+    /*border: 1px solid #cc0044 !important;*/
+    /*border-radius: 30px!important;*/
+    /*background-color: #ffe1e1 !important;*/
+    background-color: transparent;
+
+}
+
+.favouriteClicked{
+    position: absolute;
+    top: 25%;
+    left: 80%;
+    /*border: 1px solid #cc0044 !important;*/
+    /*border-radius: 30px!important;*/
+    /*background-color: #ffe1e1 !important;*/
+    background-color: transparent;
+
 }
 
 .favouriteHeart{
+    /*color: #cc0044 !important;*/
+
+    /*color: transparent;*/
     font-size: 40px !important;
 }
 
 .fa-heart{
-    color: #cc0044 !important;
+
 
 }
 

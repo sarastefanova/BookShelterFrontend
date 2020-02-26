@@ -60,6 +60,26 @@ class UserService {
         });
     }
 
+    addOrderedBook(id,name,user){
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUserSubject.next(user);
+        return axios.patch("/user/addOrderedBook/"+id+"/"+name, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+    }
+
+    addOrderedBookNewTable(id,name,user){
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        currentUserSubject.next(user);
+        return axios.patch("/user/addOrderedBookWithStatus/"+id+"/"+name, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+    }
+
     register(user){
         console.log(user);
         return axios.post( '/user/registration', JSON.stringify(user),

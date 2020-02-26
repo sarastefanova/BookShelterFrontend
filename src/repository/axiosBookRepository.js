@@ -20,6 +20,13 @@ const BookService={
                 'page':page,'page-size':pageSize
             }
         })
+    },
+    searchBookByNamePage:(search,pageSize)=>{
+        return axios.get("/books/searchBookPage?name="+search,{
+            headers: {
+                'page':0,'page-size':pageSize
+            }
+        })
     }
     ,
     addNewBookWithImg:(book)=>{

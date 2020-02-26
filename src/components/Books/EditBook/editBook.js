@@ -49,7 +49,8 @@ const BookEdit=(props)=>{
             "name": name,
             "nameAndSurname":e.target.nameAndSurname.value,
             "price": e.target.price.value,
-            "shortContentBook":e.target.shortContentBook.value
+            "shortContentBook":e.target.shortContentBook.value,
+            "availability":e.target.availability.value
         };
 
         // const formData = new FormData();
@@ -104,10 +105,16 @@ const BookEdit=(props)=>{
                            placeholder="Enter price for the book"/>
                 </div>
 
+                <div className="form-group">
+                    <label className="bookAddLabel3">Quantity</label>
+                    <input required onChange={handleTermOnChange} value={detailsBook.availability} name={"availability"} id="availability" type="number" className="form-control col-md-6"
+                           placeholder="Enter quantity of the book"/>
+                </div>
+
                 <div className=" text-right">
 
                     <button  type="submit"  className="btn btnColor col-md-6 btn-block" title="AddBook">
-                        <i className="fa fa-fw fa-save"></i> Add book
+                        <i className="fa fa-fw fa-save"></i> Edit book
                     </button>
                 </div>
             </form>

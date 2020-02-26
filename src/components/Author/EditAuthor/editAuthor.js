@@ -50,7 +50,7 @@ const editAuthor = (props) =>{
 
                             <div className="form-group">
                                 <label className="labelEditAuthor2">Short author biography</label>
-                                <textarea value={detailsAuthor.shortAuthorBiography} name="shortAuthorBiography" onChange={handleTermOnChange} id="shortAuthorBiography" cols="5" rows="5" className="form-control col-md-6" />
+                                <textarea required value={detailsAuthor.shortAuthorBiography} name="shortAuthorBiography" onChange={handleTermOnChange} id="shortAuthorBiography" cols="5" rows="5" className="form-control col-md-6" />
                             </div>
 
                             <div className=" text-right">

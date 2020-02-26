@@ -1,38 +1,42 @@
-import OneBookFavourite from '../OneFavouriteBook/oneFavouriteBook'
+import OneRequestAdmin from '../OneRequestAdmin/oneRequestAdmin';
 import ReactPaginate from "react-paginate";
 import React, {useEffect, useState} from "react";
 import {useHistory, useParams} from "react-router";
-import axios from "../../../cutom-axios/axios";
-import './allFavBooksUserStyle.css'
+import axios from "../../../../cutom-axios/axios";
+import './allRequestsStyle.css'
 
-const allFavouriteBooks=(props)=>{
-    const [allBooks,setAllBooks]=useState({});
+const allRequests=(props)=>{
+    const [allRequestsAdmin,setAllRequests]=useState({});
     const history = useHistory();
 
 
 
     useEffect(()=>{
 
-        axios.get("/user/allFavouriteBooksOfUser/"+props.id).then((data)=>{
-            setAllBooks(data.data)
+        // axios.get("/user/getAllRequestsOrders").then((data)=>{
+        //     setAllRequests(data.data)
+        // })
+
+        axios.get("/user/getAllRequestsOrdersStatus").then((data)=>{
+            setAllRequests(data.data)
         })
     },[]);
 
-    const  onDeleteBookFavourite=(name)=>{
-        console.log(name)
-        axios.delete("/user/deleteFavBookUser/"+props.id+"?name="+name).then((response)=>{
-            axios.get("/user/allFavouriteBooksOfUser/"+props.id).then((data)=>{
-                setAllBooks(data.data)
-            })
-        })
-    }
+    // const  onDeleteBookFavourite=(name)=>{
+    //     console.log(name)
+    //     axios.delete("/user/deleteFavBookUser/"+props.id+"?name="+name).then((response)=>{
+    //         axios.get("/user/allFavouriteBooksOfUser/"+props.id).then((data)=>{
+    //             setAllBooks(data.data)
+    //         })
+    //     })
+    // }
 
 
-    console.log(allBooks)
-    const allBooksFav=Object.values(allBooks);
-    const oneBookTerm=allBooksFav.map((book,index)=>{
+    console.log(allRequestsAdmin)
+    const allRequestsAdminBooks=Object.values(allRequestsAdmin);
+    const oneRequestTerm=allRequestsAdminBooks.map((book,index)=>{
         return(
-            <OneBookFavourite onDeleteBookFav={onDeleteBookFavourite} bookName={book.name} book={book} key={index} />
+            <OneRequestAdmin   bookName={book.name} book={book} key={index} />
 
         ) ;
     });
@@ -71,19 +75,21 @@ const allFavouriteBooks=(props)=>{
 
     return(
 
-        <div className="row container containerAllFavBooks">
+        <div className="row container containerAllRequestsBooks">
 
             <div className="table-responsive">
                 <table className="table tr-history table-striped small">
                     <thead>
                     <tr>
                         <th scope="col"></th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Name book</th>
+                        <th scope="col">Quantity of book available</th>
+                        <th scope="col">Name of the author</th>
                         <th scope="col">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {oneBookTerm}
+                    {oneRequestTerm}
                     </tbody>
                 </table>
             </div>
@@ -94,4 +100,4 @@ const allFavouriteBooks=(props)=>{
 
     )
 }
-export default allFavouriteBooks;
+export default allRequests;

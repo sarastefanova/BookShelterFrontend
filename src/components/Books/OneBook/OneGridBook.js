@@ -4,7 +4,8 @@ import './OneGridBookStyle.css'
 import Confirm from './Confirm'
 class OneGridBook extends Component{
         state={
-             url : ""
+             url : "",
+            color: "#cc0044"
         }
         constructor(props){
             super(props);
@@ -12,13 +13,19 @@ class OneGridBook extends Component{
 
     addFavourite=(e)=>{
         //console.log(this.props);
+        this.setState({color:'yellow'})
+        this.props.addFavourite(this.props.bookName)
 
-            this.props.addFavourite(this.props.bookName)
 
     }
 
+    changeColor(){
+        // this.setState({colorBtn: !this.state.black}) ovaa e za da moze da se dodava i da se brise na klik na srceto
+
+    }
 
     render() {
+        const {btn_class} = this.state.colorBtn ? "favourite" : "favouriteClicked";
       //  console.log(Object.values(this.props.author)[3])
       //   console.log(this.props.author)
       //   console.log(this.props.okFavourites)
@@ -47,8 +54,8 @@ class OneGridBook extends Component{
             <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
 
         </Link>
-        <button onClick={this.addFavourite} href="#" className="btn btn-light favourite" title="Favourite">
-            <i className="fa fa-heart favouriteHeart"/>
+        <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+            <i className="fa fa-heart favouriteHeart " style={{color:this.state.color}}/>
         </button>
     </div>
 
