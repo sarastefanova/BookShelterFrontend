@@ -4,3 +4,9 @@
     height: 600px;
     margin-left: 350px!important;
 }
+
+.paginateAllOrderedBooksStyle{
+    position: absolute;
+    margin-top: 530px;
+    margin-left: 300px;
+}

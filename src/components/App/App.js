@@ -60,7 +60,7 @@ class App extends Component{
         this.loadBooksPaginate();
        this.saveCurrentUser();
        this.loadAuthorsPaginate();
-
+     //   this.loadBooksPaginateFavBooks();
     }
 
     saveCurrentUser=()=>{
@@ -204,6 +204,20 @@ class App extends Component{
         //debugger;
         BookService.fetchBooksTermsPaged(page,this.state.pageSize).then((data) => {
         
+            this.setState({
+                books: data.data.content,
+                page:data.data.page,
+                pageSize:data.data.pageSize,
+                totalPages:data.data.totalPages
+            })
+        })
+
+    }
+
+    loadBooksPaginateFavBooks = (page=0) => {
+        //debugger;
+        BookService.fetchBooksTermsPagedFavouriteBookUser(page,this.state.pageSize).then((data) => {
+
             this.setState({
                 books: data.data.content,
                 page:data.data.page,
@@ -359,6 +373,7 @@ class App extends Component{
     };
 
     addFavourite=(name)=>{
+        debugger;
         UserService.addFavouriteBook(this.state.currentUser.id,name,this.state.currentUser).then((response)=>{
                 this.setState({
                     okFavourites:true
@@ -392,8 +407,21 @@ class App extends Component{
         })
     }
 
+    approveOrder=(userId,bookName)=>{
+        UserService.approveOrder(userId,bookName).then((response)=>{
+
+        })
+    }
+
+    declineOrder=(userId,bookName)=>{
+        UserService.declineOrder(userId,bookName).then((response)=>{
+
+        })
+    }
+
 
     addOrderNewTable=(name)=>{
+        debugger;
         UserService.addOrderedBookNewTable(this.state.currentUser.id,name,this.state.currentUser).then((response)=>{
             // this.setState({
             //     okFavourites:true
@@ -454,6 +482,8 @@ class App extends Component{
                </Modal>
            )
     }
+
+
 
     handleShowOrder = () => this.setState({showOrder:false});
     modalFavouriteDuplicateOrders(){
@@ -553,7 +583,7 @@ const {currentUser}=this.state;
                 <Route path={"/allOrderedBooks/:id"} render={()=><AllOrderedBooks  id={this.state.currentUser.id}/>}>
                 </Route>
 
-                <Route path={"/allRequests"} render={()=><AllRequests  id={this.state.currentUser.id}/>}>
+                <Route path={"/allRequests"} render={()=><AllRequests declineOrder={this.declineOrder} approveOrder={this.approveOrder}  id={this.state.currentUser.id}/>}>
                 </Route>
             </div>
 

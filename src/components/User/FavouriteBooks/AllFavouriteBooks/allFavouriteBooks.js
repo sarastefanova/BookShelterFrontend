@@ -8,21 +8,43 @@ import './allFavBooksUserStyle.css'
 const allFavouriteBooks=(props)=>{
     const [allBooks,setAllBooks]=useState({});
     const history = useHistory();
-
+    const [page,setPage]=useState(0);
+    const [totalPages,setTotalPages]=useState(0);
+    const [pageSize,setPageSize]=useState(3);
 
 
     useEffect(()=>{
 
-        axios.get("/user/allFavouriteBooksOfUser/"+props.id).then((data)=>{
-            setAllBooks(data.data)
+        // axios.get("/user/getAllFavouriteBooksUser/"+props.id).then((data)=>{
+        //     setAllBooks(data.data)
+        // })
+
+        axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
+            headers: {
+                'page':page,'page-size':pageSize
+            }
+        }).then((data)=>{
+
+            setAllBooks(data.data.content),
+                setPage(data.data.page),
+                setPageSize(data.data.pageSize),
+                setTotalPages(data.data.totalPages)
         })
     },[]);
 
     const  onDeleteBookFavourite=(name)=>{
         console.log(name)
-        axios.delete("/user/deleteFavBookUser/"+props.id+"?name="+name).then((response)=>{
-            axios.get("/user/allFavouriteBooksOfUser/"+props.id).then((data)=>{
-                setAllBooks(data.data)
+        axios.delete("/user/deleteFavouriteBookUser/"+props.id+"?name="+name).then((response)=>{
+            axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
+                headers: {
+                    'page':page,'page-size':pageSize
+                }
+            }).then((data)=>{
+
+                setAllBooks(data.data.content),
+                    setPage(data.data.page),
+                    setPageSize(data.data.pageSize),
+                    setTotalPages(data.data.totalPages)
             })
         })
     }
@@ -32,41 +54,55 @@ const allFavouriteBooks=(props)=>{
     const allBooksFav=Object.values(allBooks);
     const oneBookTerm=allBooksFav.map((book,index)=>{
         return(
-            <OneBookFavourite addOrder={props.addOrder} onDeleteBookFav={onDeleteBookFavourite} bookName={book.name} book={book} key={index} />
+            <OneBookFavourite addOrder={props.addOrder} onDeleteBookFav={onDeleteBookFavourite} id={props.id} bookName={book.name} book={book} key={index} />
 
         ) ;
     });
 
 
-    // const handlePageClick = (e) => {
-    //     props.onPageClick(e.selected)
-    // };
-    //
-    // const paginate = () => {
-    //     // debugger;
-    //     if (props.totalPages !== 0) {
-    //         return (
-    //             <ReactPaginate previousLabel={"previous"}
-    //                            nextLabel={"next"}
-    //                            breakLabel={<span className="gap">...</span>}
-    //                            breakClassName={"break-me"}
-    //                            pageCount={props.totalPages}
-    //                            marginPagesDisplayed={2}
-    //                            pageRangeDisplayed={5}
-    //                            pageClassName={"page-item"}
-    //                            pageLinkClassName={"page-link"}
-    //                            previousClassName={"page-item"}
-    //                            nextClassName={"page-item"}
-    //                            previousLinkClassName={"page-link"}
-    //                            nextLinkClassName={"page-link"}
-    //                            forcePage={props.page}
-    //                            onPageChange={handlePageClick}
-    //                            containerClassName={"pagination justify-content-center"}
-    //                            activeClassName={"active"}/>
-    //         )
-    //     }
-    // }
+    const loadRequests=(page)=>{
+        debugger;
+        return axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
+            headers: {
+                'page':page,'page-size':pageSize
+            }
+        }).then((data)=>{
+            console.log(data.data)
+            setAllBooks(data.data.content),
+                setPage(data.data.page),
+                setPageSize(data.data.pageSize),
+                setTotalPages(data.data.totalPages)
+        })
+    }
 
+    const handlePageClick = (e) => {
+        loadRequests(e.selected)
+    }
+
+    const paginate = () => {
+        // debugger;
+        if (totalPages !== 0) {
+            return (
+                <ReactPaginate previousLabel={"previous"}
+                               nextLabel={"next"}
+                               breakLabel={<span className="gap">...</span>}
+                               breakClassName={"break-me"}
+                               pageCount={totalPages}
+                               marginPagesDisplayed={2}
+                               pageRangeDisplayed={5}
+                               pageClassName={"page-item"}
+                               pageLinkClassName={"page-link"}
+                               previousClassName={"page-item"}
+                               nextClassName={"page-item"}
+                               previousLinkClassName={"page-link"}
+                               nextLinkClassName={"page-link"}
+                               forcePage={page}
+                               onPageChange={handlePageClick}
+                               containerClassName={"pagination justify-content-center"}
+                               activeClassName={"active"}/>
+            )
+        }
+    }
 
 
     return(
@@ -87,8 +123,8 @@ const allFavouriteBooks=(props)=>{
                     </tbody>
                 </table>
             </div>
-            <div className="paginateAuthor">
-                {/*{paginate()}*/}
+            <div className="paginateAllFavouriteBooksUser">
+                {paginate()}
             </div>
         </div>
 

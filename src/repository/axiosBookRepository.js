@@ -21,6 +21,13 @@ const BookService={
             }
         })
     },
+    // fetchBooksTermsPagedFavouriteBookUser:(page,pageSize)=>{
+    //     return axios.get("/books/getAllBooksAuthorFavourite",{
+    //         headers: {
+    //             'page':page,'page-size':pageSize
+    //         }
+    //     })
+    // },
     searchBookByNamePage:(search,pageSize)=>{
         return axios.get("/books/searchBookPage?name="+search,{
             headers: {

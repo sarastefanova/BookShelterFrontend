@@ -5,7 +5,8 @@ import Confirm from './Confirm'
 class OneGridBook extends Component{
         state={
              url : "",
-            color: "#cc0044"
+            color: "#cc0044",
+            isClicked:false
         }
         constructor(props){
             super(props);
@@ -13,7 +14,7 @@ class OneGridBook extends Component{
 
     addFavourite=(e)=>{
         //console.log(this.props);
-        this.setState({color:'yellow'})
+        this.setState({color:'yellow',isClicked:true})
         this.props.addFavourite(this.props.bookName)
 
 
@@ -32,6 +33,9 @@ class OneGridBook extends Component{
       //   if(this.props.okFavourites){
       //
       //   }
+
+
+
         return(
 
             <div className={this.props.colClass}>
@@ -49,15 +53,19 @@ class OneGridBook extends Component{
 
     }
 
-    Example = () => <div>
-        <Link to={"/detailsBook/"+this.props.book.name}>
-            <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
+    Example = () => {
+            return(
+                <div>
+                    <Link to={"/detailsBook/"+this.props.book.name}>
+                        <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
 
-        </Link>
-        <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-            <i className="fa fa-heart favouriteHeart " style={{color:this.state.color}}/>
-        </button>
-    </div>
+                    </Link>
+                    <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                        <i className="fa fa-heart favouriteHeart " style={{color:this.state.color}}/>
+                    </button>
+                </div>
+            )
+    }
 
     cardHeader(){
 

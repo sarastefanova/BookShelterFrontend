@@ -14,7 +14,7 @@ class OneOrderedBook extends Component{
     }
 
     componentDidMount() {
-        axios.get("/user/getStatusBookOrdered/"+this.props.book.name).then((response)=>{
+        axios.get("/user/getStatusBookOrdered/"+this.props.id+"/"+this.props.book.name).then((response)=>{
             this.setState({status:response.data})
         })
 
@@ -29,8 +29,11 @@ class OneOrderedBook extends Component{
         if(this.state.status===0){
             pom="Order is in progress";
         }
-        else{
+        if(this.state.status===1){
             pom="Book is sent";
+        }
+        if(this.state.status===2){
+            pom="Not available books at the moment at our storage!";
         }
 
         return(

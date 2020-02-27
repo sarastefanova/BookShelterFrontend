@@ -51,9 +51,27 @@ class UserService {
     }
 
     addFavouriteBook(id,name,user){
+        debugger;
+        console.log("babsabj")
         localStorage.setItem('currentUser', JSON.stringify(user));
         currentUserSubject.next(user);
-        return axios.patch("/user/addFavouriteBook/"+id+"/"+name, {
+        return axios.patch("/user/addFavouriteBookFlag/"+id+"/"+name, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+    }
+
+    approveOrder(userId,bookName){
+        return    axios.patch("/user/approveOrder/"+userId+"/"+bookName,{
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+    }
+
+    declineOrder(userId,bookName){
+        return    axios.patch("/user/declineOrder/"+userId+"/"+bookName,{
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -71,6 +89,7 @@ class UserService {
     }
 
     addOrderedBookNewTable(id,name,user){
+        debugger;
         localStorage.setItem('currentUser', JSON.stringify(user));
         currentUserSubject.next(user);
         return axios.patch("/user/addOrderedBookWithStatus/"+id+"/"+name, {
