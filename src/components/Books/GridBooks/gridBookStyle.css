@@ -1,5 +1,5 @@
 .containerGridBook{
-    height: 780px;
+    height: 820px;
     margin-top: 60px;
     position: relative;
 }
@@ -11,7 +11,7 @@
 
 .paginateBooks{
     position: absolute;
-    bottom: 0;
+    bottom: 60px!important;
     margin-left: 430px;
 
 }

@@ -1,16 +1,44 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom"
 import './OneGridBookStyle.css'
-import Confirm from './Confirm'
+import Confirm from './Confirm';
+import axios from '../../../cutom-axios/axios';
+import HeartButton from "./HeartButton";
+import random from "lodash/random";
+import OneBookFavourite from "../../User/FavouriteBooks/OneFavouriteBook/oneFavouriteBook";
+import {contains} from "jquery";
+import {forEach} from "react-bootstrap/cjs/ElementChildren";
 class OneGridBook extends Component{
-        state={
-             url : "",
-            color: "#cc0044",
-            isClicked:false
-        }
-        constructor(props){
-            super(props);
-        }
+
+    state ={
+        url: "",
+        color: "",
+        isClicked: false,
+        userHasTheBook: null,
+        flagIndex: 6,
+        getAllFavBooksUser:{}
+    }
+
+
+
+
+    componentDidMount() {
+       // debugger;
+
+            axios.get("/user/getAllFavouriteBooksUser/"+this.props.id).then((result)=>{
+                // debugger;
+                this.setState({
+                    getAllFavBooksUser:result.data
+                })
+            })
+
+
+
+      //  this.setHasTheBook();
+
+    }
+
+
 
     addFavourite=(e)=>{
         //console.log(this.props);
@@ -20,19 +48,56 @@ class OneGridBook extends Component{
 
     }
 
-    changeColor(){
-        // this.setState({colorBtn: !this.state.black}) ovaa e za da moze da se dodava i da se brise na klik na srceto
 
-    }
+
+
+
 
     render() {
-        const {btn_class} = this.state.colorBtn ? "favourite" : "favouriteClicked";
-      //  console.log(Object.values(this.props.author)[3])
-      //   console.log(this.props.author)
-      //   console.log(this.props.okFavourites)
-      //   if(this.props.okFavourites){
-      //
-      //   }
+
+       //  console.log((this.state.getAllFavBooksUser))
+         let {oneBookTermFavUser}="";
+         const  pom=Object.values(this.state.getAllFavBooksUser).map((book)=>book.name===this.props.bookName);
+        const hasBook=pom.filter(p=>p===true).length;
+        console.log(hasBook);
+        if(hasBook!==0){
+            oneBookTermFavUser=  (
+                <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                    <i className="fa fa-heart favouriteHeart " style={{color:"yellow"}}/>
+                </button>
+            )
+        }else {
+            oneBookTermFavUser=  (
+                <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                    <i className="fa fa-heart favouriteHeart " style={{color:"red"}}/>
+                </button>
+            )
+        }
+
+
+        // else{
+        //     oneBookTermFavUser=  (
+        //         <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+        //             <i className="fa fa-heart favouriteHeart " style={{color:"red"}}/>
+        //         </button>
+        //     )
+        // }
+
+
+       // const oneBookTermFavUser=this.state.getAllFavBooksUser.map((book)=>{
+       //     console.log(book)
+       //      if(book.name===this.props.bookName){
+       //
+       //
+       //      } else if(book.name!==this.props.bookName){
+       //
+       //          return (
+       //              <button  onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+       //                  <i className="fa fa-heart favouriteHeart " style={{color:"red"}}/>
+       //              </button>
+       //          )
+       //      }
+       //  });
 
 
 
@@ -42,7 +107,7 @@ class OneGridBook extends Component{
                 <div className="card ">
                     <div className="book">
                         {this.cardHeader()}
-                        {this.Example()}
+                        {this.Example(oneBookTermFavUser)}
 
                         {this.cardFooter()}
 
@@ -53,16 +118,19 @@ class OneGridBook extends Component{
 
     }
 
-    Example = () => {
+    Example = (oneBookTermFavUser) => {
+
             return(
                 <div>
                     <Link to={"/detailsBook/"+this.props.book.name}>
                         <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
 
                     </Link>
-                    <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-                        <i className="fa fa-heart favouriteHeart " style={{color:this.state.color}}/>
-                    </button>
+                    {oneBookTermFavUser}
+                    {/*<button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">*/}
+                    {/*    <i className="fa fa-heart favouriteHeart " style={{color:pom}}/>*/}
+                    {/*</button>*/}
+                    {/*<HeartButton id={this.props.id} bookName={this.props.bookName}/>*/}
                 </div>
             )
     }

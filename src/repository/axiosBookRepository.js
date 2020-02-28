@@ -6,6 +6,10 @@ const BookService={
     getAllBooks:()=>{
         return axios.get("/books");
     },
+    getAllBooksNewest:()=>{
+        return axios.get("/books/getNewestBooks");
+    },
+
     addNewBook:(book)=>{
 
         const formParams = qs.stringify(book);
@@ -21,13 +25,14 @@ const BookService={
             }
         })
     },
-    // fetchBooksTermsPagedFavouriteBookUser:(page,pageSize)=>{
-    //     return axios.get("/books/getAllBooksAuthorFavourite",{
-    //         headers: {
-    //             'page':page,'page-size':pageSize
-    //         }
-    //     })
-    // },
+    fetchBooksTermsPagedFavouriteBookUser:(page,pageSize,id)=>{
+        debugger;
+        return axios.get("/books/getAllBooksAuthorFavourite/"+id,{
+            headers: {
+                'page':page,'page-size':pageSize
+            }
+        })
+    },
     searchBookByNamePage:(search,pageSize)=>{
         return axios.get("/books/searchBookPage?name="+search,{
             headers: {

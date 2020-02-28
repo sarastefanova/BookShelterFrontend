@@ -7,8 +7,17 @@ import bookReason from '../AllPhotos/booksReason.png';
 import moneyReason from '../AllPhotos/moneyReason.png';
 import mailReason from '../AllPhotos/mail.png'
 import PhotoWithText from './PhotoWithText/photoWithText';
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import NewestBooks from '../HomePage/NewestBooks/AllNewestBooks/allNewestBook'
+
 class homePage extends Component{
+
+    constructor(props){
+        super(props);
+        this.state={
+            booksNewest:[]
+        }
+    }
 
     render() {
 
@@ -16,16 +25,25 @@ class homePage extends Component{
             <div className="colorContainer ">
                 {/*<Img src={logo} className="photoBooks"/>*/}
                 <PhotoWithText/>
+
+                <hr/>
+                <div>
+                    <NewestBooks booksNewest={this.props.booksNewest}/>
+                </div>
+                <div>
+                    <Link to={"/allBooks"} className="btn ColorBtn btnBooksNewest btn-primary">See more of our books!</Link>
+                </div>
+                <hr/>
                 <div className="container  containerHeigth">
 
-                        <div className="row ">
-                            <div className="col-md-6 borderCol">
-                                {this.allTheBooks()}
-                            </div>
-                            <div className="col-md-6">
-                                {this.whyShowHere()}
-                            </div>
+                    <div className="row ">
+                        <div className="col-md-6 borderCol">
+                            {this.allTheBooks()}
                         </div>
+                        <div className="col-md-6">
+                            {this.whyShowHere()}
+                        </div>
+                    </div>
 
                 </div>
             </div>

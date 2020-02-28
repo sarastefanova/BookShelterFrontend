@@ -36,6 +36,7 @@ class App extends Component{
         super(props);
         this.state={
             authors: [],
+            booksNewest:[],
             books:[],
             totalPages:0,
             pageSize:6,
@@ -51,23 +52,24 @@ class App extends Component{
             okFavourites:false,
             show:false,
             orderedBooksUser:[],
-            showOrder:false
+            showOrder:false,
+            pomBooks:[]
         }
     }
 
     componentDidMount() {
 
-        this.loadBooksPaginate();
+     //   this.loadBooksPaginate();
        this.saveCurrentUser();
        this.loadAuthorsPaginate();
-     //   this.loadBooksPaginateFavBooks();
+        this.loadBooksNewest();
     }
 
     saveCurrentUser=()=>{
         UserService.currentUser.subscribe(data => {
            // debugger;
             this.setState({currentUser: data});
-            debugger;
+            //debugger;
         });
 
     };
@@ -200,6 +202,16 @@ class App extends Component{
         })
     };
 
+    loadBooksNewest = () => {
+        BookService.getAllBooksNewest().then(response=>{
+            this.setState((prevState)=>{
+                return {
+                    "booksNewest":response.data
+                }
+            })
+        })
+    };
+
     loadBooksPaginate = (page=0) => {
         //debugger;
         BookService.fetchBooksTermsPaged(page,this.state.pageSize).then((data) => {
@@ -215,14 +227,14 @@ class App extends Component{
     }
 
     loadBooksPaginateFavBooks = (page=0) => {
-        //debugger;
-        BookService.fetchBooksTermsPagedFavouriteBookUser(page,this.state.pageSize).then((data) => {
 
+        BookService.fetchBooksTermsPagedFavouriteBookUser(page,this.state.pageSize,this.state.currentUser.id).then((data) => {
+            debugger;
             this.setState({
-                books: data.data.content,
-                page:data.data.page,
-                pageSize:data.data.pageSize,
-                totalPages:data.data.totalPages
+                pomBooks: data.data.content,
+                // page:data.data.page,
+                // pageSize:data.data.pageSize,
+                // totalPages:data.data.totalPages
             })
         })
 
@@ -287,12 +299,12 @@ class App extends Component{
 
     deleteBook=(i)=>{
         BookService.deleteBook(i).then((response)=>{
-            this.setState((state)=>{
-                const books=state.books.filter((t)=>{
-                    return t.name!==i;
-                });
-                return {books}
-            })
+            // this.setState((state)=>{
+            //     const books=state.books.filter((t)=>{
+            //         return t.name!==i;
+            //     });
+            //     return {books}
+            // })
         })
     };
 
@@ -506,8 +518,10 @@ class App extends Component{
 
   render() {
 const {currentUser}=this.state;
-
-
+let {idUser}="";
+if(this.state.currentUser!==null){
+    idUser=this.state.currentUser.id
+}
 
 
     const routing=(
@@ -518,7 +532,7 @@ const {currentUser}=this.state;
 
             <div className="container-fluid">
 
-                <Route path={"/"} exact render={()=><HomePage />}>
+                <Route path={"/"} exact render={()=><HomePage booksNewest={this.state.booksNewest}/>}>
                 </Route>
                 <Route path={"/login"} component={Login} exact>
                 </Route>
@@ -574,7 +588,7 @@ const {currentUser}=this.state;
                     <DetailsBook />}>
                 </Route>
 
-                <Route path={"/allBooks"} render={()=><GridBooks okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
+                <Route path={"/allBooks"} render={()=><GridBooks id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
                 <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>
