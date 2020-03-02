@@ -108,12 +108,7 @@ class MyProfile extends Component{
                         <Link to="/allAuthors">
                             <span  className="linksProfile"> <i className="fa fa-edit "/>List all authors</span>
                         </Link>
-                        <Link to={"/allOrderedBooks/"+this.state.user.id}>
-                            <span  className="linksProfile"> <i className="fa fa-shopping-cart "/>List all ordered books</span>
-                        </Link>
-                         <Link to={"/allRequests"}>
-                            <span  className="linksProfile"> <i className="fa fa-book "/>List all requests</span>
-                        </Link>
+
                 </span>
 
 
@@ -121,6 +116,12 @@ class MyProfile extends Component{
                 </div>
                 <div className="col-md-8 mt-5">
                     <span className="font-italic float-left colorH font-weight-bold nameProfile">All the favourite books of {this.state.detailsUser.username}</span>
+                    <Link to={"/allOrderedBooks/"+this.state.user.id}>
+                        <button  className="btnShoppingCart  float-lg-right" title="My shopping cart">  <i className="fa fa-shopping-cart "/></button>
+                    </Link>
+                    <Link to={"/allRequests"}>
+                        <button  className="btnShoppingCart float-lg-right" title="All requests"> <i className="fa fa-book "/></button>
+                    </Link>
                     <br/>
                     <hr className="hrCostume"/>
                     <div className="float-left text-center">

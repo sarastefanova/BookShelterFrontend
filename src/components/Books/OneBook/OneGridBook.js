@@ -12,7 +12,7 @@ class OneGridBook extends Component{
 
     state ={
         url: "",
-        color: "",
+        color: "#cc0044",
         isClicked: false,
         userHasTheBook: null,
         flagIndex: 6,
@@ -43,6 +43,7 @@ class OneGridBook extends Component{
     addFavourite=(e)=>{
         //console.log(this.props);
         this.setState({color:'yellow',isClicked:true})
+        debugger;
         this.props.addFavourite(this.props.bookName)
 
 
@@ -69,7 +70,7 @@ class OneGridBook extends Component{
         }else {
             oneBookTermFavUser=  (
                 <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-                    <i className="fa fa-heart favouriteHeart " style={{color:"red"}}/>
+                    <i className="fa fa-heart favouriteHeart " style={{color:this.state.color}}/>
                 </button>
             )
         }
@@ -137,7 +138,7 @@ class OneGridBook extends Component{
 
     cardHeader(){
 
-        return (<div className="card-header">
+        return (<div className="card-header cardOneBookHeader">
             <div className="row">
                 <div className="col-md-6 font-weight-bold font-italic headerText">
                     <span className="fontNameBook">{this.props.book.name}</span>

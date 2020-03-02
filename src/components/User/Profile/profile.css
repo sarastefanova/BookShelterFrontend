@@ -61,3 +61,10 @@
     margin-right: 180px;
     color: #cc0044 !important;
 }
+
+.btnShoppingCart{
+    background-color: #cc0044;
+    color: white !important;
+    border-radius: 5px;
+    width: 50px;
+}

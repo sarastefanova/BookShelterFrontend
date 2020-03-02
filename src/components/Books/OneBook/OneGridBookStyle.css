@@ -41,11 +41,9 @@
     font-size: 40px !important;
 }
 
-.fa-heart{
-
-
-}
-
 .roundedLinksBooks{
     border-radius: 20px!important;
+}
+.cardOneBookHeader{
+    height: 70px;
 }
