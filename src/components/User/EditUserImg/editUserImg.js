@@ -26,7 +26,8 @@ class editUserImg extends Component{
             detailsUser:[],
             selectedFile:null,
             id:this.props.match.params.id,
-            imagePreviewUrl:null
+            imagePreviewUrl:null,
+            user:UserService.currentUserValue
         }
     }
 
@@ -52,7 +53,8 @@ class editUserImg extends Component{
             "userName": e.target.userName.value,
             "address":e.target.address.value,
             "number":e.target.number.value,
-            "email":e.target.email.value
+            "email":e.target.email.value,
+            "roles":this.state.detailsUser.roles
         };
 
         const formData = new FormData();
@@ -65,8 +67,10 @@ class editUserImg extends Component{
         formData.append('number',e.target.number.value);
         formData.append('email',e.target.email.value);
 
-        //console.log(newUser);
-        console.log(formData);
+        console.log(newUser);
+       // console.log(formData);
+
+        debugger;
         this.updateUser(formData,newUser);
 
 
@@ -138,12 +142,14 @@ class editUserImg extends Component{
     }
 
     render(){
+        console.log(this.state.detailsUser.roles)
+       // console.log(this.state.user.roles)
         let $imagePreview;
         let $imagePreviewAvatar;
         if (this.state.imagePreviewUrl) {
             //$imagePreviewAvatar.hide();
             this.hideAvatar();
-            console.log(this.state.imagePreviewUrl);
+           //   console.log(this.state.imagePreviewUrl);
             $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" className="photoProfile rounded-circle" /> </div>);
         }
         if(this.state.detailsUser.file==null){
@@ -153,7 +159,7 @@ class editUserImg extends Component{
         }
 
 
-         console.log(this.state.detailsUser);
+        // console.log(this.state.detailsUser);
         return(
             <div className="container containerEditUserImg">
                 <form onSubmit={this.onFormSubmit}>

@@ -100,8 +100,8 @@ const allOrderedBooks=(props)=>{
     }
 
     // console.log(props.id)
-    const allBooksFav=Object.values(allBooksOrdered);
-    const oneBookTerm=allBooksFav.map((book,index)=>{
+    const allBooksOrder=Object.values(allBooksOrdered);
+    const oneBookTerm=allBooksOrder.map((book,index)=>{
         return(
             <OneOrderedBook onDeleteBookOrdered={onDeleteBookOrdered} id={id}  bookName={book.name} book={book} key={index} />
 
@@ -111,31 +111,40 @@ const allOrderedBooks=(props)=>{
 
 
 
-    return(
+   if(Object.values(allBooksOrder).length!==0){
+       return(
 
-        <div className="row container containerAllOrderedBooks">
+           <div className="row container containerAllOrderedBooks">
 
-            <div className="table-responsive">
-                <table className="table tr-history table-striped small">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Actions</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {oneBookTerm}
+               <div className="table-responsive">
+                   <table className="table tr-history table-striped small">
+                       <thead>
+                       <tr>
+                           <th scope="col"></th>
+                           <th scope="col">Name</th>
+                           <th scope="col">Actions</th>
+                           <th scope="col">Status</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       {oneBookTerm}
 
-                    </tbody>
-                </table>
-            </div>
-            <div className="paginateAllOrderedBooksStyle">
-                {paginate()}
-            </div>
-        </div>
+                       </tbody>
+                   </table>
+               </div>
+               <div className="paginateAllOrderedBooksStyle">
+                   {paginate()}
+               </div>
+           </div>
 
-    )
+       )
+   }else{
+       return (
+           <div className="row container containerAllOrderedBooks">
+
+           <h3 className="mt-5">No ordered books in the moment</h3>
+           </div>
+       )
+   }
 }
 export default allOrderedBooks;

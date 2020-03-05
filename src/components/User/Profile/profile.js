@@ -17,7 +17,8 @@ class MyProfile extends Component{
         this.state={
             user:UserService.currentUserValue,
             detailsUser:[],
-            photo:UserService.currentUserValue.file
+            photo:UserService.currentUserValue.file,
+            roleAdmin:false
 
         };
     }
@@ -36,6 +37,13 @@ class MyProfile extends Component{
                 }
             )
         });
+
+        if (this.state.user!==null && this.state.user.roles!=null){
+            if(this.state.user.roles.role==='admin'){
+                this.setState({roleAdmin:true})
+            }
+
+        }
 
         // this.setState({
         //     photo:avatar
@@ -62,8 +70,8 @@ class MyProfile extends Component{
 
 
     render() {
-        console.log((this.state.detailsUser));
-        //console.log(this.state.user.userName)
+       // console.log((this.state.detailsUser));
+       // console.log(this.state.user.roles)
        // const {currentUser}=JSON.parse(this.state.user);
         let $imgProfie;
         if(this.state.detailsUser.file!=null){
@@ -81,33 +89,40 @@ class MyProfile extends Component{
                     <Img alt="" src={authorPhoto} className="topPhoto rounded"/>
                     {$imgProfie}
                     <img src={avatar} id={"imgAvatar"} alt="" className=" imgProfileAvatar rounded-circle"/>
-                    <br/>
 
-                    <span className="font-weight-bold font-italic  nameBook mt-5">{this.state.user.name} {this.state.user.surname} </span>
-                    <br/>
-                    <span className="font-weight-bold font-italic ">
-                    {/*<Link to={"/editUser/"+this.state.detailsUser.id}>*/}
-                    {/*    <i className="fa fa-edit"/>Edit my profile*/}
-                    {/*</Link>*/}
-                        <Link to={"/editUserImg/"+this.state.user.id}>
-                            <span  className="linksProfile"> <i className="fa fa-edit "/>Edit my profile</span>
-                        </Link>
+
+                    <h4 className="font-weight-bold font-italic  nameBook mt-3">{this.state.user.name} {this.state.user.surname} </h4>
+
+                    <span className="font-weight-bold font-italic mt-2">
+                             <Link to={"/editUserImg/"+this.state.user.id}>
+                                <span  className="linksProfile"> <i className="fa fa-edit "/>Edit my profile</span>
+                            </Link>
                         <br/>
+                        <Link to={"/allBooks"}><span className="linksProfile2">
+                            <i className="fa fa-book"/>See more of our books!
+                        </span></Link>
+                        {this.state.roleAdmin &&
                         <Link to="/addBook">
-                            <span  className="linksProfile"> <i className="fa fa-edit "/>Add new book</span>
+                            <span  className="linksProfile3"> <i className="fa fa-book "/>Add new book</span>
                         </Link>
+                        }
                         <br/>
+                        {this.state.roleAdmin &&
                         <Link to="/addAuthor">
-                            <span  className="linksProfile"> <i className="fa fa-edit "/>Add new author</span>
+                            <span  className="linksProfile"> <i className="fa fa-user "/>Add new author</span>
                         </Link>
+                        }
+
                         <br/>
-                        <Link to="/allBooks">
-                            <span  className="linksProfile"> <i className="fa fa-edit "/>List all books</span>
-                        </Link>
-                        <br/>
+                        { this.state.roleAdmin &&
                         <Link to="/allAuthors">
-                            <span  className="linksProfile"> <i className="fa fa-edit "/>List all authors</span>
+                            <span  className="linksProfile3"> <i className="fa fa-user-o "/>List all authors</span>
                         </Link>
+                        }
+                        <br/>
+
+
+
 
                 </span>
 
@@ -115,13 +130,15 @@ class MyProfile extends Component{
 
                 </div>
                 <div className="col-md-8 mt-5">
-                    <span className="font-italic float-left colorH font-weight-bold nameProfile">All the favourite books of {this.state.detailsUser.username}</span>
+                    <h3 className="font-italic float-left colorH font-weight-bold nameProfile">All my favourite books</h3>
                     <Link to={"/allOrderedBooks/"+this.state.user.id}>
                         <button  className="btnShoppingCart  float-lg-right" title="My shopping cart">  <i className="fa fa-shopping-cart "/></button>
                     </Link>
+                    {this.state.roleAdmin &&
                     <Link to={"/allRequests"}>
                         <button  className="btnShoppingCart float-lg-right" title="All requests"> <i className="fa fa-book "/></button>
                     </Link>
+                    }
                     <br/>
                     <hr className="hrCostume"/>
                     <div className="float-left text-center">

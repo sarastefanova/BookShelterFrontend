@@ -8,9 +8,9 @@ const Example=(props)=> {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const deleteBook=()=>{
+    const deleteAuthor=()=>{
         props.onDelete(props.nameAndSurname,1);
-
+        debugger;
         handleClose();
     }
     return (
@@ -35,8 +35,8 @@ const Example=(props)=> {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={deleteBook}>
-                        Delete book
+                    <Button variant="primary" onClick={deleteAuthor}>
+                        Delete author
                     </Button>
                 </Modal.Footer>
             </Modal>

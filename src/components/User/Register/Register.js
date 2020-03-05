@@ -113,7 +113,7 @@ class Register extends Component{
 
                     <div className={'form-group' + (submitted && !user.number ? 'has-error' : '')}>
                         <label className="labelLogin2" htmlFor={"number"}>Phone number</label>
-                        <input name="number" value={user.number} pattern="^\d{3}-\d{3}-\d{3}$"  onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter phone number" />
+                        <input name="number" value={user.number} pattern="^\d{3}-\d{3}-\d{3}$"  onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="xxx-xxx-xxx" />
                     </div>
 
                     <div className={'form-group' + (submitted && !user.address ? 'has-error' : '')}>

@@ -10,22 +10,39 @@ const getAllBooks=(props)=>{
     const [allBooks,setAllBooks]=useState({});
     const [page,setPage]=useState(0);
     const [totalPages,setTotalPages]=useState(0);
-    const [pageSize,setPageSize]=useState(6);
+    const [pageSize,setPageSize]=useState(3);
 
     useEffect(()=>{
 
-        axios.get("/books",{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        }).then((data)=>{
-
-            setAllBooks(data.data.content),
-                setPage(data.data.page),
-                setPageSize(data.data.pageSize),
-                setTotalPages(data.data.totalPages)
-        })
+          // if(props.searchedBook){
+          //     debugger;
+          //     setAllBooks(props.booksSearch),
+          //         setPage(props.pageSearch),
+          //         setPageSize(props.pageSizeSearch),
+          //         setTotalPages(props.totalPagesSearch)
+          //     debugger;
+          //     console.log(allBooks)
+          // }else {
+          //
+          // }
+        // axios.get("/books",{
+        //     headers: {
+        //         'page':page,'page-size':pageSize
+        //     }
+        // }).then((data)=>{
+        //     debugger;
+        //     setAllBooks(data.data.content),
+        //         setPage(data.data.page),
+        //         setPageSize(data.data.pageSize),
+        //         setTotalPages(data.data.totalPages)
+        //     debugger;
+        // })
+                 setAllBooks(props.books);
+                setPage(props.page);
+                setPageSize(props.pageSize);
+                setTotalPages(props.totalPages);
     },[]);
+
 
 
     const loadRequests=(page)=>{
@@ -35,7 +52,7 @@ const getAllBooks=(props)=>{
                 'page':page,'page-size':pageSize
             }
         }).then((data)=>{
-
+            console.log(data);
             setAllBooks(data.data.content),
                 setPage(data.data.page),
                 setPageSize(data.data.pageSize),
@@ -44,6 +61,7 @@ const getAllBooks=(props)=>{
     }
 
     const onDeleteBook=(i)=>{
+        debugger;
         BookService.deleteBook(i).then((response)=>{
            loadRequests(0);
         })
@@ -51,18 +69,13 @@ const getAllBooks=(props)=>{
 
 
     //console.log(Array.of(props.books));
-    console.log(allBooks)
+    console.log(Object.values(allBooks));
     const allBooksFav=Object.values(allBooks);
     const oneBookGrid=allBooksFav.map((book,index)=>{
-      // console.log(book);
-        //getBookFav(book.name)
-       // console.log(userHasTheBook);
-       //  axios.get("/books/checkIfUserHasThisBookFav/"+props.id+"/"+book.name).then((result)=>{
-       //      setUserHasTheBook(result.data)
-       //  })
+
         return(
 
-            <OneBook  id={props.id} okFavourites={props.okFavourites} errorMessageFavourite={props.errorMessageFavourite} addFavourite={props.addFavourite} onDelete={onDeleteBook} bookName={book.name} author={book.author} book={book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
+            <OneBook getAllFavBooksUser={props.getAllFavBooksUser}  id={props.id} okFavourites={props.okFavourites} errorMessageFavourite={props.errorMessageFavourite} addFavourite={props.addFavourite} onDelete={onDeleteBook} bookName={book.name} author={book.author} book={book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
 
         ) ;
     });

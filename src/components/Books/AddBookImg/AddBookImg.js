@@ -95,7 +95,7 @@ render() {
     // console.log(this.props.bookRedirect);
     if (this.props.bookRedirect) {
         //debugger;
-        return <Redirect to='/'/>;
+        return <Redirect to='/myProfile'/>;
     }
     return (
         <div className="container containerAddBook">

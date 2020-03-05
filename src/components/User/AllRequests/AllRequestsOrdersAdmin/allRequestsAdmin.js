@@ -146,32 +146,41 @@ const allRequests=(props)=>{
 
 
 
-    return(
+  if(Object.values(allRequestsAdmin).length!==0){
+      return(
 
-        <div className="row container containerAllRequestsBooks">
+          <div className="row container containerAllRequestsBooks">
 
-            <div className="table-responsive">
-                <table className="table tr-history table-striped small">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Name user</th>
-                        <th scope="col">Name book</th>
-                        <th scope="col">Quantity of book available</th>
-                        <th scope="col">Name of the author</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {oneRequestTerm}
-                    </tbody>
-                </table>
-            </div>
-            <div className="paginateAllRequests">
-                {paginate()}
-            </div>
-        </div>
+              <div className="table-responsive">
+                  <table className="table tr-history table-striped small">
+                      <thead>
+                      <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Name user</th>
+                          <th scope="col">Name book</th>
+                          <th scope="col">Quantity of book available</th>
+                          <th scope="col">Name of the author</th>
+                          <th scope="col">Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      {oneRequestTerm}
+                      </tbody>
+                  </table>
+              </div>
+              <div className="paginateAllRequests">
+                  {paginate()}
+              </div>
+          </div>
 
-    )
+      )
+  }else{
+      return (
+          <div className="row container containerAllRequestsBooks">
+          <h3 className="mt-5">No requests for books in the moment</h3>
+          </div>
+
+      )
+  }
 }
 export default allRequests;

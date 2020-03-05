@@ -52,6 +52,8 @@ const allFavouriteBooks=(props)=>{
 
     console.log(allBooks)
     const allBooksFav=Object.values(allBooks);
+
+
     const oneBookTerm=allBooksFav.map((book,index)=>{
         return(
             <OneBookFavourite addOrder={props.addOrder} onDeleteBookFav={onDeleteBookFavourite} id={props.id} bookName={book.name} book={book} key={index} />
@@ -61,7 +63,7 @@ const allFavouriteBooks=(props)=>{
 
 
     const loadRequests=(page)=>{
-        debugger;
+        //debugger;
         return axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
             headers: {
                 'page':page,'page-size':pageSize
@@ -105,29 +107,36 @@ const allFavouriteBooks=(props)=>{
     }
 
 
-    return(
+    if(Object.values(allBooks).length!==0){
+        return (
+            <div className="row container containerAllFavBooks">
 
-        <div className="row container containerAllFavBooks">
+                <div className="table-responsive">
+                    <table className="table tr-history table-striped small">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {oneBookTerm}
 
-            <div className="table-responsive">
-                <table className="table tr-history table-striped small">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {oneBookTerm}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div className="paginateAllFavouriteBooksUser">
+                    {paginate()}
+                </div>
             </div>
-            <div className="paginateAllFavouriteBooksUser">
-                {paginate()}
-            </div>
-        </div>
+        )
+    }
+    else{
+        return (
+             <h3>No favourite books in the moment</h3>
+        )
+    }
 
-    )
 }
 export default allFavouriteBooks;

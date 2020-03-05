@@ -28,16 +28,16 @@ class UserService {
 
 
         return axios.get( '/user/login', {headers: headers}).then(response => {
-            debugger;
+           // debugger;
             console.log(JSON.stringify(response.data))
 
            // sessionStorage.setItem('currentUser', JSON.stringify(response.data));
-            debugger;
+            //debugger;
             localStorage.setItem('currentUser', JSON.stringify(response.data));
-            debugger;
+            //debugger;
             currentUserSubject.next(response.data);
            // currentUserSubjectSession.next(response.data)
-            debugger;
+           // debugger;
         });
     }
 
@@ -51,7 +51,7 @@ class UserService {
     }
 
     addFavouriteBook(id,name,user){
-        debugger;
+        //debugger;
         console.log("babsabj")
         localStorage.setItem('currentUser', JSON.stringify(user));
         currentUserSubject.next(user);
@@ -126,6 +126,7 @@ class UserService {
         const formParams = qs.stringify(newUser);
         console.log(JSON.stringify(newUser));
         localStorage.setItem('currentUser', JSON.stringify(newUser));
+        console.log(localStorage.getItem('currentUser'));
         currentUserSubject.next(newUser);
         return axios.patch("/user/editUser/"+id,user    , {
             headers: {

@@ -39,7 +39,7 @@ class App extends Component{
             booksNewest:[],
             books:[],
             totalPages:0,
-            pageSize:6,
+            pageSize:3,
             currentUser:new User(),
             idCurrentUser:0,
             errorMsg:false,
@@ -53,16 +53,25 @@ class App extends Component{
             show:false,
             orderedBooksUser:[],
             showOrder:false,
-            pomBooks:[]
+            pomBooks:[],
+            booksSearch:[],
+            totalPagesSearch:0,
+            pageSearch:0,
+            pageSizeSearch:6,
+            searchedBook:false,
+            getAllFavBooksUser:[],
+            user:UserService.currentUserValue
         }
     }
 
     componentDidMount() {
 
-     //   this.loadBooksPaginate();
+        this.loadBooksPaginate();
        this.saveCurrentUser();
+
        this.loadAuthorsPaginate();
         this.loadBooksNewest();
+       this.getAllFavouriteBooksUser();
     }
 
     saveCurrentUser=()=>{
@@ -106,7 +115,7 @@ class App extends Component{
     createBook = (book) => {
         BookService.addNewBook(book).then((response)=>{
             const book = response.data;
-            console.log(response+"dd");
+           // console.log(response+"dd");
 
             this.setState((prevState) => {
                 const newBookRef = [...prevState.books, book];
@@ -121,6 +130,16 @@ class App extends Component{
 
     };
 
+    getAllFavouriteBooksUser=()=>{
+
+        axios.get("/user/getAllFavouriteBooksUser/"+this.state.user.id).then((result)=>{
+             debugger;
+            this.setState({
+                getAllFavBooksUser:result.data
+            })
+        })
+    }
+
 
     createBookImg=(book)=>{
         BookService.addNewBookWithImg(book).then((response)=>{
@@ -129,7 +148,7 @@ class App extends Component{
             });
             debugger;
             const book = response.data;
-            console.log(response+"img");
+            //console.log(response+"img");
 
             this.setState((prevState) => {
                 const newBookRef = [...prevState.books, book];
@@ -147,7 +166,7 @@ class App extends Component{
 
         },error => {
             if (error.response.status === 409) {
-                console.log("error");
+                //console.log("error");
 
                 this.setState({
                     errorMsg:true
@@ -162,7 +181,7 @@ class App extends Component{
     createAuthorImg=(author)=>{
         AuthorService.addNewAuthorWithImg(author).then((response)=>{
             const author = response.data;
-            console.log(response+"img");
+           // console.log(response+"img");
 
             this.setState({
                 authorRedirect:true
@@ -180,7 +199,7 @@ class App extends Component{
             this.loadAuthorsPaginate();
         },error => {
             if (error.response.status === 409) {
-                console.log("error");
+               // console.log("error");
 
                 this.setState({
                     errorMsgAuthor:true
@@ -224,6 +243,8 @@ class App extends Component{
             })
         })
 
+        //this.getAllFavouriteBooksUser(this.state.currentUser.id);
+
     }
 
     loadBooksPaginateFavBooks = (page=0) => {
@@ -243,7 +264,7 @@ class App extends Component{
 
 
     loadAuthorsPaginate = (page=0) => {
-        //debugger;
+       // debugger;
         AuthorService.fetchAuthorsTermsPaged(page,this.state.pageSizeAuthor).then((data) => {
 
             this.setState({
@@ -279,7 +300,7 @@ class App extends Component{
     updateAuthors= ((editedAuthor) => {
         AuthorService.updateAuthorTerm(editedAuthor).then((response)=>{
             const newAuthor = response.data;
-            console.log(newAuthor);
+        //    console.log(newAuthor);
             this.setState((prevState) => {
                 const newAuthorRef = prevState.authors.map((author)=>{
                     //debugger;
@@ -322,12 +343,7 @@ class App extends Component{
     deleteAuthorFlag=(i,flag)=>{
         AuthorService.deleteAuthorFlag(i,flag).then((response)=>{
             // console.log(flag);
-            this.setState((state)=>{
-                const authors=state.authors.map((t)=>{
-                    return t.nameAndSurname!==i;
-                });
-                return {authors}
-            })
+            this.loadAuthorsPaginate();
         })
     };
 
@@ -347,20 +363,26 @@ class App extends Component{
     searchData = (search) => {
 
            if (search!==""){
-               BookService.searchBookByName(search,this.state.pageSize).then((response)=>{
+               debugger;
+               BookService.searchBookByNamePage(search,this.state.pageSizeSearch).then((response)=>{
 
                    this.setState({
-                       books: response.data,
-                       page:0,
-                      //  pageSize:0,
-                       //totalPages:0
+                       booksSearch: response.data.content,
+                       pageSearch:response.data.page,
+                       pageSizeSearch:response.data.pageSize,
+                       totalPagesSearch:response.data.totalPages,
+                       searchedBook:true
                    })
+                   debugger;
+                  // console.log(this.state.booksSearch)
                })
 
            }
            else {
-
+               this.setState({  searchedBook:false})
                this.loadBooksPaginate(0);
+
+               debugger;
            }
     };
 
@@ -407,7 +429,7 @@ class App extends Component{
             // this.setState({
             //     okFavourites:true
             // })
-            console.log("add");
+         //   console.log("add");
         }, error => {
             if (error.response.status === 409) {
                 this.setState({
@@ -438,7 +460,7 @@ class App extends Component{
             // this.setState({
             //     okFavourites:true
             // })
-            console.log("add");
+          //  console.log("add");
         }, error => {
             if (error.response.status === 409) {
                 this.setState({
@@ -478,7 +500,7 @@ class App extends Component{
 
     handleShow = () => this.setState({show:false});
     modalFavouriteDuplicate(){
-            console.log(this.state.show)
+          //  console.log(this.state.show)
            return(
                <Modal show={this.state.show} >
                    <Modal.Header closeButton>
@@ -499,7 +521,7 @@ class App extends Component{
 
     handleShowOrder = () => this.setState({showOrder:false});
     modalFavouriteDuplicateOrders(){
-        console.log(this.state.showOrder)
+       // console.log(this.state.showOrder)
         return(
             <Modal show={this.state.showOrder} >
                 <Modal.Header closeButton>
@@ -517,6 +539,7 @@ class App extends Component{
     }
 
   render() {
+        //console.log(this.state.currentUser)
 const {currentUser}=this.state;
 let {idUser}="";
 if(this.state.currentUser!==null){
@@ -588,7 +611,7 @@ if(this.state.currentUser!==null){
                     <DetailsBook />}>
                 </Route>
 
-                <Route path={"/allBooks"} render={()=><GridBooks id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} totalPages={this.state.totalPages} books={this.state.books}/>}>
+                <Route path={"/allBooks"} render={()=><GridBooks getAllFavBooksUser={this.state.getAllFavBooksUser} searchedBook={this.state.searchedBook} id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} page={this.state.page} pageSize={this.state.pageSize} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
                 <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>
