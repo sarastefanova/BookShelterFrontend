@@ -71,7 +71,11 @@ class App extends Component{
 
        this.loadAuthorsPaginate();
         this.loadBooksNewest();
-       this.getAllFavouriteBooksUser();
+       //this.getAllFavouriteBooksUser();
+
+       // if(this.state.user!==null){
+       //     this.loadBooksPaginateAllBooksUser();
+       // }
     }
 
     saveCurrentUser=()=>{
@@ -130,15 +134,15 @@ class App extends Component{
 
     };
 
-    getAllFavouriteBooksUser=()=>{
-
-        axios.get("/user/getAllFavouriteBooksUser/"+this.state.user.id).then((result)=>{
-             debugger;
-            this.setState({
-                getAllFavBooksUser:result.data
-            })
-        })
-    }
+    // getAllFavouriteBooksUser=()=>{
+    //
+    //     axios.get("/user/getAllFavouriteBooksUser/"+this.state.user.id).then((result)=>{
+    //          debugger;
+    //         this.setState({
+    //             getAllFavBooksUser:result.data
+    //         })
+    //     })
+    // }
 
 
     createBookImg=(book)=>{
@@ -233,19 +237,60 @@ class App extends Component{
 
     loadBooksPaginate = (page=0) => {
         //debugger;
-        BookService.fetchBooksTermsPaged(page,this.state.pageSize).then((data) => {
-        
-            this.setState({
-                books: data.data.content,
-                page:data.data.page,
-                pageSize:data.data.pageSize,
-                totalPages:data.data.totalPages
+        if(this.state.user!==null){
+            BookService.fetchBooksTermsPaged(page,this.state.pageSize,this.state.user.id).then((data) => {
+
+                //console.log(data);
+                if(data!==""){
+                    this.loadBooksPaginateAllBooksUser();
+                }else {
+                    this.setState({
+                        books: data.data.content,
+                        page:data.data.page,
+                        pageSize:data.data.pageSize,
+                        totalPages:data.data.totalPages
+                    })
+                    debugger;
+                }
+
             })
-        })
+        }else {
+            BookService.fetchBooksTermsPagedUser(page,this.state.pageSize,0).then((data) => {
+                //debugger;
+                //console.log(data.data);
+                this.setState({
+                    books: data.data.content,
+                    page:data.data.page,
+                    pageSize:data.data.pageSize,
+                    totalPages:data.data.totalPages
+                });
+
+            })
+        }
 
         //this.getAllFavouriteBooksUser(this.state.currentUser.id);
 
     }
+
+    loadBooksPaginateAllBooksUser = (page=0) => {
+        //debugger;
+        if(this.state.user!==null){
+            BookService.fetchBooksTermsPagedUser(page,this.state.pageSize,this.state.user.id).then((data) => {
+                debugger;
+                //console.log(data.data.content.books);
+                this.setState({
+                    books: data.data.content,
+                    page:data.data.page,
+                    pageSize:data.data.pageSize,
+                    totalPages:data.data.totalPages
+                })
+            })
+        }
+
+        //this.getAllFavouriteBooksUser(this.state.currentUser.id);
+
+    }
+
 
     loadBooksPaginateFavBooks = (page=0) => {
 
@@ -540,10 +585,13 @@ class App extends Component{
 
   render() {
         //console.log(this.state.currentUser)
+
 const {currentUser}=this.state;
 let {idUser}="";
 if(this.state.currentUser!==null){
     idUser=this.state.currentUser.id
+}else{
+    idUser=0;
 }
 
 
@@ -611,7 +659,7 @@ if(this.state.currentUser!==null){
                     <DetailsBook />}>
                 </Route>
 
-                <Route path={"/allBooks"} render={()=><GridBooks getAllFavBooksUser={this.state.getAllFavBooksUser} searchedBook={this.state.searchedBook} id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} page={this.state.page} pageSize={this.state.pageSize} totalPages={this.state.totalPages} books={this.state.books}/>}>
+                <Route path={"/allBooks"} render={()=><GridBooks   id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} page={this.state.page} pageSize={this.state.pageSize} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
                 <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>

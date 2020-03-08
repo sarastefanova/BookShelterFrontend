@@ -19,7 +19,9 @@ class OneGridBook extends Component{
         flagIndex: 6,
         getAllFavBooksUser:{},
         user:UserService.currentUserValue,
-        roleAdmin:false
+        roleAdmin:false,
+        text:null,
+        isOrdered:""
     }
 
 
@@ -34,6 +36,10 @@ class OneGridBook extends Component{
             //         getAllFavBooksUser:result.data
             //     })
             // })
+        // axios.get("/books/getInFavouritesBook/"+this.props.id+"/"+this.props.book.name).then((response)=>{
+        //    // console.log(response.data+" pom");
+        //     this.setState({text:response.data})
+        // })
 
 
         if (this.state.user!==null){
@@ -56,6 +62,7 @@ class OneGridBook extends Component{
         this.props.addFavourite(this.props.bookName)
 
 
+
     }
 
 
@@ -66,25 +73,32 @@ class OneGridBook extends Component{
     render() {
 
        //  console.log((this.state.getAllFavBooksUser))
-         let {oneBookTermFavUser}="";
-         const  pom=Object.values(this.props.getAllFavBooksUser).map((book)=>book.name===this.props.bookName);
-        const hasBook=pom.filter(p=>p===true).length;
-        console.log(hasBook);
-        if(hasBook!==0){
-            oneBookTermFavUser=  (
-                <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-                    <i className="fa fa-heart favouriteHeart " style={{color:"yellow"}}/>
-                </button>
-            )
-        }else {
-            oneBookTermFavUser=  (
-                <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-                    <i className="fa fa-heart favouriteHeart " style={{color:this.state.color}}/>
-                </button>
-            )
+        let {pom}=this.state.isOrdered;
+        if(this.props.inFavourite===1){
+            pom="yellow";
         }
+        if(this.props.inFavourite===0){
+            pom=this.state.color;
+        }
+       //   const  pom=Object.values(this.props.getAllFavBooksUser).map((book)=>book.name===this.props.bookName);
+       //  const hasBook=pom.filter(p=>p===true).length;
+       //  console.log(hasBook);
+       //  if(this.state.text===1){
+       //      oneBookTermFavUser=  (
+       //          <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+       //              <i className="fa fa-heart favouriteHeart " style={{color:"yellow"}}/>
+       //          </button>
+       //      )
+       //  } if(this.state.text===0){
+       //      oneBookTermFavUser=  (
+       //          <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+       //              <i className="fa fa-heart favouriteHeart " style={{color:this.state.color}}/>
+       //          </button>
+       //      )
+       //  }
 
-
+        //console.log(this.state.text);
+       console.log(this.props.inFavourite);
 
         return(
 
@@ -92,7 +106,8 @@ class OneGridBook extends Component{
                 <div className="card ">
                     <div className="book">
                         {this.cardHeader()}
-                        {this.Example(oneBookTermFavUser)}
+                        {this.Example(pom)}
+                        {/*{this.Example()}*/}
 
                         {this.cardFooter()}
 
@@ -103,7 +118,7 @@ class OneGridBook extends Component{
 
     }
 
-    Example = (oneBookTermFavUser) => {
+    Example = (pom) => {
 
             return(
                 <div>
@@ -117,7 +132,11 @@ class OneGridBook extends Component{
                             <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
                     }
 
-                    {this.state.user!==null &&oneBookTermFavUser}
+                    {this.state.user!==null &&
+                                 <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                                     <i className="fa fa-heart favouriteHeart " style={{color:pom}}/>
+                                 </button>
+                    }
 
                 </div>
             )

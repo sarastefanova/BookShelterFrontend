@@ -18,13 +18,31 @@ const BookService={
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-    },fetchBooksTermsPaged:(page,pageSize)=>{
-        return axios.get("/books",{
+    },fetchBooksTermsPaged:(page,pageSize,id)=>{
+       // debugger;
+        if(id===0){
+            return axios.get("/books?id="+id,{
+                headers: {
+                    'page':page,'page-size':pageSize
+                }
+            })
+        }else{
+            return axios.get("/books?id="+id,{
+                headers: {
+                    'page':page,'page-size':pageSize
+                }
+            })
+        }
+
+    },
+    fetchBooksTermsPagedUser:(page,pageSize,id)=>{
+        //debugger;
+        return axios.get("/books/getAllBooksUser?id="+id,{
             headers: {
                 'page':page,'page-size':pageSize
             }
         })
-    },
+},
     fetchBooksTermsPagedFavouriteBookUser:(page,pageSize,id)=>{
         debugger;
         return axios.get("/books/getAllBooksAuthorFavourite/"+id,{

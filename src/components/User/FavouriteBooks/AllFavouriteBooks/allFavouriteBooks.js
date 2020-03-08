@@ -40,7 +40,7 @@ const allFavouriteBooks=(props)=>{
                     'page':page,'page-size':pageSize
                 }
             }).then((data)=>{
-
+                console.log(data.data.content)
                 setAllBooks(data.data.content),
                     setPage(data.data.page),
                     setPageSize(data.data.pageSize),
