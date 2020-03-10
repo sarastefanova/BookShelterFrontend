@@ -8,7 +8,9 @@ const SearchFiled=(props)=>{
 
         props.onSearch(e.target.searchTerm.value);
         e.target.searchTerm.value="";
-        history.push("/allBooks");
+        //history.push("/allBooks");
+       // window.location.reload();
+        debugger;
     }
     return(
       <form onSubmit={onSearch}>

@@ -1,12 +1,12 @@
 .containerAllRequestsBooks{
     margin-top: 50px!important;
-    width: 850px !important;
+    width: 900px !important;
     margin-left: 350px!important;
     height: 650px;
 }
 
 .paginateAllRequests{
     position: absolute;
-    margin-top: 540px;
-    margin-left: 350px;
+    margin-top: 500px;
+    margin-left: 320px;
 }

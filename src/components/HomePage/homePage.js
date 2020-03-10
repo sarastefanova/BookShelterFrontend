@@ -67,9 +67,9 @@ class homePage extends Component{
                       </div>
                   </div>
               </div>
-             <div className="row mt-3">
-                 <Link to={"/allBooks"} className="btn ColorBtn btnBuy btn-primary">See all our books!</Link>
-             </div>
+             {/*<div className="row mt-3">*/}
+             {/*    <Link to={"/allBooks"} className="btn ColorBtn btnBuy btn-primary">See all our books!</Link>*/}
+             {/*</div>*/}
           </div>
 
         );

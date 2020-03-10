@@ -49,22 +49,30 @@ class OneGridBook extends Component{
 
         }
 
+
+
       //  this.setHasTheBook();
 
     }
 
 
 
+
+
     addFavourite=(e)=>{
         //console.log(this.props);
-        this.setState({color:'yellow',isClicked:true})
+       // this.setState({color:'yellow',isClicked:true})
+        this.setState({isClicked:!this.state.isClicked});
+        // if(this.state.isClicked){
+        //     this.setState({color:'yellow'})
+        //     debugger;
+        // }
         debugger;
-        this.props.addFavourite(this.props.bookName)
+        this.props.addFavourite(this.props.bookName,this.props.page)
 
 
 
     }
-
 
 
 
@@ -73,13 +81,7 @@ class OneGridBook extends Component{
     render() {
 
        //  console.log((this.state.getAllFavBooksUser))
-        let {pom}=this.state.isOrdered;
-        if(this.props.inFavourite===1){
-            pom="yellow";
-        }
-        if(this.props.inFavourite===0){
-            pom=this.state.color;
-        }
+
        //   const  pom=Object.values(this.props.getAllFavBooksUser).map((book)=>book.name===this.props.bookName);
        //  const hasBook=pom.filter(p=>p===true).length;
        //  console.log(hasBook);
@@ -96,17 +98,24 @@ class OneGridBook extends Component{
        //          </button>
        //      )
        //  }
-
-        //console.log(this.state.text);
-       console.log(this.props.inFavourite);
+       //  let  pom=this.state.isOrdered;
+       //  if(this.state.text===1){
+       //      pom=1;
+       //  }
+       //  console.log(this.state.text);
+    //   console.log(this.props.inFavourite);
 
         return(
+
+
+
+
 
             <div className={this.props.colClass}>
                 <div className="card ">
                     <div className="book">
                         {this.cardHeader()}
-                        {this.Example(pom)}
+                        {this.Example()}
                         {/*{this.Example()}*/}
 
                         {this.cardFooter()}
@@ -132,10 +141,48 @@ class OneGridBook extends Component{
                             <img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className="card-img-top imgWidthAndHeight"/>
                     }
 
+                    {/*{this.state.user!==null &&*/}
+                    {/*this.state.isClicked*/}
+                    {/*&&*/}
+                    {/*<button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">*/}
+                    {/*    <i className="fa fa-heart favouriteHeart " style={{color: "#cc0044"}}/>*/}
+                    {/*</button>*/}
+                    {/*}*/}
+
                     {this.state.user!==null &&
-                                 <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-                                     <i className="fa fa-heart favouriteHeart " style={{color:pom}}/>
-                                 </button>
+                    this.props.inFavourite===0 &&
+
+                        <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                        <i className="fa fa-heart-o favouriteHeart " style={{color: "#cc0044"}}/>
+                        </button>
+
+                    }
+
+                    {this.state.user!==null &&
+                    this.props.inFavourite===0 &&
+
+                    <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                        <i className="fa fa-heart-o favouriteHeart " style={{color: "#cc0044"}}/>
+                    </button>
+
+                    }
+
+                    {/*{this.state.user!==null &&*/}
+                    {/*pom===1*/}
+                    {/*&&*/}
+                    {/*<button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">*/}
+                    {/*    <i className="fa fa-heart favouriteHeart " style={{color: "#cc0044"}}/>*/}
+                    {/*</button>*/}
+                    {/*}*/}
+
+
+
+                    {this.state.user!==null &&
+                    this.props.inFavourite===1 &&
+                    <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                        <i className="fa fa-heart favouriteHeart " style={{color: "#cc0044"}}/>
+                    </button>
+
                     }
 
                 </div>

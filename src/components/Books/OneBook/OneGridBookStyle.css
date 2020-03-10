@@ -16,10 +16,10 @@
     position: absolute;
     top: 25%;
     left: 80%;
-    /*border: 1px solid #cc0044 !important;*/
-    /*border-radius: 30px!important;*/
-    /*background-color: #ffe1e1 !important;*/
-    background-color: transparent;
+    border: 1px solid #cc0044 !important;
+    border-radius: 50px!important;
+    background-color: #ffe1e1 !important; opacity: 90%;
+  //  background-color: transparent;
 
 }
 

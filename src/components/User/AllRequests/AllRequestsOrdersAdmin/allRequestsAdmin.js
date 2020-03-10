@@ -16,17 +16,7 @@ const allRequests=(props)=>{
 
     useEffect(()=>{
 
-        // axios.get("/user/getAllRequestsOrders").then((data)=>{
-        //     setAllRequests(data.data)
-        // })
 
-        // axios.get("/user/getAllRequestsOrdersStatus").then((data)=>{
-        //     setAllRequests(data.data)
-        // })
-
-        // axios.get("/user/getAllRequests").then((data)=>{
-        //     setAllRequests(data.data)
-        // })ovaa go koristeme za bez page
 
          axios.get("/user/getAllRequestsPaginate",{
             headers: {
@@ -155,12 +145,14 @@ const allRequests=(props)=>{
                   <table className="table tr-history table-striped small">
                       <thead>
                       <tr>
+
                           <th scope="col"></th>
                           <th scope="col">Name user</th>
                           <th scope="col">Name book</th>
                           <th scope="col">Quantity of book available</th>
                           <th scope="col">Name of the author</th>
                           <th scope="col">Actions</th>
+                          <th scope="col"></th>
                       </tr>
                       </thead>
                       <tbody>

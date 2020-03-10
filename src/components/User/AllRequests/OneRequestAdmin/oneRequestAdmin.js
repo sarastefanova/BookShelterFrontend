@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import axios from '../../../../cutom-axios/axios'
 import React, {Component} from "react";
-
+import './styleOneRequest.css'
 class OneRequest extends Component{
 
     constructor(props) {
@@ -9,7 +9,10 @@ class OneRequest extends Component{
 
         this.state={
             authorsDetails:[],
-            userDetails:[]
+            userDetails:[],
+            approved:false,
+            declined:false,
+            closeApprove:false
         }
     }
 
@@ -35,6 +38,9 @@ class OneRequest extends Component{
             debugger;
             this.props.approveOrder(this.state.userDetails.id,this.props.book.name);
 
+        }else{
+            //alert('You can\'t decline this request');
+            this.setState({approved:true})
         }
     };
 
@@ -43,12 +49,18 @@ class OneRequest extends Component{
 
             this.props.declineOrder(this.state.userDetails.id,this.props.book.name);
 
+        }else{
+            //alert('You can\'t approve this request');
+            this.setState({declined:true})
         }
     }
+
     render() {
 
         return(
+
             <tr>
+
                 <td><img src={`data:image/jpeg;base64,${this.props.book.file}`}  alt="" className=" imgAuthorOne rounded-circle"/></td>
                 <td scope="col"><span className="nameAuthorOne font-weight-bold">{this.state.userDetails.username}</span></td>
                 <td scope="col"><span className="nameAuthorOne font-weight-bold">{this.props.book.name}</span></td>
@@ -59,9 +71,11 @@ class OneRequest extends Component{
                         <span className="fa fa-first-order"/>
                         <span><strong>Accept</strong></span>
                     </button>
-                    <button onClick={this.declineOrder}>
-                        Decline
+                    <button onClick={this.declineOrder} className="btn btn-sm btn-primary">
+                        <span className="fa fa-trash"/>
+                        <strong>Decline</strong>
                     </button>
+                    {/*<ModalDecline availability={this.state.approve}/>*/}
                     {/*<button  className="btn btn-sm btn-outline-secondary ">*/}
                     {/*    <span className="fa fa-remove"/>*/}
                     {/*    <span><strong>Remove</strong></span>*/}
@@ -69,7 +83,13 @@ class OneRequest extends Component{
                     {/*<ConfirmDeleteFavBook onDeleteBookFav={this.props.onDeleteBookFav}  bookName={this.props.book.name}/>*/}
 
                 </td>
+                {this.state.approved &&
+                <td scope="col" className="font-weight-bold colorApproveDecline">You can't decline this request!</td>
+                }
+                {this.state.declined &&
+                <td scope="col"  className="font-weight-bold colorApproveDecline">You can't decline this request!</td>}
             </tr>
+
         )
     }
 }

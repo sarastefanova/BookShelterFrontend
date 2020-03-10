@@ -1,0 +1,12 @@
+.colorApproveDecline{
+    color:#cc0044;
+}
+
+td button{
+    margin: 2px;
+}
+
+.btn-primary{
+    background-color: #cc0044 !important;
+
+}

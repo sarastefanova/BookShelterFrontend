@@ -46,6 +46,7 @@ class editUserImg extends Component{
 
         e.preventDefault();
 
+        console.log(this.state.detailsUser.roles);
         const newUser = {
             "id":this.state.id,
             "name": e.target.name.value,
@@ -67,7 +68,7 @@ class editUserImg extends Component{
         formData.append('number',e.target.number.value);
         formData.append('email',e.target.email.value);
 
-        console.log(newUser);
+        //console.log(newUser);
        // console.log(formData);
 
         debugger;
@@ -142,7 +143,7 @@ class editUserImg extends Component{
     }
 
     render(){
-        console.log(this.state.detailsUser.roles)
+       // console.log(this.state.detailsUser.roles)
        // console.log(this.state.user.roles)
         let $imagePreview;
         let $imagePreviewAvatar;
