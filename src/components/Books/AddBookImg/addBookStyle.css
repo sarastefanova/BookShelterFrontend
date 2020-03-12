@@ -28,6 +28,11 @@
     height: 100px;
 }
 
+.imgPreview{
+    border-radius: 50%;
+    border:1px solid #cc0044;
+}
+
 .errorMessage2{
     margin-left: 280px;
 }

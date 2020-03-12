@@ -80,7 +80,7 @@ render() {
 
     let $imagePreview;
     if (this.state.imagePreviewUrl) {
-        $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="200" height="200"/> </div>);
+        $imagePreview = (<div className="image-container" ><img className="imgPreview" src={this.state.imagePreviewUrl} alt="icon" width="100" height="100"/> </div>);
     }
 
     if (this.props.bookRedirect) {

@@ -32,9 +32,6 @@ class OneGridBook extends Component{
         }
 
 
-
-
-
     }
 
 
@@ -43,7 +40,7 @@ class OneGridBook extends Component{
 
     addFavourite=(e)=>{
 
-        this.setState({isClicked:!this.state.isClicked});
+        this.setState({isClicked:true},() => this.setState({isClicked: false}));
 
         debugger;
         this.props.addFavourite(this.props.bookName,this.props.page)
@@ -57,7 +54,7 @@ class OneGridBook extends Component{
 
 
     render() {
-
+        console.log(this.state.isClicked);
         return(
 
             <div className={this.props.colClass}>
@@ -92,6 +89,17 @@ class OneGridBook extends Component{
 
 
 
+
+                    {this.state.user!==null &&
+                    this.props.inFavourite===1 &&
+                    <button onClick={this.addFavourite}  className={"btn favourite"} title="Favourite">
+                        <i className="fa fa-heart favouriteHeart " style={{color: "#cc0044"}}/>
+                    </button>
+
+                    }
+
+
+
                     {this.state.user!==null &&
                     this.props.inFavourite===0 &&
 
@@ -101,25 +109,16 @@ class OneGridBook extends Component{
 
                     }
 
-                    {this.state.user!==null &&
-                    this.props.inFavourite===0 &&
-
-                    <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-                        <i className="fa fa-heart-o favouriteHeart " style={{color: "#cc0044"}}/>
-                    </button>
-
+                    {
+                        this.state.isClicked &&
+                        <button onClick={this.addFavourite} className={"btn favourite"} title="Favourite">
+                            <i className="fa fa-heart favouriteHeart " style={{color: "#cc0044"}}/>
+                        </button>
                     }
 
 
 
 
-                    {this.state.user!==null &&
-                    this.props.inFavourite===1 &&
-                    <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
-                        <i className="fa fa-heart favouriteHeart " style={{color: "#cc0044"}}/>
-                    </button>
-
-                    }
 
                 </div>
             )
