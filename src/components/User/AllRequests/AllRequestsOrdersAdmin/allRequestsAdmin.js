@@ -77,14 +77,7 @@ const allRequests=(props)=>{
         }
     }
 
-    // const  onDeleteBookFavourite=(name)=>{
-    //     console.log(name)
-    //     axios.delete("/user/deleteFavBookUser/"+props.id+"?name="+name).then((response)=>{
-    //         axios.get("/user/allFavouriteBooksOfUser/"+props.id).then((data)=>{
-    //             setAllBooks(data.data)
-    //         })
-    //     })
-    // }
+
 
     const approveOrder=(userId,bookName)=>{
         UserService.approveOrder(userId,bookName).then((response)=>{
@@ -123,7 +116,7 @@ const allRequests=(props)=>{
 
     console.log(totalPages)
     const allRequestsAdminBooks=Object.values(allRequestsAdmin);
-    //console.log((JSON.stringify(allRequestsAdminBooks[3])))
+
     const oneRequestTerm=allRequestsAdminBooks.map((book,index)=>{
 
 

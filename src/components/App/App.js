@@ -6,11 +6,9 @@ import {BrowserRouter as Router,Redirect,Route} from "react-router-dom";
 import Footer from '../Footer/footer';
 import Login from '../User/LogIn/LogIn';
 import Register from "../User/Register/Register";
-import AuthorAdd from '../Author/AddAuthor/addAuthor';
 import AuthorEdit from '../Author/EditAuthor/editAuthor';
 import EditUser from '../User/EditUser/editUser';
 import EditUserImg from '../User/EditUserImg/editUserImg';
-import BookAdd from '../Books/AddBook/addBook';
 import EditBook from '../Books/EditBook/editBook';
 import AuthorService from '../../repository/axiosAuthorRepository';
 import BookService from '../../repository/axiosBookRepository';
@@ -23,9 +21,9 @@ import UserService from '../../repository/axiosUserRepository';
 import {User} from '../../model/user';
 import MyProfile from '../User/Profile/profile';
 import AllAuthors from '../Author/AllAuthors/allAuthors';
-import ModalFavourite from '../ModalFavoutite/modalFavourite'
+
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+
 import axios from "../../cutom-axios/axios";
 import AllOrderedBooks from '../User/OrderedBooks/AllOrderedBooksUser/allOrderedBooks'
 import AllRequests from '../User/AllRequests/AllRequestsOrdersAdmin/allRequestsAdmin'
@@ -71,11 +69,7 @@ class App extends Component{
         this.loadBooksPaginate();
        this.loadAuthorsPaginate();
         this.loadBooksNewest();
-       //this.getAllFavouriteBooksUser();
 
-       // if(this.state.user!==null){
-       //     this.loadBooksPaginateAllBooksUser();
-       // }
     }
 
     saveCurrentUser=()=>{
@@ -91,15 +85,7 @@ class App extends Component{
 
     };
 
-    loadAuthors = () => {
-        AuthorService.getAllAuthors().then(response=>{
-            this.setState((prevState)=>{
-                return {
-                    "authors":response.data
-                }
-            })
-        })
-    };
+
 
 
     createAuthor = (author) => {
@@ -113,25 +99,6 @@ class App extends Component{
 
                 return {
                     "authors": newAuthorRef
-                }
-            });
-        });
-
-    };
-
-
-    createBook = (book) => {
-        BookService.addNewBook(book).then((response)=>{
-            const book = response.data;
-           // console.log(response+"dd");
-
-            this.setState((prevState) => {
-                const newBookRef = [...prevState.books, book];
-                //or
-                //const terms = prevState.terms.concat(newTerm);
-
-                return {
-                    "books": newBookRef
                 }
             });
         });
@@ -211,15 +178,7 @@ class App extends Component{
         });
     };
 
-    loadBooks = () => {
-        BookService.getAllBooks().then(response=>{
-            this.setState((prevState)=>{
-                return {
-                    "books":response.data
-                }
-            })
-        })
-    };
+
 
     loadBooksNewest = () => {
         BookService.getAllBooksNewest().then(response=>{
@@ -237,9 +196,10 @@ class App extends Component{
             BookService.fetchBooksTermsPaged(page,this.state.pageSize,this.state.user.id).then((data) => {
                 debugger;
                 console.log(data);
-                if(data!==""){
+                debugger;
+                if(data!==null){
                     debugger;
-                    this.loadBooksPaginateAllBooksUser();
+                    this.loadBooksPaginateAllBooksUser(page);
                 }else {
                     this.setState({
                         books: data.data.content,
@@ -265,7 +225,7 @@ class App extends Component{
             })
         }
 
-        //this.getAllFavouriteBooksUser(this.state.currentUser.id);
+
 
     }
 
@@ -283,25 +243,11 @@ class App extends Component{
                 })
             })
         }
-
-        //this.getAllFavouriteBooksUser(this.state.currentUser.id);
-
-    }
-
-
-    loadBooksPaginateFavBooks = (page=0) => {
-
-        BookService.fetchBooksTermsPagedFavouriteBookUser(page,this.state.pageSize,this.state.currentUser.id).then((data) => {
-            debugger;
-            this.setState({
-                pomBooks: data.data.content,
-                // page:data.data.page,
-                // pageSize:data.data.pageSize,
-                // totalPages:data.data.totalPages
-            })
-        })
+  //this.getAllFavouriteBooksUser(this.state.currentUser.id);
 
     }
+
+
 
 
 
@@ -359,29 +305,6 @@ class App extends Component{
     });
 
 
-
-    deleteBook=(i)=>{
-        BookService.deleteBook(i).then((response)=>{
-            // this.setState((state)=>{
-            //     const books=state.books.filter((t)=>{
-            //         return t.name!==i;
-            //     });
-            //     return {books}
-            // })
-        })
-    };
-
-    deleteAuthor=(i)=>{
-        AuthorService.deleteAuthorTerm(i).then((response)=>{
-            this.setState((state)=>{
-                const authors=state.authors.filter((t)=>{
-                    return t.nameAndSurname!==i;
-                });
-                return {authors}
-            })
-        })
-    };
-
     deleteAuthorFlag=(i,flag)=>{
         AuthorService.deleteAuthorFlag(i,flag).then((response)=>{
             // console.log(flag);
@@ -393,14 +316,22 @@ class App extends Component{
         console.log(name)
         axios.delete("/user/deleteFavBookUser/"+this.state.currentUser.id+"?name="+name).then((response)=>{
             console.log("delete book");
+
+        })
+
+        this.loadBooksPaginateAllBooksUser();
+    };
+
+
+    onDeleteBook=(bookName)=>{
+        BookService.deleteBook(bookName).then((response)=>{
+            this.setState((state)=>{
+
+
+            })
+            this.loadBooksPaginateAllBooksUser();
         })
     }
-    //
-    // onDeleteBookOrdered=(name)=>{
-    //     axios.delete("/user/deleteOrderedBookUser/"+this.state.currentUser.id+"?name="+name).then((response)=>{
-    //         console.log("delete book");
-    //     })
-    // }
 
     searchData = (search) => {
 
@@ -409,26 +340,16 @@ class App extends Component{
                BookService.searchBookByNamePage(search,this.state.pageSizeSearch).then((data)=>{
                     console.log(data.data)
                    this.setState({
-                       // booksSearch: response.data.content,
-                       // pageSearch:response.data.page,
-                       // pageSizeSearch:response.data.pageSize,
-                       // totalPagesSearch:response.data.totalPages,
-                       // searchedBook:true
+
                        books: data.data.content,
                        page:data.data.page,
                        pageSize:data.data.pageSize,
                        totalPages:data.data.totalPages
                    });
                     console.log(this.state.books);
-                   // debugger;
-                   // this.loadBooksPaginate();
-                   // if(this.state.user!==null){
-                   //     this.loadBooksPaginateAllBooksUser();
-                   // }
-                   // return <Redirect to='/allBooks'/>;
-                  // console.log(this.state.booksSearch)
+
                })
-             //  this.loadBooksPaginate(0);
+
 
            }
            else {
@@ -439,25 +360,7 @@ class App extends Component{
            }
     };
 
-    searchDataPage = (search) => {
 
-        if (search!==""){
-            BookService.searchBookByNamePage(search,this.state.pageSize).then((response)=>{
-
-                this.setState({
-                    books: response.data,
-                    page:response.data.page,
-                    pageSize:response.data.pageSize,
-                    totalPages:response.data.totalPages
-                })
-            })
-
-        }
-        else {
-
-            this.loadBooksPaginate(0);
-        }
-    };
 
     addFavourite=(name,page)=>{
         debugger;
@@ -466,7 +369,7 @@ class App extends Component{
                 this.setState({
                     okFavourites:true
                 })
-           //this.loadBooksPaginateAllBooksUser(page)
+
             debugger;
 
         }, error => {
@@ -482,10 +385,7 @@ class App extends Component{
 
     addOrder=(name)=>{
         UserService.addOrderedBook(this.state.currentUser.id,name,this.state.currentUser).then((response)=>{
-            // this.setState({
-            //     okFavourites:true
-            // })
-         //   console.log("add");
+
         }, error => {
             if (error.response.status === 409) {
                 this.setState({
@@ -546,13 +446,6 @@ class App extends Component{
             });
         });
     }
-
-    saveId(){
-        this.setState({
-            idCurrentUser:this.state.currentUser.id
-        })
-    }
-
 
     handleShow = () => this.setState({show:false});
     modalFavouriteDuplicate(){
@@ -670,7 +563,7 @@ if(this.state.currentUser!==null){
                     <DetailsBook />}>
                 </Route>
 
-                <Route path={"/allBooks"}  render={()=><GridBooks  loadBooksPaginateAllBooksUser={this.loadBooksPaginateAllBooksUser} id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite} onDelete={this.deleteBook} onPageClick={this.loadBooksPaginate} page={this.state.page} pageSize={this.state.pageSize} totalPages={this.state.totalPages} books={this.state.books}/>}>
+                <Route path={"/allBooks"}  render={()=><GridBooks onDeleteBook={this.onDeleteBook} loadBooksPaginateAllBooksUser={this.loadBooksPaginateAllBooksUser} id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite}  onPageClick={this.loadBooksPaginate} page={this.state.page} pageSize={this.state.pageSize} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
                 <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>

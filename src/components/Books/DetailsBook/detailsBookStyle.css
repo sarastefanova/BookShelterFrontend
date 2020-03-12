@@ -30,10 +30,15 @@
     font-size: 25px;
     /*margin-right:0px !important;*/
     margin: auto;
+
     /*margin-left: 6px;*/
 }
 
 .imgBook{
     width:200px;
     height:200px
+}
+
+.shortContentBook{
+    text-align: justify!important;
 }

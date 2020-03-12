@@ -43,14 +43,7 @@ class OneOrderedBook extends Component{
 
                 <td scope="col">
 
-                    {/*<button onClick={this.addOrder} className="btn btn-sm btn-secondary">*/}
-                    {/*    <span className="fa fa-first-order"/>*/}
-                    {/*    <span><strong>Order</strong></span>*/}
-                    {/*</button>*/}
-                    {/*<button  className="btn btn-sm btn-outline-secondary ">*/}
-                    {/*    <span className="fa fa-remove"/>*/}
-                    {/*    <span><strong>Remove</strong></span>*/}
-                    {/*</button>*/}
+
                     <ConfirmDeleteOrderedBook onDeleteBookOrdered={this.props.onDeleteBookOrdered}  bookName={this.props.book.name}/>
 
                 </td>

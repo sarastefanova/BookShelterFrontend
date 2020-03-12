@@ -45,35 +45,20 @@ class MyProfile extends Component{
 
         }
 
-        // this.setState({
-        //     photo:avatar
-        // })
+
     }
 
-    // submitPhoto=()=>{
-    //     this.setState({
-    //
-    //     })
-    // }
+
 
     hideAvatarPhoto=()=>{
         let div=document.getElementById("imgAvatar");
         div.style.display="none";
     }
 
-    // onDelete(name){
-    //     console.log(name)
-    //     axios.delete("/user/deleteFavBookUser/"+this.state.detailsUser.id+"?name="+name).then((response)=>{
-    //         console.log("delete book");
-    //     })
-    // }
 
 
     render() {
-       // console.log((this.state.detailsUser));
-       // console.log(this.state.user.roles)
-       // const {currentUser}=JSON.parse(this.state.user);
-        let $imgProfie;
+             let $imgProfie;
         if(this.state.detailsUser.file!=null){
             this.hideAvatarPhoto();
             $imgProfie=(  <img src={`data:image/jpeg;base64,${this.state.detailsUser.file}`}  alt="" className=" imgProfileAvatar rounded-circle"/>);

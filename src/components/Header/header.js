@@ -1,10 +1,10 @@
 import React from "react";
-import {BrowserRouter as Router, Link} from "react-router-dom";
+import { Link} from "react-router-dom";
 import logo from '../AllPhotos/logo.png';
 import './headerStyle.css';
 import SearchFiled from "../SearchField/Search";
 import UserService from '../../repository/axiosUserRepository';
-import {Redirect, useHistory, useParams} from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 const header=(props)=>{
     const history = useHistory();
    const logout=(e)=> {

@@ -57,12 +57,6 @@ componentDidMount() {
 
         e.preventDefault();
         this.setState({submitted: true});
-        // const newBook = {
-        //     "name": e.target.name.value,
-        //     "nameAndSurname":e.target.nameAndSurname.value,
-        //     "price": e.target.price.value,
-        //     "file":this.state.selectedFile,
-        // };
 
         const formData = new FormData();
         formData.append('name',e.target.name.value);
@@ -71,28 +65,24 @@ componentDidMount() {
         formData.append('file', this.state.selectedFile);
         formData.append('shortContentBook',e.target.shortContentBook.value);
         formData.append("availability",e.target.availability.value)
-       // // console.log(newBook.get("name"));
+
         console.log(formData);
         console.log(this.state.selectedFile);
+
         this.props.onNewBookAddedWithImg(formData);
 
-        // if(this.props.bookRedirect===true){
-        //     debugger;
-        //     this.setState({redirect:true});
-        // }
+
     };
 
 
 
 render() {
+
     let $imagePreview;
     if (this.state.imagePreviewUrl) {
-        $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="200" /> </div>);
+        $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="200" height="200"/> </div>);
     }
-    // console.log(this.props.errorMsg);
-    // const {submitted}=this.state;
-    // let url = this.state.selectedFile && URL.createObjectURL(this.state.selectedFile);
-    // console.log(this.props.bookRedirect);
+
     if (this.props.bookRedirect) {
         //debugger;
         return <Redirect to='/myProfile'/>;

@@ -15,9 +15,7 @@ const allFavouriteBooks=(props)=>{
 
     useEffect(()=>{
 
-        // axios.get("/user/getAllFavouriteBooksUser/"+props.id).then((data)=>{
-        //     setAllBooks(data.data)
-        // })
+
 
         axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
             headers: {
@@ -34,17 +32,17 @@ const allFavouriteBooks=(props)=>{
 
     const  onDeleteBookFavourite=(name)=>{
         console.log(name)
-        axios.delete("/user/deleteFavouriteBookUser/"+props.id+"?name="+name).then((response)=>{
+            axios.delete("/user/deleteFavouriteBookUser/"+props.id+"?name="+name).then((response)=>{
             axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
                 headers: {
                     'page':page,'page-size':pageSize
                 }
             }).then((data)=>{
-                console.log(data.data.content)
-                setAllBooks(data.data.content),
-                    setPage(data.data.page),
-                    setPageSize(data.data.pageSize),
-                    setTotalPages(data.data.totalPages)
+                console.log(data.data.content);
+                setAllBooks(data.data.content);
+                    setPage(data.data.page);
+                    setPageSize(data.data.pageSize);
+                    setTotalPages(data.data.totalPages);
             })
         })
     }

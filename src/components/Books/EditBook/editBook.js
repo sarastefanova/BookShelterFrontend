@@ -21,13 +21,7 @@ const BookEdit=(props)=>{
                 axios.get("/books/"+name+"/authorBook").then((data)=>{
                     setTheAuthor(data.data)
                 })
-               // axios.get("/author/getAuthorName",{
-               //     headers: {'Content-Type': 'application/json'},
-               //     body:detailsBook.author
-               // }).then((data)=>{
-               //     setTheAuthor(data.data)
-               //
-               // })
+
 
    },[]);
 
@@ -53,14 +47,7 @@ const BookEdit=(props)=>{
             "availability":e.target.availability.value
         };
 
-        // const formData = new FormData();
-        // formData.append('name',e.target.name.value);
-        // formData.append('nameAndSurname',e.target.nameAndSurname.value);
-        // formData.append('price',e.target.price.value);
-        // formData.append('shortContentBook',e.target.shortContentBook.value)
-        // // console.log(newBook.get("name"));
-       //console.log(detailsBook.nameAndSurname);
-        //console.log(newBook);
+
 
         props.onEditedBook(newBook);
 
@@ -74,13 +61,10 @@ const BookEdit=(props)=>{
         setDetailsBooks({[paramName]:paramValue});
 
     };
-    let defaultAuthor=null;
 
 
-        // if (Object.values(detailsBook).length > 0) {
-        //     console.log(Object.values(detailsBook)[1].nameAndSurname);
-        //     defaultAuthor=Object.values(detailsBook)[1].nameAndSurname;
-        // }
+
+
     console.log(theAuthor.nameAndSurname);
     return (
 

@@ -75,12 +75,6 @@ class OneRequest extends Component{
                         <span className="fa fa-trash"/>
                         <strong>Decline</strong>
                     </button>
-                    {/*<ModalDecline availability={this.state.approve}/>*/}
-                    {/*<button  className="btn btn-sm btn-outline-secondary ">*/}
-                    {/*    <span className="fa fa-remove"/>*/}
-                    {/*    <span><strong>Remove</strong></span>*/}
-                    {/*</button>*/}
-                    {/*<ConfirmDeleteFavBook onDeleteBookFav={this.props.onDeleteBookFav}  bookName={this.props.book.name}/>*/}
 
                 </td>
                 {this.state.approved &&

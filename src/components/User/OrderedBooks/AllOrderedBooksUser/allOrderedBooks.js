@@ -15,13 +15,7 @@ const allOrderedBooks=(props)=>{
 
     useEffect(()=>{
 
-        // axios.get("/user/allOrderedBooks/"+id).then((data)=>{
-        //     setAllBooksOrdered(data.data)
-        // })
 
-        // axios.get("/user/allOrderedBooksStatus/"+id).then((data)=>{
-        //     setAllBooksOrdered(data.data)
-        // })//ovaa go koristeme za obicno bez paginacija
 
         axios.get("/user/allOrderedBooksStatusPaginate/"+id,{
             headers: {

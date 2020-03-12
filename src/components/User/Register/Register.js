@@ -6,16 +6,7 @@ import PasswordStrength from './PasswordStrength/passwordStrength';
 import PasswordInput from './PasswordInput/passwordInput'
 class Register extends Component{
 
-    // constructor(props) {
-    //     super(props);
-    //
-    //     if (UserService.currentUserValue) {
-    //         this.props.history.push('/');
-    //     }
-    //
-    //
-    //
-    // }
+
     state = {
         user: new User('', '', ''),
         submitted: false,
@@ -124,13 +115,7 @@ class Register extends Component{
                         }
                     </div>
 
-                    {/*<div className={'form-group' + (submitted && !user.password ? 'has-error' : '')}>*/}
-                    {/*    <label className="labelLogin4" htmlFor={"password"}>Password</label>*/}
-                    {/*    <input type="password" name="password" value={user.password} onChange={(e) => this.handleChange(e)} className="form-control col-md-6" placeholder="Enter password" />*/}
-                    {/*    {submitted && !user.password &&*/}
-                    {/*    <span className="help-block font-weight-bold">Password is required!</span>*/}
-                    {/*    }*/}
-                    {/*</div>*/}
+
                     <PasswordInput value={user.password}
                                    name="password"
                     handleChange={(e) => this.handleChange(e)}/>

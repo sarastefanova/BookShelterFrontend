@@ -1,10 +1,10 @@
-import logo from "./PhotoWithText/pagePhoto.jpg";
+
 import Img from "react-image";
 import React, {Component} from "react";
 import './homePage.css';
 import bookImg from '../AllPhotos/books.png';
 import bookReason from '../AllPhotos/booksReason.png';
-import moneyReason from '../AllPhotos/moneyReason.png';
+
 import mailReason from '../AllPhotos/mail.png'
 import PhotoWithText from './PhotoWithText/photoWithText';
 import {Link} from "react-router-dom";
@@ -23,7 +23,7 @@ class homePage extends Component{
 
         return(
             <div className="colorContainer ">
-                {/*<Img src={logo} className="photoBooks"/>*/}
+
                 <PhotoWithText/>
 
                 <hr/>
@@ -67,9 +67,7 @@ class homePage extends Component{
                       </div>
                   </div>
               </div>
-             {/*<div className="row mt-3">*/}
-             {/*    <Link to={"/allBooks"} className="btn ColorBtn btnBuy btn-primary">See all our books!</Link>*/}
-             {/*</div>*/}
+
           </div>
 
         );

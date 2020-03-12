@@ -8,8 +8,8 @@ const SearchFiled=(props)=>{
 
         props.onSearch(e.target.searchTerm.value);
         e.target.searchTerm.value="";
-        //history.push("/allBooks");
-       // window.location.reload();
+        history.push("/allBooks");
+
         debugger;
     }
     return(

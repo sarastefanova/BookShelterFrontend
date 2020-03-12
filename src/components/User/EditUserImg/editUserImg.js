@@ -5,19 +5,7 @@ import axios from "../../../cutom-axios/axios";
 import UserService from "../../../repository/axiosUserRepository";
 import avatar from "../../AllPhotos/avatar.jpg";
 class editUserImg extends Component{
-    // const history = useHistory();
-    // const {id}=useParams();
-    // let errorMsg='';
-    // let okFlag=false;
-    // let errorFlag=false;
-    // const [detailsUser,setDetailsUser]=useState({});
-    // const [ errorMessage,setErrorMessage]=useState('');
-    // useEffect(()=>{
-    //
-    //     axios.get("/user?id="+id).then((data)=>{
-    //         setDetailsUser(data.data)
-    //     })
-    // },[]);
+
 
     constructor(props){
         super(props);
@@ -68,8 +56,7 @@ class editUserImg extends Component{
         formData.append('number',e.target.number.value);
         formData.append('email',e.target.email.value);
 
-        //console.log(newUser);
-       // console.log(formData);
+
 
         debugger;
         this.updateUser(formData,newUser);
@@ -101,18 +88,15 @@ class editUserImg extends Component{
      updateUser= ((editedUser,newUser) => {
         UserService.updateUserImg(editedUser,this.state.id,newUser).then((response)=>{
             const newUser= response.data;
-           // console.log(editedUser);
-            // localStorage.setItem('currentUser', JSON.stringify(response.data));
-            // debugger;
+
             this.hideErrorMessage();
-            // okFlag=true;
-            // errorFlag=false;
+
             this.props.history.push("/myProfile");
         }, error => {
             if (error.response.status === 409) {
                 console.log("error");
 
-                // setErrorMessage("Username is already taken!")
+
                 this.showErrorMessage();
             }
         });
@@ -143,14 +127,13 @@ class editUserImg extends Component{
     }
 
     render(){
-       // console.log(this.state.detailsUser.roles)
-       // console.log(this.state.user.roles)
+
         let $imagePreview;
         let $imagePreviewAvatar;
         if (this.state.imagePreviewUrl) {
-            //$imagePreviewAvatar.hide();
+
             this.hideAvatar();
-           //   console.log(this.state.imagePreviewUrl);
+
             $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" className="photoProfile rounded-circle" /> </div>);
         }
         if(this.state.detailsUser.file==null){
@@ -160,7 +143,7 @@ class editUserImg extends Component{
         }
 
 
-        // console.log(this.state.detailsUser);
+
         return(
             <div className="container containerEditUserImg">
                 <form onSubmit={this.onFormSubmit}>

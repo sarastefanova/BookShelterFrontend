@@ -45,9 +45,7 @@ const editUser = (props) =>{
    const updateUser= ((editedUser) => {
         UserService.updateUser(editedUser).then((response)=>{
             const newUser= response.data;
-           // console.log(newUser);
-           // localStorage.setItem('currentUser', JSON.stringify(response.data));
-           // debugger;
+
             hideErrorMessage();
             okFlag=true;
             errorFlag=false;
@@ -55,7 +53,7 @@ const editUser = (props) =>{
             if (error.response.status === 409) {
                 console.log("error");
 
-                // setErrorMessage("Username is already taken!")
+
                 showErrorMessage();
             }
         });
@@ -68,8 +66,7 @@ const editUser = (props) =>{
 
     const hideErrorMessage=()=>{
         history.push("/");
-        // let div=document.getElementById("errorMessage");
-        // div.style.visibility="hidden";
+
     }
 
     const handleTermOnChange  = (e) => {

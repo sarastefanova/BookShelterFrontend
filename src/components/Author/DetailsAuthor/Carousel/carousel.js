@@ -23,7 +23,7 @@ function ControlledCarousel(props) {
         // console.log(allBooksAuthor)
 
     const booksArray = Object.values(allBooksAuthor);
-    const booksAuthor =booksArray.map((item) =>
+    const booksAuthor = booksArray.map((item) =>
         <Carousel.Item key={item.name}>
             <Link to={"/detailsBook/"+item.name}>
             <img
@@ -35,7 +35,6 @@ function ControlledCarousel(props) {
             </Link>
             <Carousel.Caption>
                 <h3>{item.name}</h3>
-                {/*<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>*/}
             </Carousel.Caption>
         </Carousel.Item>
 
