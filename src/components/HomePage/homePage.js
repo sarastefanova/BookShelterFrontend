@@ -30,12 +30,12 @@ class homePage extends Component{
                 <div>
                     <NewestBooks booksNewest={this.props.booksNewest}/>
                 </div>
-                <div>
+                <div className="mt-5">
                     <Link to={"/allBooks"} className="btn ColorBtn btnBooksNewest btn-primary">See more of our books!</Link>
                 </div>
-                <hr/>
-                <div className="container  containerHeigth">
 
+                <div className="container  containerHeigth">
+                    <hr/>
                     <div className="row ">
                         <div className="col-md-6 borderCol">
                             {this.allTheBooks()}

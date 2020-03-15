@@ -20,7 +20,7 @@ class oneNewestBook extends Component {
         <div className={this.props.colClass}>
             <div className="card">
                 <div className="book">
-                    {this.cardHeader()}
+
                     {this.Example()}
                     {this.cardFooter()}
 
@@ -49,20 +49,8 @@ class oneNewestBook extends Component {
 
             </div>
         )
-    }
+    };
 
-    cardHeader(){
-
-        return (<div className="card-header cardBookNewestHeader">
-            <div className="row">
-                <div className="col-md-6 font-weight-bold font-italic headerText">
-                    <span className="fontNameBook">{this.props.book.name}</span>
-                </div>
-
-
-            </div>
-        </div>);
-    }
 
 
 

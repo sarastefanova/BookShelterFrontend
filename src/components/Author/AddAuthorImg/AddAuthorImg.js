@@ -53,7 +53,7 @@ class AddAuthorImg extends Component{
     render() {
         let $imagePreview;
         if (this.state.imagePreviewUrl) {
-            $imagePreview = (<div className="image-container" ><img src={this.state.imagePreviewUrl} alt="icon" width="200" /> </div>);
+            $imagePreview = (<div className="image-container" ><img className="imgPreviewAuthor" src={this.state.imagePreviewUrl} alt="icon" width="200" height="200"/> </div>);
         }
 
         if (this.props.authorRedirect) {

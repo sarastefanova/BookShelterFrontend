@@ -59,7 +59,7 @@ class OneGridBook extends Component{
             <div className={this.props.colClass}>
                 <div className="card ">
                     <div className="book">
-                        {this.cardHeader()}
+                        {/*{this.cardHeader()}*/}
                         {this.Example()}
                         {/*{this.Example()}*/}
 
@@ -157,14 +157,27 @@ class OneGridBook extends Component{
         return(
             <div className="card-footer">
                 <div className="row">
-                    <div className="col-md-12 ">
+                    <div className="col-md-8 ">
                         {this.state.user!==null &&
                             <span className="colorH  float-left"><i className="fa fa-book"/> <Link
                                 to={"/detailsAuthor/" + this.props.book.author.nameAndSurname}><span className="colorH">Written by {this.props.book.author.nameAndSurname}</span></Link></span>
                         }
                         {this.state.user===null &&
-                        <span className="colorH  float-left"><i className="fa fa-book"/><span className="colorH">Written by {this.props.book.author.nameAndSurname}</span></span>
+                        <span className="colorH  float-left"><i className="fa fa-book"/><span className="colorH nameAuthor">Written by {this.props.book.author.nameAndSurname}</span></span>
                         }
+                    </div>
+
+                    <div className="col-md-4 text-right ">
+                        {this.state.roleAdmin &&
+                        <Link to={"/editBook/" + this.props.book.name} title="Edit"
+                              className="btn btn-default roundedLinksBooks"><i className="fa fa-pencil"/></Link>
+                        }
+
+                        {this.state.roleAdmin &&
+                        <Confirm onDelete={this.props.onDelete} bookName={this.props.bookName}/>
+                        }
+
+
 
                     </div>
                 </div>

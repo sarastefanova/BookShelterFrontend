@@ -7,6 +7,10 @@
     width: 500px !important;
 }
 
+.carouselHeight{
+    height: 400px!important;
+}
+
 .carousel {
     width:600px;
     height:300px;

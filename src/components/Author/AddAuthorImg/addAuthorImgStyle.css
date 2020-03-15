@@ -14,3 +14,8 @@ textarea{
 .labelAuthor2{
     margin-right: 380px;
 }
+
+.imgPreviewAuthor{
+    border-radius: 50%;
+    border:1px solid #cc0044;
+}

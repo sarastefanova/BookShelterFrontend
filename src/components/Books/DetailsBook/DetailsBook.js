@@ -28,12 +28,12 @@ const detailsBook=(props)=>{
             <div className="row mt-5">
 
                 <div className="col-md-4 mt-5">
-                    <Img alt="" src={authorPhoto} className="topPhoto rounded"/>
-                    <img src={`data:image/jpeg;base64,${detailsForBook.file}`}  alt="" className=" imgProfileBook rounded-circle"/>
+                    {/*<Img alt="" src={authorPhoto} className="topPhoto rounded"/>*/}
+                    <img src={`data:image/jpeg;base64,${detailsForBook.file}`}  alt="" className="topPhoto rounded" />
 
                     <br/>
 
-                    <span className="font-weight-bold font-italic  nameBook mt-5">{detailsForBook.name} by <Link to={"/detailsAuthor/"+theAuthor.nameAndSurname}><span className="text-dark">{theAuthor.nameAndSurname}</span></Link></span>
+                    <span className="font-weight-bold font-italic  nameBook mt-5"> By <Link to={"/detailsAuthor/"+theAuthor.nameAndSurname}><span className="text-dark">{theAuthor.nameAndSurname}</span></Link></span>
                     <p className="font-weight-bold font-italic nameProfile ml-4 mt-2">$ {detailsForBook.price}</p>
 
                 </div>
