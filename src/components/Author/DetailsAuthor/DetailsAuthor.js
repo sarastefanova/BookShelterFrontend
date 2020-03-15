@@ -13,7 +13,7 @@ const detailsAuthor=(props)=>{
     useEffect(()=>{
         axios.get("/author?nameAndSurname="+nameAndSurname).then((data)=>{
             setDetailsAuthor(data.data)
-        }),
+        });
             axios.get("/books/getAllBooksByAuthor/"+nameAndSurname).then((data)=>{
                 setAllBooksAuthor(data.data)
             })

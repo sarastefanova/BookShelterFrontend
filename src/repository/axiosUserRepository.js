@@ -122,8 +122,8 @@ class UserService {
 
     updateUserImg(user,id,newUser)  {
 
-        const userId=user;
-        const formParams = qs.stringify(newUser);
+        //const userId=user;
+        //const formParams = qs.stringify(newUser);
         console.log(JSON.stringify(newUser));
         localStorage.setItem('currentUser', JSON.stringify(newUser));
         console.log(localStorage.getItem('currentUser'));

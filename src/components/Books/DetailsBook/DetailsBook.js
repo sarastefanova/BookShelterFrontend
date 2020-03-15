@@ -15,12 +15,12 @@ const detailsBook=(props)=>{
     useEffect(()=>{
         axios.get("/books?name="+name).then((data)=>{
             setDetailsForBook(data.data)
-        }),
+        });
             axios.get("/books/"+name+"/authorBook").then((data)=>{
                 setTheAuthor(data.data)
             })
 
-    },[])
+    },[]);
 
 
     return(

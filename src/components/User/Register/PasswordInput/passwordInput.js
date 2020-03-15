@@ -15,7 +15,8 @@ function PasswordInput(props) {
                 name={props.name}
                 onChange={props.handleChange}
                 className="form-control col-md-6 inputPass"
-                placeholder="Enter password"
+                placeholder="At least one capital letter, one small letter, one number and one special char!"
+                pattern="^(?=.*\d)(?=.*[!@#$%^&*)(+=.-_])(?=.*[a-z])(?=.*[A-Z]).{5,15}$"
                 style={{
                     border:`2px solid ${color}`
                 }}/>

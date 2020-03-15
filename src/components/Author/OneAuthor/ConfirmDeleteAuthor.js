@@ -1,6 +1,6 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import React,{useEffect, useState} from "react";
+import React, { useState} from "react";
 
 const Example=(props)=> {
     const [show, setShow] = useState(false);
@@ -17,9 +17,6 @@ const Example=(props)=> {
         <span>
 
 
-            {/*<a   className="btn btn-danger roundedLinksBooks" title="Delete" onClick={handleShow}>*/}
-            {/*    <i className="fa fa-trash"/>*/}
-            {/*</a>*/}
 
             <button  className="btn btn-sm btn-outline-secondary " onClick={handleShow}>
                 <span className="fa fa-remove"/>

@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import './registerStyle.css';
 import UserService from '../../../repository/axiosUserRepository';
 import {User} from '../../../model/user';
-import PasswordStrength from './PasswordStrength/passwordStrength';
 import PasswordInput from './PasswordInput/passwordInput'
 class Register extends Component{
 

@@ -51,8 +51,8 @@ const BookService={
             }
         })
     },
-    searchBookByNamePage:(search,pageSize)=>{
-        return axios.get("/books/searchBookPage?name="+search,{
+    searchBookByNamePage:(search,pageSize,id)=>{
+        return axios.get("/books/searchBookPage?name="+search+"&id="+id,{
             headers: {
                 'page':0,'page-size':pageSize
             }

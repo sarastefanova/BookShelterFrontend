@@ -1,23 +1,23 @@
-import React, {Component,useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './styleEditBook.css'
 import axios from "../../../cutom-axios/axios";
-import {Redirect, useHistory, useParams} from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 const BookEdit=(props)=>{
     const [allAuthors,setAllAuthors]=useState({});
      const [detailsBook,setDetailsBooks]=useState({});
     const [theAuthor,setTheAuthor]=useState({});
     const history = useHistory();
     const {name}=useParams();
-    let flag=true;
+    ;
    useEffect(()=>{
 
            axios.get("/books?name="+name).then((data)=>{
               setDetailsBooks(data.data)
-           }),
+           });
                axios.get("/author").then((data)=>{
                    setAllAuthors(data.data)
 
-               }),
+               });
                 axios.get("/books/"+name+"/authorBook").then((data)=>{
                     setTheAuthor(data.data)
                 })
@@ -73,18 +73,18 @@ const BookEdit=(props)=>{
                 <h1 className="colorH">Add new book</h1>
 
                 <div className="form-group">
-                    <label className="bookAddLabel1">Short content of the book</label>
-                    <input required onChange={handleTermOnChange} value={detailsBook.shortContentBook} name={"shortContentBook"} id="shortContentBook" type="text" className="form-control col-md-6"
+                    <label className="bookEditLabel1">Short content of the book</label>
+                    <textarea cols="5" rows="5" required onChange={handleTermOnChange} value={detailsBook.shortContentBook} name={"shortContentBook"} id="shortContentBook" type="text" className="form-control col-md-6"
                            placeholder="Write something about the book"/>
                 </div>
                 <div className="form-group">
-                    <label className="bookAddLabel2">Choose author</label>
+                    <label className="bookEditLabel2">Choose author</label>
                     <select value={theAuthor.nameAndSurname} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
                 </div>
 
 
                 <div className="form-group">
-                    <label className="bookAddLabel3">Price</label>
+                    <label className="bookEditLabel3">Price</label>
                     <input required onChange={handleTermOnChange} value={detailsBook.price} name={"price"} id="price" type="text" className="form-control col-md-6"
                            placeholder="Enter price for the book"/>
                 </div>

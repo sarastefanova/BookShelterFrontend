@@ -1,13 +1,12 @@
 import OneOrderedBook from '../OneOrderedBookUser/oneOrderedBook'
 import ReactPaginate from "react-paginate";
-import React, {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import axios from "../../../../cutom-axios/axios";
 import './allOrderedBooksStyle.css'
 
 const allOrderedBooks=(props)=>{
     const [allBooksOrdered,setAllBooksOrdered]=useState({});
-    const history = useHistory();
     const {id}=useParams();
     const [page,setPage]=useState(0);
     const [totalPages,setTotalPages]=useState(0);
@@ -23,31 +22,37 @@ const allOrderedBooks=(props)=>{
             }
         }).then((data)=>{
 
-            setAllBooksOrdered(data.data.content),
-                setPage(data.data.page),
-                setPageSize(data.data.pageSize),
-                setTotalPages(data.data.totalPages)
+                setAllBooksOrdered(data.data.content);
+                setPage(data.data.page);
+                setPageSize(data.data.pageSize);
+                setTotalPages(data.data.totalPages);
         })
     },[]);
 
-    const loadRequests=(page)=>{
-        debugger;
+    const getRequests = (page) =>{
         return axios.get("/user/allOrderedBooksStatusPaginate/"+id,{
             headers: {
                 'page':page,'page-size':pageSize
             }
-        }).then((data)=>{
-            console.log(data.data)
-            setAllBooksOrdered(data.data.content),
-                setPage(data.data.page),
-                setPageSize(data.data.pageSize),
-                setTotalPages(data.data.totalPages)
         })
-    }
+    };
+
+    const loadRequests=(page)=>{
+        debugger;
+        getRequests(page).then((data)=>{
+            console.log(data.data);
+            setAllBooksOrdered(data.data.content);
+            setPage(data.data.page);
+            setPageSize(data.data.pageSize);
+            setTotalPages(data.data.totalPages);
+        });
+    };
+
+
 
     const handlePageClick = (e) => {
         loadRequests(e.selected)
-    }
+    };
 
     const paginate = () => {
         // debugger;
@@ -79,16 +84,12 @@ const allOrderedBooks=(props)=>{
 
         axios.delete("/user/deleteOrderedBookUserStatus/"+id+"?name="+name).then((response)=>{
             console.log("bla");
-            return axios.get("/user/allOrderedBooksStatusPaginate/"+id,{
-                headers: {
-                    'page':page,'page-size':pageSize
-                }
-            }).then((data)=>{
-                console.log(data.data)
-                setAllBooksOrdered(data.data.content),
-                    setPage(data.data.page),
-                    setPageSize(data.data.pageSize),
-                    setTotalPages(data.data.totalPages)
+            getRequests().then((data)=>{
+                console.log(data.data);
+                setAllBooksOrdered(data.data.content);
+                setPage(data.data.page);
+                setPageSize(data.data.pageSize);
+                setTotalPages(data.data.totalPages);
             })
         })
     }

@@ -1,6 +1,5 @@
 import React from "react";
 import OneAuthor from '../OneAuthor/oneAuthor'
-import {Link} from "react-router-dom";
 import './allAuthorsContainer.css'
 import ReactPaginate from "react-paginate";
 const getAllAuthors=(props)=>{

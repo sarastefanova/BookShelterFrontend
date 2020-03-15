@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import HomePage from '../HomePage/homePage';
 import './App.css';
 import Header from '../Header/header';
@@ -58,7 +58,8 @@ class App extends Component{
             pageSizeSearch:3,
             searchedBook:false,
             getAllFavBooksUser:[],
-            user:UserService.currentUserValue
+            user:UserService.currentUserValue,
+            prevUser:null
         }
     }
 
@@ -75,38 +76,19 @@ class App extends Component{
     saveCurrentUser=()=>{
         UserService.currentUser.subscribe(data => {
             debugger;
-            this.setState({currentUser: data});
-            this.setState({user:data});
-            this.loadBooksPaginate();
-           this.loadBooksPaginateAllBooksUser();
+            if(this.state.prevUser!==data){
+                this.setState({currentUser: data});
+                this.setState({user: data});
+                this.setState({prevUser: data});
+                // this.loadBooksPaginate();
+                this.loadBooksPaginateAllBooksUser();
+            }
+
 
             debugger;
         });
 
     };
-
-
-
-
-    createAuthor = (author) => {
-        AuthorService.addNewAuthor(author).then((response)=>{
-            const author = response.data;
-
-            this.setState((prevState) => {
-                const newAuthorRef = [...prevState.authors, author];
-                //or
-                //const terms = prevState.terms.concat(newTerm);
-
-                return {
-                    "authors": newAuthorRef
-                }
-            });
-        });
-
-    };
-
-
-
 
     createBookImg=(book)=>{
         BookService.addNewBookWithImg(book).then((response)=>{
@@ -127,19 +109,17 @@ class App extends Component{
                 }
             });
             this.loadBooksPaginate();
-            // debugger;
-            // return <Redirect to='/'/>;
-            // debugger;
+
 
         },error => {
             if (error.response.status === 409) {
-                //console.log("error");
+
 
                 this.setState({
                     errorMsg:true
                 });
                 debugger;
-                // setErrorMessage("Username is already taken!")
+
 
             }
         });
@@ -148,7 +128,7 @@ class App extends Component{
     createAuthorImg=(author)=>{
         AuthorService.addNewAuthorWithImg(author).then((response)=>{
             const author = response.data;
-           // console.log(response+"img");
+
 
             this.setState({
                 authorRedirect:true
@@ -156,8 +136,7 @@ class App extends Component{
 
             this.setState((prevState) => {
                 const newAuthorRef = [...prevState.authors, author];
-                //or
-                //const terms = prevState.terms.concat(newTerm);
+
 
                 return {
                     "authors": newAuthorRef
@@ -166,13 +145,12 @@ class App extends Component{
             this.loadAuthorsPaginate();
         },error => {
             if (error.response.status === 409) {
-               // console.log("error");
+
 
                 this.setState({
                     errorMsgAuthor:true
                 });
-              //  debugger;
-                // setErrorMessage("Username is already taken!")
+
 
             }
         });
@@ -227,7 +205,7 @@ class App extends Component{
 
 
 
-    }
+    };
 
     loadBooksPaginateAllBooksUser = (page=0) => {
         debugger;
@@ -245,7 +223,7 @@ class App extends Component{
         }
   //this.getAllFavouriteBooksUser(this.state.currentUser.id);
 
-    }
+    };
 
 
 
@@ -313,11 +291,11 @@ class App extends Component{
     };
 
     onDeleteBookFav=(name)=>{
-        console.log(name)
+        console.log(name);
         axios.delete("/user/deleteFavBookUser/"+this.state.currentUser.id+"?name="+name).then((response)=>{
             console.log("delete book");
 
-        })
+        });
 
         this.loadBooksPaginateAllBooksUser();
     };
@@ -334,10 +312,11 @@ class App extends Component{
     }
 
     searchData = (search) => {
-
+            let userId;
            if (search!==""){
                debugger;
-               BookService.searchBookByNamePage(search,this.state.pageSizeSearch).then((data)=>{
+               userId = this.state.user===null ? 3 : this.state.user.id;
+               BookService.searchBookByNamePage(search,this.state.pageSizeSearch,userId).then((data)=>{
                     console.log(data.data)
                    this.setState({
 
@@ -368,8 +347,9 @@ class App extends Component{
             debugger;
                 this.setState({
                     okFavourites:true
-                })
-
+                });
+                console.log("page-app",page);
+            this.loadBooksPaginateAllBooksUser(page);
             debugger;
 
         }, error => {
@@ -520,7 +500,7 @@ if(this.state.currentUser!==null){
                 {/*<Route path={"/myProfile"} component={MyProfile} currentUser={this.state.currentUser}>*/}
                 {/*</Route>*/}
 
-                <Route path={"/myProfile"}  render={()=><MyProfile addOrder={this.addOrderNewTable} onDeleteBookFav={this.onDeleteBookFav} currentUser={currentUser}/>} exact>
+                <Route path={"/myProfile"}  render={()=><MyProfile addOrder={this.addOrderNewTable} onDeleteBookFav={this.onDeleteBookFav} loadAllBooks={this.loadBooksPaginateAllBooksUser} currentUser={currentUser}/>} exact>
                 </Route>
 
                 {/*Bez slika dodavanje na avtor*/}

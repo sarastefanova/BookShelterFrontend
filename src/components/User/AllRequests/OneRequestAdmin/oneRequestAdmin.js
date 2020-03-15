@@ -1,7 +1,6 @@
-import {Link} from "react-router-dom";
 import axios from '../../../../cutom-axios/axios'
 import React, {Component} from "react";
-import './styleOneRequest.css'
+import './styleOneRequest.css';
 class OneRequest extends Component{
 
     constructor(props) {
@@ -23,7 +22,7 @@ class OneRequest extends Component{
                 authorsDetails:response.data
             })
 
-        }),
+        });
 
             axios.get("/user/getUserByBook/"+this.props.user.id+"/"+this.props.bookName).then((response)=>{
                 this.setState({

@@ -1,13 +1,11 @@
 import OneBookFavourite from '../OneFavouriteBook/oneFavouriteBook'
 import ReactPaginate from "react-paginate";
-import React, {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router";
+import React, { useEffect, useState } from "react";
 import axios from "../../../../cutom-axios/axios";
 import './allFavBooksUserStyle.css'
 
 const allFavouriteBooks=(props)=>{
     const [allBooks,setAllBooks]=useState({});
-    const history = useHistory();
     const [page,setPage]=useState(0);
     const [totalPages,setTotalPages]=useState(0);
     const [pageSize,setPageSize]=useState(3);
@@ -23,10 +21,10 @@ const allFavouriteBooks=(props)=>{
             }
         }).then((data)=>{
 
-            setAllBooks(data.data.content),
-                setPage(data.data.page),
-                setPageSize(data.data.pageSize),
-                setTotalPages(data.data.totalPages)
+                setAllBooks(data.data.content);
+                setPage(data.data.page);
+                setPageSize(data.data.pageSize);
+                setTotalPages(data.data.totalPages);
         })
     },[]);
 
@@ -40,9 +38,11 @@ const allFavouriteBooks=(props)=>{
             }).then((data)=>{
                 console.log(data.data.content);
                 setAllBooks(data.data.content);
-                    setPage(data.data.page);
-                    setPageSize(data.data.pageSize);
-                    setTotalPages(data.data.totalPages);
+                setPage(data.data.page);
+                setPageSize(data.data.pageSize);
+                setTotalPages(data.data.totalPages);
+
+                props.loadAllBooks();
             })
         })
     }
@@ -67,11 +67,11 @@ const allFavouriteBooks=(props)=>{
                 'page':page,'page-size':pageSize
             }
         }).then((data)=>{
-            console.log(data.data)
-            setAllBooks(data.data.content),
-                setPage(data.data.page),
-                setPageSize(data.data.pageSize),
-                setTotalPages(data.data.totalPages)
+            //console.log(data.data);
+                setAllBooks(data.data.content);
+                setPage(data.data.page);
+                setPageSize(data.data.pageSize);
+                setTotalPages(data.data.totalPages);
         })
     }
 

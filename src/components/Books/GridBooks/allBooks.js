@@ -27,6 +27,7 @@ const getAllBooks=(props)=>{
 
 
     const handlePageClick = (e) => {
+        setPage(e.selected);
        // loadRequests(e.selected)
         props.onPageClick(e.selected);
         console.log(e.selected);

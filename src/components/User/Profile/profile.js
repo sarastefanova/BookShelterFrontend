@@ -1,10 +1,9 @@
-import React, {Component, useEffect, useState} from "react";
+import React, { Component } from "react";
 import UserService from "../../../repository/axiosUserRepository";
 import Img from "react-image";
 import authorPhoto from "../../AllPhotos/authorImg.jpg";
 import './profile.css'
-import {Link} from "react-router-dom";
-import {User} from '../../../model/user';
+import { Link } from "react-router-dom";
 import axios from "../../../cutom-axios/axios";
 import avatar from "../../AllPhotos/avatar.jpg";
 import AllBooksFavourite  from '../FavouriteBooks/AllFavouriteBooks/allFavouriteBooks'
@@ -27,7 +26,7 @@ class MyProfile extends Component{
       // this.setState({
       //     user:this.state.user
       // })
-        const user=this.state.user;
+        //const user=this.state.user;
         //debugger;
 
         axios.get("/user?id="+this.state.user.id).then((data)=>{
@@ -127,7 +126,7 @@ class MyProfile extends Component{
                     <br/>
                     <hr className="hrCostume"/>
                     <div className="float-left text-center">
-                            <AllBooksFavourite addOrder={this.props.addOrder} onDeleteBookFav={this.props.onDeleteBookFav} id={this.state.user.id}/>
+                            <AllBooksFavourite loadAllBooks={this.props.loadAllBooks} addOrder={this.props.addOrder} onDeleteBookFav={this.props.onDeleteBookFav} id={this.state.user.id}/>
                     </div>
                 </div>
             </div>

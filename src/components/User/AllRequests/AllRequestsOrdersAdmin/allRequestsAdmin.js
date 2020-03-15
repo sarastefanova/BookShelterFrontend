@@ -1,14 +1,12 @@
 import OneRequestAdmin from '../OneRequestAdmin/oneRequestAdmin';
 import ReactPaginate from "react-paginate";
 import React, {useEffect, useState} from "react";
-import {useHistory, useParams} from "react-router";
 import axios from "../../../../cutom-axios/axios";
 import './allRequestsStyle.css'
 import UserService from "../../../../repository/axiosUserRepository";
 
 const allRequests=(props)=>{
     const [allRequestsAdmin,setAllRequests]=useState({});
-    const history = useHistory();
     const [page,setPage]=useState(0);
     const [totalPages,setTotalPages]=useState(0);
     const [pageSize,setPageSize]=useState(4);
@@ -24,10 +22,10 @@ const allRequests=(props)=>{
             }
         }).then((data)=>{
 
-            setAllRequests(data.data.content),
-                setPage(data.data.page),
-                setPageSize(data.data.pageSize),
-                setTotalPages(data.data.totalPages)
+            setAllRequests(data.data.content);
+            setPage(data.data.page);
+            setPageSize(data.data.pageSize);
+            setTotalPages(data.data.totalPages);
         })
 
 
@@ -40,17 +38,17 @@ const allRequests=(props)=>{
                 'page':page,'page-size':pageSize
             }
         }).then((data)=>{
-            console.log(data.data)
-            setAllRequests(data.data.content),
-                setPage(data.data.page),
-                setPageSize(data.data.pageSize),
-                setTotalPages(data.data.totalPages)
+
+                setAllRequests(data.data.content);
+                setPage(data.data.page);
+                setPageSize(data.data.pageSize);
+                setTotalPages(data.data.totalPages);
         })
     }
 
     const handlePageClick = (e) => {
        loadRequests(e.selected)
-    }
+    };
 
     const paginate = () => {
         // debugger;
@@ -87,10 +85,10 @@ const allRequests=(props)=>{
                 }
             }).then((data)=>{
 
-                setAllRequests(data.data.content),
-                    setPage(data.data.page),
-                    setPageSize(data.data.pageSize),
-                    setTotalPages(data.data.totalPages)
+                    setAllRequests(data.data.content);
+                    setPage(data.data.page);
+                    setPageSize(data.data.pageSize);
+                    setTotalPages(data.data.totalPages);
             })
         })
 
@@ -104,10 +102,10 @@ const allRequests=(props)=>{
                 }
             }).then((data)=>{
 
-                setAllRequests(data.data.content),
-                    setPage(data.data.page),
-                    setPageSize(data.data.pageSize),
-                    setTotalPages(data.data.totalPages)
+                setAllRequests(data.data.content);
+                setPage(data.data.page);
+                setPageSize(data.data.pageSize);
+                setTotalPages(data.data.totalPages);
             })
         })
     }

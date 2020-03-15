@@ -1,16 +1,15 @@
 import React,{useState,useEffect} from 'react'
 import './EditUser.css'
-import {Redirect, useHistory, useParams} from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from "../../../cutom-axios/axios";
 import UserService from "../../../repository/axiosUserRepository";
 const editUser = (props) =>{
     const history = useHistory();
     const {id}=useParams();
-    let errorMsg='';
-    let okFlag=false;
-    let errorFlag=false;
+
+
     const [detailsUser,setDetailsUser]=useState({});
-    const [ errorMessage,setErrorMessage]=useState('');
+
     useEffect(()=>{
 
         axios.get("/user?id="+id).then((data)=>{
@@ -18,7 +17,31 @@ const editUser = (props) =>{
         })
     },[]);
 
+    const showErrorMessage=()=>{
+        let div=document.getElementById("errorMessage");
+        div.style.visibility="visible";
+    };
 
+    const hideErrorMessage=()=>{
+        history.push("/");
+
+    };
+
+    const updateUser= ((editedUser) => {
+        UserService.updateUser(editedUser).then((response)=>{
+            //const newUser= response.data;
+
+            hideErrorMessage();
+
+        }, error => {
+            if (error.response.status === 409) {
+                console.log("error");
+
+
+                showErrorMessage();
+            }
+        });
+    });
 
     const onFormSubmit = (e) => {
 
@@ -42,32 +65,9 @@ const editUser = (props) =>{
 
     };
 
-   const updateUser= ((editedUser) => {
-        UserService.updateUser(editedUser).then((response)=>{
-            const newUser= response.data;
-
-            hideErrorMessage();
-            okFlag=true;
-            errorFlag=false;
-        }, error => {
-            if (error.response.status === 409) {
-                console.log("error");
 
 
-                showErrorMessage();
-            }
-        });
-    });
 
-   const showErrorMessage=()=>{
-       let div=document.getElementById("errorMessage");
-       div.style.visibility="visible";
-    }
-
-    const hideErrorMessage=()=>{
-        history.push("/");
-
-    }
 
     const handleTermOnChange  = (e) => {
         const paramName = e.target.name;

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, Component} from 'react'
-import {Redirect, withRouter} from 'react-router-dom';
+import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom';
 import './editUserImg.css';
 import axios from "../../../cutom-axios/axios";
 import UserService from "../../../repository/axiosUserRepository";
@@ -21,6 +21,7 @@ class editUserImg extends Component{
 
     componentDidMount() {
         axios.get("/user?id="+this.state.id).then((data)=>{
+            console.log("data",data.data);
                     this.setState(
                         {
                             detailsUser:data.data
@@ -34,7 +35,7 @@ class editUserImg extends Component{
 
         e.preventDefault();
 
-        console.log(this.state.detailsUser.roles);
+        console.log("roles", this.state.detailsUser.roles);
         const newUser = {
             "id":this.state.id,
             "name": e.target.name.value,
@@ -87,7 +88,7 @@ class editUserImg extends Component{
 
      updateUser= ((editedUser,newUser) => {
         UserService.updateUserImg(editedUser,this.state.id,newUser).then((response)=>{
-            const newUser= response.data;
+            //const newUser= response.data;
 
             this.hideErrorMessage();
 
@@ -109,22 +110,21 @@ class editUserImg extends Component{
     hideErrorMessage=()=>{
         let div=document.getElementById("errorMessage");
         div.style.visibility="hidden";
-    }
+    };
 
     hideAvatar=()=>{
-        //history.push("/");
+
         let div=document.getElementById("imgAvatar");
         div.style.display="none";
-    }
+    };
 
      handleTermOnChange  = (e) => {
-        const paramName = e.target.name;
-        const paramValue =  e.target.value;
+
         this.setState({
             detailsUser:e.target.value
         })
-        //console.log(e.target.value);
-    }
+
+    };
 
     render(){
 

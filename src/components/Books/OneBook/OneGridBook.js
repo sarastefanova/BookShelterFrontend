@@ -31,7 +31,6 @@ class OneGridBook extends Component{
 
         }
 
-
     }
 
 
@@ -40,12 +39,12 @@ class OneGridBook extends Component{
 
     addFavourite=(e)=>{
 
+        //this.setState({isClicked:true},() => this.setState({isClicked: false}));
         this.setState({isClicked:true},() => this.setState({isClicked: false}));
-
         debugger;
-        this.props.addFavourite(this.props.bookName,this.props.page)
+        this.props.addFavourite(this.props.bookName,this.props.page);
 
-
+        console.log("page",this.props.page);
 
     }
 
@@ -103,7 +102,7 @@ class OneGridBook extends Component{
                     {this.state.user!==null &&
                     this.props.inFavourite===0 &&
 
-                        <button onClick={this.addFavourite} href="#" className={"btn favourite"} title="Favourite">
+                        <button onClick={this.addFavourite}  className={"btn favourite"} title="Favourite">
                         <i className="fa fa-heart-o favouriteHeart " style={{color: "#cc0044"}}/>
                         </button>
 
