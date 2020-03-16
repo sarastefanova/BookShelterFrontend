@@ -494,22 +494,8 @@ if(this.state.currentUser!==null){
                 <Route path={"/register"} component={Register} exact>
                 </Route>
 
-                {/*<Route path={"/allBooksFavourite"} component={AllBooksFavourite} exact>*/}
-                {/*</Route>*/}
-
-                {/*<Route path={"/myProfile"} component={MyProfile} currentUser={this.state.currentUser}>*/}
-                {/*</Route>*/}
-
                 <Route path={"/myProfile"}  render={()=><MyProfile addOrder={this.addOrderNewTable} onDeleteBookFav={this.onDeleteBookFav} loadAllBooks={this.loadBooksPaginateAllBooksUser} currentUser={currentUser}/>} exact>
                 </Route>
-
-                {/*Bez slika dodavanje na avtor*/}
-                {/*<Route path={"/addAuthor"} render={()=><AuthorAdd onNewAuthorAdded={this.createAuthor}/>}>*/}
-                {/*</Route>*/}
-
-                {/*Bez slika dodavanje na kniga*/}
-                {/*<Route path={"/addBook"} render={()=><BookAdd onNewBookAdded={this.createBook}/>}>*/}
-                {/*</Route>*/}
 
                 {/*Dodavanje na kniga so slika*/}
                 <Route path={"/addBook"} render={()=><BookAddWithImg render={() => (<Redirect to="/" />)} bookRedirect={this.state.bookRedirect} errorMsg={this.state.errorMsg} books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
