@@ -375,7 +375,7 @@ class App extends Component{
                 });
             }
         })
-    }
+    };
 
     approveOrder=(userId,bookName)=>{
         UserService.approveOrder(userId,bookName).then((response)=>{

@@ -25,25 +25,28 @@ class OneFavouriteBook extends Component{
     }
 
     addOrder=(e)=>{
-        console.log(this.state.text)
+        console.log(this.state.text);
         this.setState({
             text:1,
             isDisabled:true
         });
         debugger;
-        this.props.addOrder(this.props.bookName)
+        console.log("page-one-book-fav",this.props.page);
+        console.log("namebook",this.props.bookName);
+        this.props.addOrder(this.props.bookName, this.props.page, this.props.id, this.props.user);
 
-    }
+
+    };
 
     render() {
-        let {pom}=this.state.isOrdered;
-
-        if(this.state.text===0){
-            pom="Order";
-        }
-        if(this.state.text===1){
-            pom="Ordered";
-        }
+        // let {pom}=this.state.isOrdered;
+        //
+        // if(this.state.text===0){
+        //     pom="Order";
+        // }
+        // if(this.state.text===1){
+        //     pom="Ordered";
+        // }
 
 
         return(
@@ -52,10 +55,19 @@ class OneFavouriteBook extends Component{
                 <td scope="col"><Link to={"/detailsBook/"+this.props.book.name}><span className="nameAuthorOneBook  font-weight-bold">{this.props.book.name}</span></Link></td>
 
                 <td scope="col">
+                    {this.props.isOrdered===1 &&
+                        <button  onClick={this.addOrder} className="btn btn-sm">
+                            <span className="fa fa-first-order"/>
+                            <span><strong>Ordered</strong></span>
+                        </button>
+                    }
+
+                    {this.props.isOrdered===0 &&
                     <button  onClick={this.addOrder} className="btn btn-sm">
                         <span className="fa fa-first-order"/>
-                        <span><strong>{pom}</strong></span>
+                        <span><strong>Order</strong></span>
                     </button>
+                    }
                     <ConfirmDeleteFavBook onDeleteBookFav={this.props.onDeleteBookFav}  bookName={this.props.book.name}/>
 
                 </td>

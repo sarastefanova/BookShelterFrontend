@@ -3,24 +3,27 @@ import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
 import axios from "../../../../cutom-axios/axios";
 import './allFavBooksUserStyle.css'
+import UserService from "../../../../repository/axiosUserRepository";
 
 const allFavouriteBooks=(props)=>{
     const [allBooks,setAllBooks]=useState({});
     const [page,setPage]=useState(0);
     const [totalPages,setTotalPages]=useState(0);
     const [pageSize,setPageSize]=useState(3);
+    const [isOrdered,setIsOrdered]=useState(0);
 
 
     useEffect(()=>{
 
 
 
-        axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
+        axios.get("/user/getFavouriteBooksUserPaginate/"+props.id,{
             headers: {
                 'page':page,'page-size':pageSize
             }
         }).then((data)=>{
-
+                debugger;
+                console.log("inORD",data.data);
                 setAllBooks(data.data.content);
                 setPage(data.data.page);
                 setPageSize(data.data.pageSize);
@@ -29,14 +32,14 @@ const allFavouriteBooks=(props)=>{
     },[]);
 
     const  onDeleteBookFavourite=(name)=>{
-        console.log(name)
+      //  console.log(name)
             axios.delete("/user/deleteFavouriteBookUser/"+props.id+"?name="+name).then((response)=>{
-            axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
+            axios.get("/user/getFavouriteBooksUserPaginate/"+props.id,{
                 headers: {
                     'page':page,'page-size':pageSize
                 }
             }).then((data)=>{
-                console.log(data.data.content);
+               // console.log(data.data.content);
                 setAllBooks(data.data.content);
                 setPage(data.data.page);
                 setPageSize(data.data.pageSize);
@@ -48,36 +51,60 @@ const allFavouriteBooks=(props)=>{
     }
 
 
-    console.log(allBooks)
+    //console.log(allBooks)
     const allBooksFav=Object.values(allBooks);
 
 
     const oneBookTerm=allBooksFav.map((book,index)=>{
+        console.log("books-allFav",book);
         return(
-            <OneBookFavourite addOrder={props.addOrder} onDeleteBookFav={onDeleteBookFavourite} id={props.id} bookName={book.name} book={book} key={index} />
+            <OneBookFavourite addOrder={addOrder} page={page} onDeleteBookFav={onDeleteBookFavourite} isOrdered={book.isOrdered} user={book.user} id={props.id} bookName={book.book.name} book={book.book} key={index} />
 
         ) ;
     });
 
 
-    const loadRequests=(page)=>{
-        //debugger;
-        return axios.get("/user/getAllFavouriteBooksUserPaginate/"+props.id,{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        }).then((data)=>{
-            //console.log(data.data);
+   function addOrder(name, page, id, user){
+       debugger;
+        UserService.addOrderedBookNewTable(id, name, user).then((response)=>{
+            loadRequests(page).then((data)=>{
+                //console.log(data.data);
                 setAllBooks(data.data.content);
                 setPage(data.data.page);
                 setPageSize(data.data.pageSize);
                 setTotalPages(data.data.totalPages);
+            });
+
+        }, error => {
+            if (error.response.status === 409) {
+                this.setState({
+                    errorMessageFavourite: "The book is already added in your list",
+                    loading: false,
+                    showOrder:true
+                });
+            }
         })
-    }
+    };
+
+
+    const loadRequests=(page)=>{
+        //debugger;
+        return axios.get("/user/getFavouriteBooksUserPaginate/"+props.id,{
+            headers: {
+                'page':page,'page-size':pageSize
+            }
+        })
+    };
 
     const handlePageClick = (e) => {
-        loadRequests(e.selected)
-    }
+        loadRequests(e.selected).then((data)=>{
+            //console.log(data.data);
+            setAllBooks(data.data.content);
+            setPage(data.data.page);
+            setPageSize(data.data.pageSize);
+            setTotalPages(data.data.totalPages);
+        });
+    };
 
     const paginate = () => {
         // debugger;

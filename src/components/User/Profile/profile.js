@@ -126,7 +126,7 @@ class MyProfile extends Component{
                     <br/>
                     <hr className="hrCostume"/>
                     <div className="float-left text-center">
-                            <AllBooksFavourite loadAllBooks={this.props.loadAllBooks} addOrder={this.props.addOrder} onDeleteBookFav={this.props.onDeleteBookFav} id={this.state.user.id}/>
+                            <AllBooksFavourite loadAllBooks={this.props.loadAllBooks} addOrder={this.props.addOrder} onDeleteBookFav={this.props.onDeleteBookFav} id={this.state.user.id} user={this.state.user}/>
                     </div>
                 </div>
             </div>
