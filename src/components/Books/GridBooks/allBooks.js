@@ -19,7 +19,7 @@ const getAllBooks=(props)=>{
 
         return(
 
-            <OneBook page={page} getAllFavBooksUser={props.getAllFavBooksUser} colorHeart={"#cc0044"} id={props.id} okFavourites={props.okFavourites} errorMessageFavourite={props.errorMessageFavourite} addFavourite={props.addFavourite} onDelete={props.N} bookName={book.book.name} inFavourite={book.inFavourite} author={book.book.author} book={book.book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
+            <OneBook page={page} getAllFavBooksUser={props.getAllFavBooksUser} colorHeart={"#cc0044"} id={props.id} okFavourites={props.okFavourites} errorMessageFavourite={props.errorMessageFavourite} addFavourite={props.addFavourite} onDelete={props.onDeleteBook} bookName={book.book.name} inFavourite={book.inFavourite} author={book.book.author} book={book.book} key={index} colClass={"col-md-4 mt-2 col-sm-12 "}/>
 
         ) ;
     });

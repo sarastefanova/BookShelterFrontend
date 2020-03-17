@@ -30,11 +30,6 @@ const BookEdit=(props)=>{
 
     const allAuthorsFromApi = allAuthorsArray.map(author => {return {value: author.nameAndSurname, display: author.nameAndSurname}});
 
-
-   // console.log(detailsBook.shortAuthorBiography);
-
-
-    // const selectedAuthor=detailsBook.nameAndSurname;
    const onFormSubmit = (e) => {
 
         e.preventDefault();
@@ -46,7 +41,6 @@ const BookEdit=(props)=>{
             "shortContentBook":e.target.shortContentBook.value,
             "availability":e.target.availability.value
         };
-
 
 
         props.onEditedBook(newBook);
@@ -64,13 +58,11 @@ const BookEdit=(props)=>{
 
 
 
-
-    console.log(theAuthor.nameAndSurname);
     return (
 
         <div className="container containerAddBook">
             <form onSubmit={onFormSubmit} >
-                <h1 className="colorH">Add new book</h1>
+                <h1 className="colorH">Edit book</h1>
 
                 <div className="form-group">
                     <label className="bookEditLabel1">Short content of the book</label>
@@ -79,7 +71,7 @@ const BookEdit=(props)=>{
                 </div>
                 <div className="form-group">
                     <label className="bookEditLabel2">Choose author</label>
-                    <select value={theAuthor.nameAndSurname} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map((author) => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
+                    <select defaultValue={theAuthor.nameAndSurname} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map(author => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
                 </div>
 
 

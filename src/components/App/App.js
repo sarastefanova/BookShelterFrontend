@@ -273,11 +273,14 @@ class App extends Component{
                         return response.data;
                     }
                     return book;
-                })
+                });
                 return {
                     "books": newBooksRef
+
                 }
+
             });
+            console.log(this.state.books);
         });
     });
 
@@ -337,7 +340,7 @@ class App extends Component{
                this.setState({searchString:search});
                debugger;
                userId = this.state.user===null ? 3 : this.state.user.id;
-               BookService.searchBookByNamePage(search,this.state.pageSizeSearch,userId, this.state.page).then((data)=>{
+               BookService.searchBookByNamePage(search,this.state.pageSizeSearch,userId, 0).then((data)=>{
                     console.log(data.data);
                    this.setState({
 
