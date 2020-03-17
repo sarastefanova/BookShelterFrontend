@@ -11,9 +11,9 @@
 
 
 .paginateBooks{
-    position: absolute;
-    bottom: 60px!important;
-    margin-left: 350px;
+    position: fixed;
+    bottom: 10%!important;
+    margin-left:23%;
 
 }
 
