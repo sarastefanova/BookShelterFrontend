@@ -56,7 +56,10 @@ const BookEdit=(props)=>{
 
     };
 
-
+    const handleTermOnChangeAuthor = (e) =>{
+        setDetailsBooks({nameAndSurname: e.target.value});
+        setTheAuthor(e.target.value);
+    };
 
     return (
 
@@ -71,7 +74,7 @@ const BookEdit=(props)=>{
                 </div>
                 <div className="form-group">
                     <label className="bookEditLabel2">Choose author</label>
-                    <select defaultValue={theAuthor.nameAndSurname} onChange={handleTermOnChange} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map(author => <option  key={author.value} value={author.value}>{author.display}</option>)}</select>
+                    <select  value={theAuthor.nameAndSurname} onChange={handleTermOnChangeAuthor} name={"nameAndSurname"} id="nameAndSurname" className="form-control col-md-6">{allAuthorsFromApi.map(author => <option defaultValue={theAuthor.nameAndSurname}  key={author.value} value={author.value}>{author.display}</option>)}</select>
                 </div>
 
 

@@ -84,7 +84,6 @@ class LogIn extends Component{
                     </div>
 
                     <button type="submit" className="btn btnColor col-md-6 btn-block" disabled={loading}>Submit</button>
-                    <button type="submit" className="btn btnColor col-md-6 btn-block">Forgot password?</button>
                     <br/>
                     <br/>
                     <br/>

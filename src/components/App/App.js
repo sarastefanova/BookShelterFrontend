@@ -276,10 +276,10 @@ class App extends Component{
                 });
                 return {
                     "books": newBooksRef
-
                 }
 
             });
+            this.loadBooksPaginateAllBooksUser();
             console.log(this.state.books);
         });
     });
