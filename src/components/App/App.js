@@ -59,7 +59,9 @@ class App extends Component{
             searchedBook:false,
             getAllFavBooksUser:[],
             user:UserService.currentUserValue,
-            prevUser:null
+            prevUser:null,
+            flagSearch:null,
+            searchString:""
         }
     }
 
@@ -210,16 +212,33 @@ class App extends Component{
     loadBooksPaginateAllBooksUser = (page=0) => {
         debugger;
         if(this.state.user!==null){
-            BookService.fetchBooksTermsPagedUser(page,this.state.pageSize,this.state.user.id).then((data) => {
-                debugger;
-                //console.log(data.data.content.books);
-                this.setState({
-                    books: data.data.content,
-                    page:data.data.page,
-                    pageSize:data.data.pageSize,
-                    totalPages:data.data.totalPages
+            if(this.state.flagSearch){
+              let  userId = this.state.user===null ? 3 : this.state.user.id;
+                BookService.searchBookByNamePage(this.state.searchString, this.state.pageSizeSearch,userId, page).then((data)=>{
+                    console.log(data.data);
+                    this.setState({
+
+                        books: data.data.content,
+                        page:data.data.page,
+                        pageSize:data.data.pageSize,
+                        totalPages:data.data.totalPages
+                    });
+                    console.log(this.state.books);
+
                 })
-            })
+            }
+            else{
+                BookService.fetchBooksTermsPagedUser(page,this.state.pageSize,this.state.user.id).then((data) => {
+                    debugger;
+                    //console.log(data.data.content.books);
+                    this.setState({
+                        books: data.data.content,
+                        page:data.data.page,
+                        pageSize:data.data.pageSize,
+                        totalPages:data.data.totalPages
+                    })
+                })
+            }
         }
   //this.getAllFavouriteBooksUser(this.state.currentUser.id);
 
@@ -314,10 +333,12 @@ class App extends Component{
     searchData = (search) => {
             let userId;
            if (search!==""){
+               this.setState({flagSearch:true});
+               this.setState({searchString:search});
                debugger;
                userId = this.state.user===null ? 3 : this.state.user.id;
-               BookService.searchBookByNamePage(search,this.state.pageSizeSearch,userId).then((data)=>{
-                    console.log(data.data)
+               BookService.searchBookByNamePage(search,this.state.pageSizeSearch,userId, this.state.page).then((data)=>{
+                    console.log(data.data);
                    this.setState({
 
                        books: data.data.content,
@@ -332,7 +353,7 @@ class App extends Component{
 
            }
            else {
-
+               this.setState({flagSearch:false});
                this.loadBooksPaginate(0);
 
                debugger;
@@ -408,24 +429,7 @@ class App extends Component{
         })
     }
 
-    updateUser= ((editedUser) => {
-        UserService.updateUser(editedUser).then((response)=>{
-            const newUser= response.data;
-            this.setState({
-                "currentUser":newUser
-            })
-        });
-    });
 
-    logout() {
-        UserService.logOut().then(data => {
-            this.state.history.push('/');
-        }, error => {
-            this.setState({
-                errorMessage: "Unexpected error occurred."
-            });
-        });
-    }
 
     handleShow = () => this.setState({show:false});
     modalFavouriteDuplicate(){

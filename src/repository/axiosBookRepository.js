@@ -51,10 +51,10 @@ const BookService={
             }
         })
     },
-    searchBookByNamePage:(search,pageSize,id)=>{
+    searchBookByNamePage:(search,pageSize,id, page)=>{
         return axios.get("/books/searchBookPage?name="+search+"&id="+id,{
             headers: {
-                'page':0,'page-size':pageSize
+                'page':page, 'page-size':pageSize
             }
         })
     }
