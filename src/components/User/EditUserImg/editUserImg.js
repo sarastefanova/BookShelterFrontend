@@ -36,6 +36,7 @@ class editUserImg extends Component{
         e.preventDefault();
 
         console.log("roles", this.state.detailsUser.roles);
+        console.log("roles-user", this.state.user.roles);
         const newUser = {
             "id":this.state.id,
             "name": e.target.name.value,
@@ -44,7 +45,7 @@ class editUserImg extends Component{
             "address":e.target.address.value,
             "number":e.target.number.value,
             "email":e.target.email.value,
-            "roles":this.state.detailsUser.roles
+            "roles":this.state.detailsUser.roles !== undefined ? this.state.detailsUser.roles : this.state.user.roles
         };
 
         const formData = new FormData();
