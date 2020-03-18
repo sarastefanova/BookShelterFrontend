@@ -71,6 +71,7 @@ class OneFavouriteBook extends Component{
                     <ConfirmDeleteFavBook onDeleteBookFav={this.props.onDeleteBookFav}  bookName={this.props.book.name}/>
 
                 </td>
+                <td scope="col"></td>
             </tr>
         )
     }

@@ -82,7 +82,7 @@ class App extends Component{
                 this.setState({currentUser: data});
                 this.setState({user: data});
                 this.setState({prevUser: data});
-                // this.loadBooksPaginate();
+                this.loadBooksPaginate();
                 this.loadBooksPaginateAllBooksUser();
             }
 
