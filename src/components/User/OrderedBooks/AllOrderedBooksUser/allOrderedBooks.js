@@ -2,7 +2,7 @@ import OneOrderedBook from '../OneOrderedBookUser/oneOrderedBook'
 import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import axios from "../../../../cutom-axios/axios";
+import UserService from '../../../../repository/axiosUserRepository';
 import './allOrderedBooksStyle.css'
 
 const allOrderedBooks=(props)=>{
@@ -14,13 +14,7 @@ const allOrderedBooks=(props)=>{
 
     useEffect(()=>{
 
-
-
-        axios.get("/user/allOrderedBooksStatusPaginate/"+id,{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        }).then((data)=>{
+        UserService.allOrderedBooksPaginate(id, page, pageSize).then((data)=>{
 
                 setAllBooksOrdered(data.data.content);
                 setPage(data.data.page);
@@ -31,11 +25,7 @@ const allOrderedBooks=(props)=>{
 
     const getRequests = (page=0) =>{
         debugger
-        return axios.get("/user/allOrderedBooksStatusPaginate/"+id,{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        })
+        return UserService.allOrderedBooksPaginate(id, page, pageSize);
     };
 
     const loadRequests=(page)=>{
@@ -83,8 +73,8 @@ const allOrderedBooks=(props)=>{
 
     const  onDeleteBookOrdered=(name)=>{
 
-        axios.delete("/user/deleteOrderedBookUserStatus/"+id+"?name="+name).then((response)=>{
-            console.log("bla");
+        UserService.deleteOrderedBookUser(id, name).then((response)=>{
+
             getRequests().then((data)=>{
                 console.log(data.data);
                 setAllBooksOrdered(data.data.content);

@@ -15,16 +15,12 @@ const header=(props)=>{
         }, error => {
             debugger;
             this.setState({
-
                 errorMessage: "Unexpected error occurred."
             });
         });
-
-
-    }
+    };
 
     return(
-
         <header>
             {!props.currentUser &&
                 <nav className="navbar navbar-expand-lg bg-white fixed-top ">

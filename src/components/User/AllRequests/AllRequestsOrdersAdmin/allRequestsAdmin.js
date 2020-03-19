@@ -1,7 +1,6 @@
 import OneRequestAdmin from '../OneRequestAdmin/oneRequestAdmin';
 import ReactPaginate from "react-paginate";
 import React, {useEffect, useState} from "react";
-import axios from "../../../../cutom-axios/axios";
 import './allRequestsStyle.css'
 import UserService from "../../../../repository/axiosUserRepository";
 
@@ -14,13 +13,7 @@ const allRequests=(props)=>{
 
     useEffect(()=>{
 
-
-
-         axios.get("/user/getAllRequestsPaginate",{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        }).then((data)=>{
+        UserService.getAllRequestsPaginate(page, pageSize).then((data)=>{
 
             setAllRequests(data.data.content);
             setPage(data.data.page);
@@ -33,21 +26,17 @@ const allRequests=(props)=>{
 
     const loadRequests=(page)=>{
         debugger;
-        return axios.get("/user/getAllRequestsPaginate",{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        }).then((data)=>{
-
-                setAllRequests(data.data.content);
-                setPage(data.data.page);
-                setPageSize(data.data.pageSize);
-                setTotalPages(data.data.totalPages);
-        })
-    }
+        return  UserService.getAllRequestsPaginate(page, pageSize);
+    };
 
     const handlePageClick = (e) => {
-       loadRequests(e.selected)
+       loadRequests(e.selected).then((data)=>{
+
+            setAllRequests(data.data.content);
+            setPage(data.data.page);
+            setPageSize(data.data.pageSize);
+            setTotalPages(data.data.totalPages);
+        })
     };
 
     const paginate = () => {
@@ -79,11 +68,7 @@ const allRequests=(props)=>{
 
     const approveOrder=(userId,bookName)=>{
         UserService.approveOrder(userId,bookName).then((response)=>{
-            axios.get("/user/getAllRequestsPaginate",{
-                headers: {
-                    'page':page,'page-size':pageSize
-                }
-            }).then((data)=>{
+            UserService.getAllRequestsPaginate(page, pageSize).then((data)=>{
 
                     setAllRequests(data.data.content);
                     setPage(data.data.page);
@@ -96,11 +81,7 @@ const allRequests=(props)=>{
 
    const declineOrder=(userId,bookName)=>{
         UserService.declineOrder(userId,bookName).then((response)=>{
-            axios.get("/user/getAllRequestsPaginate",{
-                headers: {
-                    'page':page,'page-size':pageSize
-                }
-            }).then((data)=>{
+            UserService.getAllRequestsPaginate(page, pageSize).then((data)=>{
 
                 setAllRequests(data.data.content);
                 setPage(data.data.page);

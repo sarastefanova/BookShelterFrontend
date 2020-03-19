@@ -1,10 +1,8 @@
 import OneBookFavourite from '../OneFavouriteBook/oneFavouriteBook'
 import ReactPaginate from "react-paginate";
 import React, { useEffect, useState } from "react";
-import axios from "../../../../cutom-axios/axios";
 import './allFavBooksUserStyle.css'
 import UserService from "../../../../repository/axiosUserRepository";
-import Modal from "react-bootstrap/Modal";
 
 const allFavouriteBooks=(props)=>{
     const [allBooks,setAllBooks]=useState({});
@@ -16,15 +14,9 @@ const allFavouriteBooks=(props)=>{
 
     useEffect(()=>{
 
-
-
-        axios.get("/user/getFavouriteBooksUserPaginate/"+props.id,{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        }).then((data)=>{
+        UserService.getFavouriteBooksUserPaginate(page, pageSize, props.id).then((data)=>{
                 debugger;
-               // console.log("inORD",data.data);
+
                 setAllBooks(data.data.content);
                 setPage(data.data.page);
                 setPageSize(data.data.pageSize);
@@ -33,13 +25,9 @@ const allFavouriteBooks=(props)=>{
     },[]);
 
     const  onDeleteBookFavourite=(name)=>{
-      //  console.log(name)
-            axios.delete("/user/deleteFavouriteBookUser/"+props.id+"?name="+name).then((response)=>{
-            axios.get("/user/getFavouriteBooksUserPaginate/"+props.id,{
-                headers: {
-                    'page':page,'page-size':pageSize
-                }
-            }).then((data)=>{
+
+            UserService.deleteFavouriteBookUser(props.id, name).then((response)=>{
+                UserService.getFavouriteBooksUserPaginate(page, pageSize, props.id).then((data)=>{
                // console.log(data.data.content);
                 setAllBooks(data.data.content);
                 setPage(data.data.page);
@@ -49,79 +37,40 @@ const allFavouriteBooks=(props)=>{
                 props.loadAllBooks();
             })
         })
-    }
+    };
 
-
-    //console.log(allBooks)
     const allBooksFav=Object.values(allBooks);
 
-
     const oneBookTerm=allBooksFav.map((book,index)=>{
-       // console.log("books-allFav",book);
+
         return(
             <OneBookFavourite addOrder={addOrder} page={page} onDeleteBookFav={onDeleteBookFavourite} isOrdered={book.isOrdered} user={book.user} id={props.id} bookName={book.book.name} book={book.book} key={index} />
 
         ) ;
     });
 
+    const loadRequests=(page)=>{
+        return UserService.getFavouriteBooksUserPaginate(page, pageSize, props.id);
+    };
 
    function addOrder(name, page, id, user){
        debugger;
        setShowOrder("");
-        UserService.addOrderedBookNewTable(id, name, user).then((response)=>{
+        UserService.addOrderedBook(id, name, user).then((response)=>{
             loadRequests(page).then((data)=>{
                 setShowOrder("");
-                //console.log(data.data);
                 setAllBooks(data.data.content);
                 setPage(data.data.page);
                 setPageSize(data.data.pageSize);
                 setTotalPages(data.data.totalPages);
             });
-
         }, error => {
             setShowOrder(true);
             if (error.response.status === 409) {
-                //
-                // debugger;
-                // console.log("show-order-function1",showOrder);
-                // //modalFavouriteDuplicateOrders(true);
-                // console.log("show-order-function2",showOrder);
                 setShowOrder("You already ordered this book!");
             }
         })
     }
-
-   // const handleShowOrder = () => setShowOrder(false);
-   // function modalFavouriteDuplicateOrders(flag){
-   //      // console.log(this.state.showOrder)
-   //     //setShowOrder(true);
-   //     debugger;
-   //     console.log("show-order-after-fun",showOrder);
-   //     console.log('flag', flag);
-   //      return(
-   //          <Modal show={showOrder | flag} >
-   //              <Modal.Header closeButton>
-   //                  <Modal.Title>This book is already in your favourite list!</Modal.Title>
-   //              </Modal.Header>
-   //
-   //              <Modal.Footer>
-   //                  <button  onClick={handleShowOrder}>
-   //                      Ok
-   //                  </button>
-   //
-   //              </Modal.Footer>
-   //          </Modal>
-   //      )
-   //  }
-
-    const loadRequests=(page)=>{
-        //debugger;
-        return axios.get("/user/getFavouriteBooksUserPaginate/"+props.id,{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        })
-    };
 
     const handlePageClick = (e) => {
         setShowOrder("");

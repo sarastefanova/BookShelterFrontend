@@ -1,19 +1,9 @@
-
 import OneBook from '../OneBook/OneGridBook';
 import './gridBookStyle.css';
 import ReactPaginate from 'react-paginate';
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 const getAllBooks=(props)=>{
     const [page,setPage]=useState(0);
-
-    useEffect(()=>{
-
-
-    },[]);
-
-    console.log(props.books);
-
-
     const allBooksFav=Object.values(props.books);
     const oneBookGrid=allBooksFav.map((book,index)=>{
 
@@ -28,13 +18,12 @@ const getAllBooks=(props)=>{
 
     const handlePageClick = (e) => {
         setPage(e.selected);
-       // loadRequests(e.selected)
         props.onPageClick(e.selected);
         console.log(e.selected);
-    }
+    };
 
     const paginate = () => {
-       // debugger;
+
         if (props.totalPages !== 0) {
             return (
                 <ReactPaginate previousLabel={"previous"}
@@ -68,6 +57,6 @@ const getAllBooks=(props)=>{
          </div>
       </div>
     );
-}
+};
 
 export default getAllBooks;

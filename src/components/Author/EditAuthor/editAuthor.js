@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import './styleEditAuthor.css'
 import {useHistory, useParams} from "react-router";
-import axios from "../../../cutom-axios/axios";
+import AuthorService from "../../../repository/axiosAuthorRepository";
 
 const editAuthor = (props) =>{
     const [detailsAuthor,setDetailsAuthor]=useState({});
@@ -10,14 +10,10 @@ const editAuthor = (props) =>{
 
     useEffect(()=>{
 
-        axios.get("/author?nameAndSurname="+nameAndSurname).then((data)=>{
+        AuthorService.getAuthorById(nameAndSurname).then((data)=>{
             setDetailsAuthor(data.data)
         })
     },[]);
-
-
-
-
 
     const onFormSubmit = (e) => {
 
@@ -41,8 +37,8 @@ const editAuthor = (props) =>{
         const paramName = e.target.name;
         const paramValue =  e.target.value;
         setDetailsAuthor({[paramName]:paramValue});
+    };
 
-    }
     return(
         <div className="container containerEditAuthor">
                         <form onSubmit={onFormSubmit}>
@@ -64,6 +60,5 @@ const editAuthor = (props) =>{
 
         </div>
     )
-
-}
+};
 export default editAuthor;

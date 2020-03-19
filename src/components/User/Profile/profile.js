@@ -4,7 +4,6 @@ import Img from "react-image";
 import authorPhoto from "../../AllPhotos/authorImg.jpg";
 import './profile.css'
 import { Link } from "react-router-dom";
-import axios from "../../../cutom-axios/axios";
 import avatar from "../../AllPhotos/avatar.jpg";
 import AllBooksFavourite  from '../FavouriteBooks/AllFavouriteBooks/allFavouriteBooks'
 class MyProfile extends Component{
@@ -23,13 +22,8 @@ class MyProfile extends Component{
     }
 
     componentDidMount() {
-      // this.setState({
-      //     user:this.state.user
-      // })
-        //const user=this.state.user;
-        //debugger;
 
-        axios.get("/user?id="+this.state.user.id).then((data)=>{
+        UserService.getUserById(this.state.user.id).then((data)=>{
             this.setState(
                 {
                     detailsUser:data.data
@@ -37,24 +31,18 @@ class MyProfile extends Component{
             )
         });
 
-        if (this.state.user!==null && this.state.user.roles!=null){
-            if(this.state.user.roles.role==='admin'){
-                this.setState({roleAdmin:true})
+        if (this.state.user!==null && this.state.user.roles!=null) {
+            if (this.state.user.roles.role === 'admin') {
+                this.setState({roleAdmin: true})
             }
 
         }
-
-
     }
-
-
 
     hideAvatarPhoto=()=>{
         let div=document.getElementById("imgAvatar");
         div.style.display="none";
-    }
-
-
+    };
 
     render() {
              let $imgProfie;
@@ -63,8 +51,6 @@ class MyProfile extends Component{
             $imgProfie=(  <img src={`data:image/jpeg;base64,${this.state.detailsUser.file}`}  alt="" className=" imgProfileAvatar rounded-circle"/>);
         }
     return(
-
-
 
         <div className="container containerDetails">
             <div className="row mt-5">
@@ -105,12 +91,7 @@ class MyProfile extends Component{
                         }
                         <br/>
 
-
-
-
                 </span>
-
-
 
                 </div>
                 <div className="col-md-8 mt-5">

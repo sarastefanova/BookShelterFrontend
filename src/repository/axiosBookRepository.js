@@ -3,23 +3,13 @@ import qs from 'qs'
 
 
 const BookService={
-    getAllBooks:()=>{
-        return axios.get("/books");
-    },
+
     getAllBooksNewest:()=>{
         return axios.get("/books/getNewestBooks");
     },
 
-    addNewBook:(book)=>{
+    fetchBooksTermsPaged:(page,pageSize,id)=>{
 
-        const formParams = qs.stringify(book);
-        return axios.post("/books",formParams, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
-    },fetchBooksTermsPaged:(page,pageSize,id)=>{
-       // debugger;
         if(id===0){
             return axios.get("/books?id="+id,{
                 headers: {
@@ -35,46 +25,37 @@ const BookService={
         }
 
     },
+
     fetchBooksTermsPagedUser:(page,pageSize,id)=>{
-        //debugger;
+
         return axios.get("/books/getAllBooksUser?id="+id,{
             headers: {
                 'page':page,'page-size':pageSize
             }
         })
 },
-    fetchBooksTermsPagedFavouriteBookUser:(page,pageSize,id)=>{
-        debugger;
-        return axios.get("/books/getAllBooksAuthorFavourite/"+id,{
-            headers: {
-                'page':page,'page-size':pageSize
-            }
-        })
-    },
+
     searchBookByNamePage:(search,pageSize,id, page)=>{
         return axios.get("/books/searchBookPage?name="+search+"&id="+id,{
             headers: {
                 'page':page, 'page-size':pageSize
             }
         })
-    }
-    ,
-    addNewBookWithImg:(book)=>{
+    },
 
-        //const formParams = qs.stringify(book);
-       console.log(book);
-        return axios.post("/books/upload",book, {
+    addNewBookWithImg:(book)=>{
+        return axios.post("/books/uploadBook",book, {
             headers: {
                 'Content-Type': 'multipart/form-data; boundary=${form._boundary}'
             }
         });
     },
+
     deleteBook:(id)=>{
         return axios.delete(`/books/${id}`)
-    }
-    ,
-    updateBook : (book) => {
+    },
 
+    updateBook : (book) => {
         const bookId=book.name;
         const formParams = qs.stringify(book);
         console.log(book.name)
@@ -84,9 +65,17 @@ const BookService={
             }
         });
     },
-    searchBookByName: (search,pageSize) => {
 
-        return axios.get(`/books/searchBook?name=${search}`);
+    getAuthorBook:(bookName)=>{
+        return axios.get("/books/"+bookName+"/authorBook");
+    },
+
+    getAllBooksByAuthor: (nameAndSurname) => {
+        return axios.get("/books/getAllBooksByAuthor/"+nameAndSurname);
+    },
+
+    getBookById: (name) => {
+        return axios.get("/books?name="+name);
     }
-}
+};
 export default BookService;

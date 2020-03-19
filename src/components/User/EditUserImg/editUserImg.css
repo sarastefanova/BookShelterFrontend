@@ -17,6 +17,10 @@
 .errorMessage{
     margin-top: 150px;
 }
+
+#errorMessage{
+    visibility: hidden;
+}
 .photoProfileAvatar{
     width: 100px !important;
     height: 100px !important;

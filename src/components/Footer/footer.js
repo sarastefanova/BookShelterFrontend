@@ -6,5 +6,5 @@ const footer=()=>{
             Copyright &copy; Sara's web site!
         </footer>
     );
-}
+};
 export default footer;

@@ -7,7 +7,6 @@ import Footer from '../Footer/footer';
 import Login from '../User/LogIn/LogIn';
 import Register from "../User/Register/Register";
 import AuthorEdit from '../Author/EditAuthor/editAuthor';
-import EditUser from '../User/EditUser/editUser';
 import EditUserImg from '../User/EditUserImg/editUserImg';
 import EditBook from '../Books/EditBook/editBook';
 import AuthorService from '../../repository/axiosAuthorRepository';
@@ -21,14 +20,11 @@ import UserService from '../../repository/axiosUserRepository';
 import {User} from '../../model/user';
 import MyProfile from '../User/Profile/profile';
 import AllAuthors from '../Author/AllAuthors/allAuthors';
-
 import Modal from "react-bootstrap/Modal";
-
 import axios from "../../cutom-axios/axios";
 import AllOrderedBooks from '../User/OrderedBooks/AllOrderedBooksUser/allOrderedBooks'
 import AllRequests from '../User/AllRequests/AllRequestsOrdersAdmin/allRequestsAdmin'
 class App extends Component{
-
 
     constructor(props){
         super(props);
@@ -67,7 +63,6 @@ class App extends Component{
 
     componentDidMount() {
 
-
        this.saveCurrentUser();
         this.loadBooksPaginate();
        this.loadAuthorsPaginate();
@@ -85,9 +80,6 @@ class App extends Component{
                 this.loadBooksPaginate();
                 this.loadBooksPaginateAllBooksUser();
             }
-
-
-            debugger;
         });
 
     };
@@ -99,30 +91,21 @@ class App extends Component{
             });
             debugger;
             const book = response.data;
-            //console.log(response+"img");
 
             this.setState((prevState) => {
                 const newBookRef = [...prevState.books, book];
-                //or
-                //const terms = prevState.terms.concat(newTerm);
-
                 return {
                     "books": newBookRef
                 }
             });
             this.loadBooksPaginate();
 
-
         },error => {
             if (error.response.status === 409) {
-
-
                 this.setState({
                     errorMsg:true
                 });
                 debugger;
-
-
             }
         });
     };
@@ -130,8 +113,6 @@ class App extends Component{
     createAuthorImg=(author)=>{
         AuthorService.addNewAuthorWithImg(author).then((response)=>{
             const author = response.data;
-
-
             this.setState({
                 authorRedirect:true
             });
@@ -152,13 +133,9 @@ class App extends Component{
                 this.setState({
                     errorMsgAuthor:true
                 });
-
-
             }
         });
     };
-
-
 
     loadBooksNewest = () => {
         BookService.getAllBooksNewest().then(response=>{
@@ -171,7 +148,7 @@ class App extends Component{
     };
 
     loadBooksPaginate = (page=0) => {
-        //debugger;
+
         if(this.state.user!==null){
             BookService.fetchBooksTermsPaged(page,this.state.pageSize,this.state.user.id).then((data) => {
                 debugger;
@@ -204,9 +181,6 @@ class App extends Component{
 
             })
         }
-
-
-
     };
 
     loadBooksPaginateAllBooksUser = (page=0) => {
@@ -223,8 +197,6 @@ class App extends Component{
                         pageSize:data.data.pageSize,
                         totalPages:data.data.totalPages
                     });
-                    console.log(this.state.books);
-
                 })
             }
             else{
@@ -240,13 +212,7 @@ class App extends Component{
                 })
             }
         }
-  //this.getAllFavouriteBooksUser(this.state.currentUser.id);
-
     };
-
-
-
-
 
     loadAuthorsPaginate = (page=0) => {
        // debugger;
@@ -260,8 +226,7 @@ class App extends Component{
             })
         })
 
-    }
-
+    };
 
     updateBooks= ((editedBook) => {
         BookService.updateBook(editedBook).then((response)=>{
@@ -284,7 +249,6 @@ class App extends Component{
         });
     });
 
-
     updateAuthors= ((editedAuthor) => {
         AuthorService.updateAuthorTerm(editedAuthor).then((response)=>{
             const newAuthor = response.data;
@@ -304,9 +268,8 @@ class App extends Component{
         });
     });
 
-
-    deleteAuthorFlag=(i,flag)=>{
-        AuthorService.deleteAuthorFlag(i,flag).then((response)=>{
+    deleteAuthor=(i,flag)=>{
+        AuthorService.deleteAuthor(i,flag).then((response)=>{
             // console.log(flag);
             this.loadAuthorsPaginate();
         })
@@ -322,16 +285,14 @@ class App extends Component{
         this.loadBooksPaginateAllBooksUser();
     };
 
-
     onDeleteBook=(bookName)=>{
         BookService.deleteBook(bookName).then((response)=>{
             this.setState((state)=>{
 
-
-            })
+            });
             this.loadBooksPaginateAllBooksUser();
         })
-    }
+    };
 
     searchData = (search) => {
             let userId;
@@ -349,21 +310,13 @@ class App extends Component{
                        pageSize:data.data.pageSize,
                        totalPages:data.data.totalPages
                    });
-                    console.log(this.state.books);
-
                })
-
-
            }
            else {
                this.setState({flagSearch:false});
                this.loadBooksPaginate(0);
-
-               debugger;
            }
     };
-
-
 
     addFavourite=(name,page)=>{
         debugger;
@@ -374,8 +327,6 @@ class App extends Component{
                 });
                 console.log("page-app",page);
             this.loadBooksPaginateAllBooksUser(page);
-            debugger;
-
         }, error => {
             if (error.response.status === 409) {
                 this.setState({
@@ -385,7 +336,7 @@ class App extends Component{
                 });
             }
         })
-    }
+    };
 
     addOrder=(name)=>{
         UserService.addOrderedBook(this.state.currentUser.id,name,this.state.currentUser).then((response)=>{
@@ -405,14 +356,13 @@ class App extends Component{
         UserService.approveOrder(userId,bookName).then((response)=>{
 
         })
-    }
+    };
 
     declineOrder=(userId,bookName)=>{
         UserService.declineOrder(userId,bookName).then((response)=>{
 
         })
-    }
-
+    };
 
     addOrderNewTable=(name)=>{
         debugger;
@@ -430,30 +380,7 @@ class App extends Component{
                 });
             }
         })
-    }
-
-
-
-    handleShow = () => this.setState({show:false});
-    modalFavouriteDuplicate(){
-          //  console.log(this.state.show)
-           return(
-               <Modal show={this.state.show} >
-                   <Modal.Header closeButton>
-                       <Modal.Title>This book is already in your favourite list!</Modal.Title>
-                   </Modal.Header>
-
-                   <Modal.Footer>
-                       <button  onClick={this.handleShow}>
-                           Ok
-                       </button>
-
-                   </Modal.Footer>
-               </Modal>
-           )
-    }
-
-
+    };
 
     handleShowOrder = () => this.setState({showOrder:false});
     modalFavouriteDuplicateOrders(){
@@ -475,7 +402,7 @@ class App extends Component{
     }
 
   render() {
-        //console.log(this.state.currentUser)
+
 
 const {currentUser}=this.state;
 let {idUser}="";
@@ -496,28 +423,24 @@ if(this.state.currentUser!==null){
 
                 <Route path={"/"} exact render={()=><HomePage booksNewest={this.state.booksNewest}/>}>
                 </Route>
+
                 <Route path={"/login"} component={Login} exact>
                 </Route>
+
                 <Route path={"/register"} component={Register} exact>
                 </Route>
 
                 <Route path={"/myProfile"}  render={()=><MyProfile addOrder={this.addOrderNewTable} onDeleteBookFav={this.onDeleteBookFav} loadAllBooks={this.loadBooksPaginateAllBooksUser} currentUser={currentUser}/>} exact>
                 </Route>
 
-                {/*Dodavanje na kniga so slika*/}
                 <Route path={"/addBook"} render={()=><BookAddWithImg render={() => (<Redirect to="/" />)} bookRedirect={this.state.bookRedirect} errorMsg={this.state.errorMsg} books={this.state.books} onNewBookAddedWithImg={this.createBookImg}/>}>
                 </Route>
 
-                {/*Dodavanje na avtor so slika*/}
                 <Route path={"/addAuthor"} render={()=><AddAuthorImg authorRedirect={this.state.authorRedirect} errorMsgAuthor={this.state.errorMsgAuthor} author={this.state.author} onNewAuthorAddedImg={this.createAuthorImg}/>}>
                 </Route>
 
                 <Route path="/editAuthor/:nameAndSurname" render={()=>
                     <AuthorEdit onEditedAuthor={this.updateAuthors} />}>
-                </Route>
-
-                <Route path="/editUser/:id"  render={()=>
-                    <EditUser currentUser={this.state.currentUser}/>}>
                 </Route>
 
                 <Route path="/editUserImg/:id"  render={()=>
@@ -539,7 +462,7 @@ if(this.state.currentUser!==null){
                 <Route path={"/allBooks"}  render={()=><GridBooks onDeleteBook={this.onDeleteBook} loadBooksPaginateAllBooksUser={this.loadBooksPaginateAllBooksUser} id={idUser} okFavourites={this.state.okFavourites} errorMessageFavourite={this.state.errorMessageFavourite} addFavourite={this.addFavourite}  onPageClick={this.loadBooksPaginate} page={this.state.page} pageSize={this.state.pageSize} totalPages={this.state.totalPages} books={this.state.books}/>}>
                 </Route>
 
-                <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthorFlag}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>
+                <Route path={"/allAuthors"} render={()=><AllAuthors onDelete={this.deleteAuthor}  onPageClick={this.loadAuthorsPaginate} totalPages={this.state.totalPagesAuthor} authors={this.state.authors}/>}>
                 </Route>
 
                 <Route path={"/allOrderedBooks/:id"} render={()=><AllOrderedBooks  id={this.state.currentUser.id}/>}>
@@ -552,23 +475,15 @@ if(this.state.currentUser!==null){
           </main>
             <Footer/>
 
-
         </Router>
     );
-
 
     return(
         <div className="App">
           {routing}
-            {this.modalFavouriteDuplicate()}
             {this.modalFavouriteDuplicateOrders()}
         </div>
-
-
-
     );
-
-
   }
 }
 

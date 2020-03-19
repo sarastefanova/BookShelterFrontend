@@ -16,13 +16,9 @@ class OneGridBook extends Component{
         roleAdmin:false,
         text:null,
         isOrdered:""
-    }
-
-
-
+    };
 
     componentDidMount() {
-
 
         if (this.state.user!==null){
             if(this.state.user.roles.role==='admin'){
@@ -30,27 +26,13 @@ class OneGridBook extends Component{
             }
 
         }
-
     }
 
-
-
-
-
     addFavourite=(e)=>{
-
-        //this.setState({isClicked:true},() => this.setState({isClicked: false}));
         this.setState({isClicked:true},() => this.setState({isClicked: false}));
         debugger;
         this.props.addFavourite(this.props.bookName,this.props.page);
-
-        console.log("page",this.props.page);
-
-    }
-
-
-
-
+    };
 
     render() {
         console.log(this.state.isClicked);
@@ -59,21 +41,15 @@ class OneGridBook extends Component{
             <div className={this.props.colClass}>
                 <div className="card ">
                     <div className="book">
-                        {/*{this.cardHeader()}*/}
                         {this.Example()}
-                        {/*{this.Example()}*/}
-
                         {this.cardFooter()}
-
                     </div>
                 </div>
             </div>
         )
-
     }
 
-    Example = (pom) => {
-
+    Example = () => {
             return(
                 <div>
                     {
@@ -89,11 +65,6 @@ class OneGridBook extends Component{
                 </div>
             )
     };
-
-
-
-
-
 
     cardFooter(){
         return(
@@ -125,8 +96,6 @@ class OneGridBook extends Component{
                         </button>
 
                         }
-
-
 
                         {this.state.user!==null &&
                         this.props.inFavourite===0 &&

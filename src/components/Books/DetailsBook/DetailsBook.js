@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
-import Img from "react-image";
-import authorPhoto from "../../AllPhotos/authorImg.jpg";
 import {useParams} from "react-router";
-import axios from "../../../cutom-axios/axios";
 import './detailsBookStyle.css';
 import {Link} from "react-router-dom";
+import BookService from "../../../repository/axiosBookRepository";
 const detailsBook=(props)=>{
 
 
@@ -13,15 +11,13 @@ const detailsBook=(props)=>{
     const {name}=useParams();
 
     useEffect(()=>{
-        axios.get("/books?name="+name).then((data)=>{
+        BookService.getBookById(name).then((data)=>{
             setDetailsForBook(data.data)
         });
-            axios.get("/books/"+name+"/authorBook").then((data)=>{
+            BookService.getAuthorBook(name).then((data)=>{
                 setTheAuthor(data.data)
             })
-
     },[]);
-
 
     return(
         <div className="container containerDetails">

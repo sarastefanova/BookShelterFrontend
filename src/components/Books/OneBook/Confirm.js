@@ -15,8 +15,6 @@ const Example=(props)=> {
 
     return (
         <span>
-
-
             <a   className="btn btn-danger roundedLinksBooks" title="Delete" onClick={handleShow}>
                 <i className="fa fa-trash"/>
             </a>

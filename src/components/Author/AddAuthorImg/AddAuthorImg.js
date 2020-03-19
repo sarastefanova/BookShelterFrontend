@@ -4,20 +4,15 @@ import './addAuthorImgStyle.css'
 class AddAuthorImg extends Component{
     state = {
 
-
         selectedFile:null,
         redirect: false,
         imagePreviewUrl:null
 
-    }
+    };
+
     onFormSubmit = (e) => {
 
         e.preventDefault();
-
-        // const newAuthor = {
-        //     "nameAndSurname": e.target.nameAndSurname.value,
-        //     "shortAuthorBiography": e.target.shortAuthorBiography.value
-        // };
 
         const formData = new FormData();
         formData.append('nameAndSurname',e.target.nameAndSurname.value);
@@ -31,7 +26,6 @@ class AddAuthorImg extends Component{
             debugger;
             this.setState({redirect:true});
         }
-
 
     };
 

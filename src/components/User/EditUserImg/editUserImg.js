@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom';
 import './editUserImg.css';
-import axios from "../../../cutom-axios/axios";
 import UserService from "../../../repository/axiosUserRepository";
 import avatar from "../../AllPhotos/avatar.jpg";
 class editUserImg extends Component{
@@ -20,7 +19,7 @@ class editUserImg extends Component{
     }
 
     componentDidMount() {
-        axios.get("/user?id="+this.state.id).then((data)=>{
+       UserService.getUserById(this.state.id).then((data)=>{
             console.log("data",data.data);
                     this.setState(
                         {
@@ -58,8 +57,6 @@ class editUserImg extends Component{
         formData.append('number',e.target.number.value);
         formData.append('email',e.target.email.value);
 
-
-
         debugger;
         this.updateUser(formData,newUser);
 
@@ -88,8 +85,7 @@ class editUserImg extends Component{
     };
 
      updateUser= ((editedUser,newUser) => {
-        UserService.updateUserImg(editedUser,this.state.id,newUser).then((response)=>{
-            //const newUser= response.data;
+        UserService.updateUser(editedUser,this.state.id,newUser).then((response)=>{
 
             this.hideErrorMessage();
 
@@ -142,7 +138,6 @@ class editUserImg extends Component{
         }else {
             $imagePreviewAvatar = (<div id="imgAvatar" className="image-container" ><img src={`data:image/jpeg;base64,${this.state.detailsUser.file}`}  alt="" className="photoProfileAvatar rounded-circle"/></div>);
         }
-
 
 
         return(

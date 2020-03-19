@@ -1,6 +1,7 @@
-import axios from '../../../../cutom-axios/axios'
 import React, {Component} from "react";
 import './styleOneRequest.css';
+import UserService from '../../../../repository/axiosUserRepository';
+import BookService from "../../../../repository/axiosBookRepository";
 class OneRequest extends Component{
 
     constructor(props) {
@@ -16,7 +17,7 @@ class OneRequest extends Component{
     }
 
     componentDidMount() {
-        axios.get("/books/"+this.props.bookName+"/authorBook").then((response)=>{
+        BookService.getAuthorBook(this.props.bookName).then((response)=>{
 
             this.setState({
                 authorsDetails:response.data
@@ -24,7 +25,7 @@ class OneRequest extends Component{
 
         });
 
-            axios.get("/user/getUserByBook/"+this.props.user.id+"/"+this.props.bookName).then((response)=>{
+        UserService.getUserByBook(this.props.user.id, this.props.bookName).then((response)=>{
                 this.setState({
                     userDetails:response.data
                 })

@@ -12,8 +12,6 @@ class oneNewestBook extends Component {
         }
     }
 
-
-
     render() {
     return(
 

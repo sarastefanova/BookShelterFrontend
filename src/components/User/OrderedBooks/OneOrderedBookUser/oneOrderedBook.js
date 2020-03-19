@@ -1,7 +1,6 @@
 import ConfirmDeleteOrderedBook from './confirmDeleteOrderedBook';
-import axios from '../../../../cutom-axios/axios'
 import React, {Component} from "react";
-
+import UserService from '../../../../repository/axiosUserRepository';
 class OneOrderedBook extends Component{
 
     constructor(props){
@@ -13,13 +12,10 @@ class OneOrderedBook extends Component{
     }
 
     componentDidMount() {
-        axios.get("/user/getStatusBookOrdered/"+this.props.id+"/"+this.props.book.name).then((response)=>{
+        UserService.getStatusBookOrdered(this.props.id, this.props.book.name).then((response)=>{
             this.setState({status:response.data})
         })
-
-
     }
-
 
     render() {
         console.log(this.state.status);

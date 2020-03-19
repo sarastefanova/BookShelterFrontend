@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from "react";
 import './styleEditBook.css'
-import axios from "../../../cutom-axios/axios";
 import { useHistory, useParams } from 'react-router-dom';
+import BookService from "../../../repository/axiosBookRepository";
+import AuthorService from "../../../repository/axiosAuthorRepository";
 const BookEdit=(props)=>{
     const [allAuthors,setAllAuthors]=useState({});
      const [detailsBook,setDetailsBooks]=useState({});
     const [theAuthor,setTheAuthor]=useState({});
     const history = useHistory();
     const {name}=useParams();
-    ;
+
    useEffect(()=>{
 
-           axios.get("/books?name="+name).then((data)=>{
+           BookService.getBookById(name).then((data)=>{
               setDetailsBooks(data.data)
            });
-               axios.get("/author").then((data)=>{
+               AuthorService.getAllAuthors().then((data)=>{
                    setAllAuthors(data.data)
-
                });
-                axios.get("/books/"+name+"/authorBook").then((data)=>{
+               BookService.getAuthorBook(name).then((data)=>{
                     setTheAuthor(data.data)
                 })
 
 
    },[]);
-
 
     const allAuthorsArray = Object.values(allAuthors);
 
@@ -101,8 +100,6 @@ const BookEdit=(props)=>{
 
         </div>
     )
-
-
-}
+};
 
 export default BookEdit;

@@ -29,11 +29,8 @@ const AuthorService={
         });
     }
     ,
-    deleteAuthorTerm:(id)=>{
-        return axios.delete(`/author/${id}`)
-    },
-    deleteAuthorFlag(nameAndSurname,isDeleted){
-        return axios.delete("/author/deleteFlag/"+nameAndSurname+"?isDeleted="+isDeleted);
+    deleteAuthor(nameAndSurname,isDeleted){
+        return axios.delete("/author/delete/"+nameAndSurname+"?isDeleted="+isDeleted);
     },
 
     updateAuthorTerm : (author) => {
@@ -45,6 +42,10 @@ const AuthorService={
                 'Content-Type': 'application/x-www-form-urlencoded',
             }
         });
+    },
+
+    getAuthorById: (nameAndSurname) => {
+        return  axios.get("/author?nameAndSurname="+nameAndSurname);
     }
-}
+};
 export default AuthorService;

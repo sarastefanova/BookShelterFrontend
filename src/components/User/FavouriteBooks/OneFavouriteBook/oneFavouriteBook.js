@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import ConfirmDeleteFavBook from "./confirmDeleteBookFav"
 import React, {Component} from "react";
-import axios from "../../../../cutom-axios/axios";
+import UserService from '../../../../repository/axiosUserRepository';
 import './oneFavouriteBooks.css'
 
 class OneFavouriteBook extends Component{
@@ -17,10 +17,9 @@ class OneFavouriteBook extends Component{
     }
 
     componentDidMount() {
-        axios.get("/user/getStatusOrderedFavouriteBook/"+this.props.id+"/"+this.props.book.name).then((response)=>{
+        UserService.getStatusOrderedFavouriteBook(this.props.id, this.props.book.name).then((response)=>{
             this.setState({text:response.data})
         })
-
 
     }
 
@@ -39,15 +38,6 @@ class OneFavouriteBook extends Component{
     };
 
     render() {
-        // let {pom}=this.state.isOrdered;
-        //
-        // if(this.state.text===0){
-        //     pom="Order";
-        // }
-        // if(this.state.text===1){
-        //     pom="Ordered";
-        // }
-
 
         return(
             <tr>

@@ -1,6 +1,4 @@
 import React from "react";
-
-
 import "./stylesPhoto.css";
 
 const PhotoWithText=()=>{
@@ -13,5 +11,5 @@ const PhotoWithText=()=>{
             </div>
         </div>
     );
-}
+};
 export default PhotoWithText;
