@@ -6,7 +6,7 @@ const PhotoWithText=()=>{
     return(
         <div className="header">
             <div className="dark-overlay">
-                <h1 className="title">Welcome to bookShelf!</h1>
+                <h1 className="title">Welcome to bookShelter!</h1>
 
             </div>
         </div>
